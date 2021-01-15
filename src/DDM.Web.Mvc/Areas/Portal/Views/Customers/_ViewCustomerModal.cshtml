@@ -1,0 +1,44 @@
+﻿
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@using DDM.Web.Areas.Portal.Models.Customers
+@model CustomerViewModel
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="CustomerInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Name") :</h6>
+                @Model.Customer.Name
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Company") :</h6>
+                @Model.Customer.Company
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Phone") :</h6>
+                @Model.Customer.Phone
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Email") :</h6>
+                @Model.Customer.Email
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Address") :</h6>
+                @Model.Customer.Address
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("CustomerCategory")) @L("Name") :</h6>
+                @Model.CustomerCategoryName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

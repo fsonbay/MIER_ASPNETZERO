@@ -1,0 +1,81 @@
+﻿@using DDM.Authorization
+@using DDM.Web.Areas.Portal.Models.VendorCategories
+@using DDM.Web.Areas.Portal.Startup
+@model VendorCategoriesViewModel
+@{
+    ViewBag.CurrentPageName = PortalPageNames.Common.VendorCategories;
+}
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/Portal/Views/VendorCategories/Index.js" asp-append-version="true"></script>
+}
+
+<div class="content d-flex flex-column flex-column-fluid">
+
+                <abp-page-subheader title="@L("VendorCategories")" description="@L("VendorCategoriesHeaderInfo")">
+                     
+                     @if (IsGranted(AppPermissions.Pages_VendorCategories_Create))
+                     {
+                         <button id="CreateNewVendorCategoryButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewVendorCategory")</button>                
+                     }
+                </abp-page-subheader>
+            
+<div class="@(await GetContainerClass())">   
+    <div class="card card-custom gutter-b">
+        <div class="card-body">
+            <div class="form">
+                <div class="row align-items-center mb-4">
+                    <div class="col-xl-12">
+                        <div class="form-group align-items-center">
+                            <div class="input-group">
+                                <input type="text" id="VendorCategoriesTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                <span class="input-group-btn">
+                                    <button id="GetVendorCategoriesButton" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+                <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
+                    <div class="col-md-12">
+						<div class="kt-separator kt-separator--border-dashed"></div>
+					</div>
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="NameFilterId">@L("Name")</label>
+									<input type="text" class="form-control" name="nameFilter" id="NameFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DescriptionFilterId">@L("Description")</label>
+									<input type="text" class="form-control" name="descriptionFilter" id="DescriptionFilterId">
+								</div>
+                            </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-xl-12">
+                        <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item"><i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")</span>
+                        <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none"><i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")</span>
+                    </div>
+                </div>
+            <div class="row align-items-center">
+                <table id="VendorCategoriesTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            
+                            <th>@L("Actions")</th>
+								<th>@L("Name")</th>
+								<th>@L("Description")</th>
+                            
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+﻿
+@using DDM.Web.Areas.Portal.Models.SalesOrders
+@model CreateOrEditSalesOrderModalViewModel
+
+@foreach (var item in Model.SalesOrder.SalesOrderLines)
+{
+    <div class="form-group col-12 row subcat-set">
+        <div class="col-2">
+            <label for="SalesOrderLine_Name">@L("Name")</label>
+            <textarea class="form-control" id="SalesOrderLines[0]_Name" value="@item.Name" type="text" name="SalesOrderLines[0].Name"
+                      required minlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MinNameLength" maxlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MaxNameLength" />
+        </div>
+        <div class="col-3">
+            <label for="SalesOrderLine_Description">@L("Description")</label>
+            <textarea class="form-control" id="SalesOrderLines[0]_Description" value="@item.Description" type="text" name="SalesOrderLines[0].Description"
+                      required minlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MinDescriptionLength" maxlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MaxDescriptionLength"  />
+        </div>
+        <div class="col-1">
+            <label for="SalesOrderLine_Material">@L("Material")</label>
+            @Html.DropDownList("SalesOrderLines[0].MaterialId", new SelectList(Model.SalesOrderMaterialList, "Id", "DisplayName", (Model.IsEditMode ? item.MaterialId.ToString() : "")), @L(" select "), new { @id= "SalesOrderLine[0]_MaterialId", @class = "form-control", @required = "required" })
+        </div>
+        <div class="col-1">
+            <label for="SalesOrderLine_Machine">@L("Machine")</label>
+            @Html.DropDownList("SalesOrderLines[0].MachineId", new SelectList(Model.SalesOrderMachineList, "Id", "DisplayName", (Model.IsEditMode ? item.MachineId.ToString() : "")), @L(" select "), new { @id = "SalesOrderLine[0]_MachineId", @class = "form-control", @required = "required" })
+        </div>
+        <div class="col-1">
+            <label for="SalesOrderLine_Quantity">@L("Quantity")</label>
+            <input class="form-control" id="SalesOrderLine[0]_Quantity" value="@item.Quantity" type="text" name="SalesOrderLines[0].Quantity" />
+        </div>
+        <div class="col-1">
+            <label for="SalesOrderLine_UnitPrice">@L("UnitPrice")</label>
+            <input class="form-control" id="SalesOrderLine[0]_UnitPrice" value="@item.UnitPrice" type="text" name="SalesOrderLines[0].UnitPrice" />
+        </div>
+        <div class="col-2">
+            <label for="SalesOrderLine_LineAmount">@L("LineAmount")</label>
+            <input class="form-control" id="SalesOrderLine[0]_LineAmount" value="@item.LineAmount" type="text" name="SalesOrderLines[0].LineAmount" />
+        </div>
+        <div class="col-1">
+            <button class="btn btn-link btn-sm btn-delete-subcat" name="delete" id="SalesOrderLine[0]_Delete">@L("Delete")</button>
+        </div>
+    </div>
+
+}

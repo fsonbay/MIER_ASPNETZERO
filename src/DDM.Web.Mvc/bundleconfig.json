@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "wwwroot/view-resources/Areas/Portal/Views/Customers/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Areas/Portal/Views/Customers/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Areas/Portal/Views/SalesOrders/_CreateOrEditModal.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Areas/Portal/Views/SalesOrders/_CreateOrEditModal.js"
+    ]
+  }
+]

@@ -1,0 +1,41 @@
+﻿
+@using System.Globalization
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@using DDM.Web.Areas.Portal.Models.Vendors
+@model CreateOrEditVendorModalViewModel
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditVendor")) : L("CreateNewVendor")))
+
+<div class="modal-body">
+        <div id="VendorInformationsTab">
+            <form name="VendorInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.Vendor.Id" />
+                }
+
+				            
+						<div class="form-group">
+							<label for="vendorCategoryId">@L("VendorCategory")</label>
+							@Html.DropDownList("vendorCategoryId", new SelectList(Model.VendorVendorCategoryList,"Id","DisplayName", (Model.IsEditMode ? Model.Vendor.VendorCategoryId.ToString() : "")),@L("SelectAVendorCategory"), new { @class = "form-control"  , @required="required" })
+						</div>
+
+
+				
+								<div class="form-group">
+									<label for="Vendor_Name">@L("Name")</label>
+									<input class="form-control" id="Vendor_Name" value="@Model.Vendor.Name" type="text" name="name"  required  maxlength="@DDM.Vendors.VendorConsts.MaxNameLength"  minlength="@DDM.Vendors.VendorConsts.MinNameLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="Vendor_Description">@L("Description")</label>
+									<input class="form-control" id="Vendor_Description" value="@Model.Vendor.Description" type="text" name="description"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

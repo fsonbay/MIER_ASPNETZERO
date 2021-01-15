@@ -1,0 +1,36 @@
+﻿
+@using System.Globalization
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@using DDM.Web.Areas.Portal.Models.Materials
+@model CreateOrEditMaterialModalViewModel
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditMaterial")) : L("CreateNewMaterial")))
+
+<div class="modal-body">
+        <div id="MaterialInformationsTab">
+            <form name="MaterialInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.Material.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="Material_Name">@L("Name")</label>
+									<input class="form-control" id="Material_Name" value="@Model.Material.Name" type="text" name="name"  required  maxlength="@DDM.Materials.MaterialConsts.MaxNameLength"  minlength="@DDM.Materials.MaterialConsts.MinNameLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="Material_Description">@L("Description")</label>
+									<input class="form-control" id="Material_Description" value="@Model.Material.Description" type="text" name="description"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

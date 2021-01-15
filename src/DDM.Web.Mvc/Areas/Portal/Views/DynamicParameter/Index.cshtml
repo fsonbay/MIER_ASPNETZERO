@@ -1,0 +1,45 @@
+﻿@using DDM.Authorization
+@using DDM.Web.Areas.Portal.Startup
+@{
+    ViewBag.CurrentPageName = PortalPageNames.Common.DynamicEntityParameters;
+}
+@section Styles
+{
+    <link rel="stylesheet" abp-href="/view-resources/Areas/Portal/Views/DynamicParameters/Index.css" asp-append-version="true"/>
+}
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/Portal/Views/_Bundles/dynamic-parameters-index.js" asp-append-version="true"></script>
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <abp-page-subheader title="@L("DynamicParameters")">
+        @if (IsGranted(AppPermissions.Pages_Administration_DynamicParameters_Create))
+        {
+            <button id="CreateNewDynamicParameter" class="btn btn-primary">
+                <i class="fa fa-plus"></i> @L("AddNewDynamicParameter")
+            </button>
+        }
+    </abp-page-subheader>
+
+    <div class="@(await GetContainerClass())">
+        <div class="card card-custom gutter-b">
+                        <div class="card-body">
+                            <div class="align-items-center">
+                                <table id="DynamicParametersTable" class="display table table-separate table-head-custom no-footer dtr-inline dt-responsive nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th style="width:50px"></th>
+                                        <th>@L("ParameterName")</th>
+                                        <th>@L("InputType")</th>
+                                        <th>@L("Permission")</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+</div>

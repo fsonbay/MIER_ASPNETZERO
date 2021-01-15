@@ -1,0 +1,24 @@
+﻿@using Abp.Configuration;
+@using DDM
+@using DDM.Configuration
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("ChangeProfilePicture")))
+
+<div class="modal-body">
+    <form id="ChangeProfilePictureModalForm" method="POST" action="@(ApplicationPath + "Profile/UploadProfilePicture")">
+        <div class="form-group">
+            <label for="Profile_UseGravatarProfilePicture" class="checkbox checkbox-outline">
+                <input id="Profile_UseGravatarProfilePicture" type="checkbox" name="UseGravatarProfilePicture" @(await SettingManager.GetSettingValueAsync<bool>(AppSettings.UserManagement.UseGravatarProfilePicture) ? "checked=\"checked\"" : "")>
+                @L("UseGravatarProfilePicture")
+                <span></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <input type="file" name="ProfilePicture" @(await SettingManager.GetSettingValueAsync<bool>(AppSettings.UserManagement.UseGravatarProfilePicture) ? "disabled=\"disabled\"" : "")/>
+            <span class="help-block m-b-none">@L("ProfilePicture_Change_Info", AppConsts.MaxProfilPictureBytesUserFriendlyValue)</span>
+        </div>
+    </form>
+    <img id="ProfilePictureResize" src=""/>
+</div>
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

@@ -1,0 +1,32 @@
+﻿
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@using DDM.Web.Areas.Portal.Models.Vendors
+@model VendorViewModel
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="VendorInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Name") :</h6>
+                @Model.Vendor.Name
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Description") :</h6>
+                @Model.Vendor.Description
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("VendorCategory")) @L("Name") :</h6>
+                @Model.VendorCategoryName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

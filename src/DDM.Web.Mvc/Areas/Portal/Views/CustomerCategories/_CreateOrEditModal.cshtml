@@ -1,0 +1,36 @@
+﻿
+@using System.Globalization
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@using DDM.Web.Areas.Portal.Models.CustomerCategories
+@model CreateOrEditCustomerCategoryModalViewModel
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditCustomerCategory")) : L("CreateNewCustomerCategory")))
+
+<div class="modal-body">
+        <div id="CustomerCategoryInformationsTab">
+            <form name="CustomerCategoryInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.CustomerCategory.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="CustomerCategory_Name">@L("Name")</label>
+									<input class="form-control" id="CustomerCategory_Name" value="@Model.CustomerCategory.Name" type="text" name="name"  required  maxlength="@DDM.CustomerCategories.CustomerCategoryConsts.MaxNameLength"  minlength="@DDM.CustomerCategories.CustomerCategoryConsts.MinNameLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="CustomerCategory_Description">@L("Description")</label>
+									<input class="form-control" id="CustomerCategory_Description" value="@Model.CustomerCategory.Description" type="text" name="description"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

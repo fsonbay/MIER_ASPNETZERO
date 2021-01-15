@@ -1,0 +1,110 @@
+﻿@using DDM.Authorization
+@using DDM.Web.Areas.Portal.Models.Customers
+@using DDM.Web.Areas.Portal.Startup
+@model CustomersViewModel
+@{
+    ViewBag.CurrentPageName = PortalPageNames.Common.Customers;
+}
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/Portal/Views/Customers/Index.js" asp-append-version="true"></script>
+}
+
+<div class="content d-flex flex-column flex-column-fluid">
+
+                <abp-page-subheader title="@L("Customers")" description="@L("CustomersHeaderInfo")">
+                     
+                     @if (IsGranted(AppPermissions.Pages_Customers_Create))
+                     {
+                         <button id="CreateNewCustomerButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewCustomer")</button>                
+                     }
+                </abp-page-subheader>
+            
+<div class="@(await GetContainerClass())">   
+    <div class="card card-custom gutter-b">
+        <div class="card-body">
+            <div class="form">
+                <div class="row align-items-center mb-4">
+                    <div class="col-xl-12">
+                        <div class="form-group align-items-center">
+                            <div class="input-group">
+                                <input type="text" id="CustomersTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                <span class="input-group-btn">
+                                    <button id="GetCustomersButton" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+                <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
+                    <div class="col-md-12">
+						<div class="kt-separator kt-separator--border-dashed"></div>
+					</div>
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="NameFilterId">@L("Name")</label>
+									<input type="text" class="form-control" name="nameFilter" id="NameFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="CompanyFilterId">@L("Company")</label>
+									<input type="text" class="form-control" name="companyFilter" id="CompanyFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="PhoneFilterId">@L("Phone")</label>
+									<input type="text" class="form-control" name="phoneFilter" id="PhoneFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="EmailFilterId">@L("Email")</label>
+									<input type="text" class="form-control" name="emailFilter" id="EmailFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="AddressFilterId">@L("Address")</label>
+									<input type="text" class="form-control" name="addressFilter" id="AddressFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="CustomerCategoryNameFilterId">(@L("CustomerCategory")) @L("Name")</label>
+									<input type="text" class="form-control" name="customerCategoryNameFilter" id="CustomerCategoryNameFilterId">
+								</div>
+                            </div>
+
+                </div>
+                <div class="row mb-4">
+                    <div class="col-xl-12">
+                        <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item"><i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")</span>
+                        <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none"><i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")</span>
+                    </div>
+                </div>
+            <div class="row align-items-center">
+                <table id="CustomersTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th></th>
+
+                            <th>@L("Actions") </th>
+                            <th>@L("Name")</th>
+                            <th>@L("Company")</th>
+                            <th>@L("Phone")</th>
+                            <th>@L("Email")</th>
+                            <th>@L("Address")</th>
+                            <th>@L("CustomerCategoryName")</th>
+                            <th>@L("CreationTime")</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

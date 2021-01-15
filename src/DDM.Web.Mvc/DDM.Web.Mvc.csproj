@@ -1,0 +1,208 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <Import Project="..\..\common.props"></Import>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>DDM.Web.Mvc</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>DDM.Web.Mvc</PackageId>
+    <UserSecretsId>MyCompanyName-DDM-894FDFC1-6482-4A56-926A-3C46C9FE0329</UserSecretsId>
+    <RootNamespace>DDM.Web</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="App_Data\**" />
+    <Content Remove="App_Data\**" />
+    <EmbeddedResource Remove="App_Data\**" />
+    <None Remove="App_Data\**" />
+    <Content Update="Areas\Portal\Views\Shared\Components\PortalQuickThemeSelectComponent\Default.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Portal\Views\Shared\Components\PortalLanguageSwitch\Default.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Portal\Views\Shared\Components\PortalChatToggler\Default.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Portal\Views\Shared\Components\PortalUserMenu\Default.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Portal\Views\Shared\Components\PortalRecentNotifications\Default.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme10\js\settings.min.js">
+      <DependentUpon>settings.js</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme11\js\settings.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme11\js\settings.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <DependentUpon>settings.js</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme2\js\settings.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme2\js\settings.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <DependentUpon>settings.js</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme3\js\settings.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme3\js\settings.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <DependentUpon>settings.js</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme4\js\settings.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme4\js\settings.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <DependentUpon>settings.js</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme5\js\settings.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme5\js\settings.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <DependentUpon>settings.js</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme6\js\settings.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme6\js\settings.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <DependentUpon>settings.js</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme7\js\settings.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme7\js\settings.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <DependentUpon>settings.js</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme8\js\settings.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme8\js\settings.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <DependentUpon>settings.js</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme9\js\settings.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\metronic\themes\theme9\js\settings.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <DependentUpon>settings.js</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+    <Content Remove="wwwroot\swagger\ui\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\swagger\ui\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="bundleconfig.json" />
+    <None Include="wwwroot\Plugins\.gitkeep" />
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <None Update="wwwroot\**\*;Areas\**\*;Views\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DDM.Web.Core\DDM.Web.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Abp.Castle.Log4Net" Version="5.10.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.1.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Portal\Views\Shared\Themes\Theme10\Components" />
+    <Folder Include="Areas\Portal\Views\Shared\Themes\Theme11\Components" />
+    <Folder Include="Areas\Portal\Views\Shared\Themes\Theme4\Components" />
+    <Folder Include="Areas\Portal\Views\Shared\Themes\Theme5\Components" />
+    <Folder Include="Areas\Portal\Views\Shared\Themes\Theme6\Components" />
+    <Folder Include="Areas\Portal\Views\Shared\Themes\Theme7\Components" />
+    <Folder Include="Areas\Portal\Views\Shared\Themes\Theme8\Components" />
+    <Folder Include="Areas\Portal\Views\Shared\Themes\Theme9\Components" />
+    <Folder Include="wwwroot\lib\form2js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme12Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme12Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme9Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme9Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalDefaultBrand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalDefaultFooter\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme2Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme2Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme3Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme3Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme4Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme4Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme5Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme5Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme6Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme6Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme7Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme7Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme8Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme8Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme10Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme10Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme11Brand\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTheme11Footer\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Layout\Theme12\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="bundleconfig.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\Common\Styles\Themes\theme12\datatables-rtl.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\Common\Styles\Themes\theme12\datatables-rtl.min.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\Common\Styles\Themes\theme12\datatables.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\Common\Styles\Themes\theme12\datatables.min.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\Common\Styles\Themes\theme12\metronic-customize.less" />
+    <_ContentIncludedByDefault Remove="wwwroot\Common\Styles\Themes\theme12\metronic-customize.min.css" />
+    <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTopBar\Default.cshtml" />
+  </ItemGroup>
+</Project>

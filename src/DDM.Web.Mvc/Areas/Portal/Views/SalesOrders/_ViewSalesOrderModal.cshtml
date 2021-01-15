@@ -1,0 +1,36 @@
+﻿
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@using DDM.Web.Areas.Portal.Models.SalesOrders
+@model SalesOrderViewModel
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="SalesOrderInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Number") :</h6>
+                @Model.SalesOrder.Number
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Date") :</h6>
+                @Model.SalesOrder.Date
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("DueDate") :</h6>
+                @Model.SalesOrder.DueDate
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("Customer")) @L("Name") :</h6>
+                @Model.CustomerName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

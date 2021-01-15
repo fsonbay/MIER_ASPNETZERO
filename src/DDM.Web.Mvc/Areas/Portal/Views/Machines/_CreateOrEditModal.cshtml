@@ -1,0 +1,36 @@
+﻿
+@using System.Globalization
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@using DDM.Web.Areas.Portal.Models.Machines
+@model CreateOrEditMachineModalViewModel
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditMachine")) : L("CreateNewMachine")))
+
+<div class="modal-body">
+        <div id="MachineInformationsTab">
+            <form name="MachineInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.Machine.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="Machine_Name">@L("Name")</label>
+									<input class="form-control" id="Machine_Name" value="@Model.Machine.Name" type="text" name="name"  required  maxlength="@DDM.Machines.MachineConsts.MaxNameLength"  minlength="@DDM.Machines.MachineConsts.MinNameLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="Machine_Description">@L("Description")</label>
+									<input class="form-control" id="Machine_Description" value="@Model.Machine.Description" type="text" name="description"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

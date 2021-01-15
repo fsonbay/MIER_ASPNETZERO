@@ -1,0 +1,36 @@
+﻿
+@using System.Globalization
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@using DDM.Web.Areas.Portal.Models.VendorCategories
+@model CreateOrEditVendorCategoryModalViewModel
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditVendorCategory")) : L("CreateNewVendorCategory")))
+
+<div class="modal-body">
+        <div id="VendorCategoryInformationsTab">
+            <form name="VendorCategoryInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.VendorCategory.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="VendorCategory_Name">@L("Name")</label>
+									<input class="form-control" id="VendorCategory_Name" value="@Model.VendorCategory.Name" type="text" name="name"  required  maxlength="@DDM.VendorCategories.VendorCategoryConsts.MaxNameLength"  minlength="@DDM.VendorCategories.VendorCategoryConsts.MinNameLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="VendorCategory_Description">@L("Description")</label>
+									<input class="form-control" id="VendorCategory_Description" value="@Model.VendorCategory.Description" type="text" name="description"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

@@ -1,0 +1,5 @@
+﻿@using DDM.Web.Areas.Portal.Models.Common
+@model IFeatureEditViewModel
+<div class="feature-tree">
+    @await Html.PartialAsync("~/Areas/Portal/Views/Common/_FeaturesTreeItem.cshtml", new FeatureTreeItemModel(Model, null))
+</div>

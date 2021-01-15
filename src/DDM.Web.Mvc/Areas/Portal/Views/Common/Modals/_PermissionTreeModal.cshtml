@@ -1,0 +1,15 @@
+﻿@using DDM.Web.Areas.Portal.Models.Common
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@model IPermissionsEditViewModel
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel( L("SelectPermissions")))
+
+<div class="modal-body">
+    <div id="PermissionFilterTree">
+        @await Html.PartialAsync("~/Areas/Portal/Views/Common/_PermissionTree.cshtml", Model)
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" data-dismiss="modal">@L("Select")</button>
+</div>
+

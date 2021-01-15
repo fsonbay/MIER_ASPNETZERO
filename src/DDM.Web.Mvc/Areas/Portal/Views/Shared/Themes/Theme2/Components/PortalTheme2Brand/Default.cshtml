@@ -1,0 +1,13 @@
+﻿@using DDM.Web.Areas.Portal.Models.Layout
+@using DDM.Web.Areas.Portal.Views.Shared.Components.PortalLogo
+@model HeaderViewModel
+@{
+    Layout = null;
+}
+
+<div class="header-logo">
+    <a href="@Url.Action("Index", "Home", new {area = string.Empty})" class="brand-logo">
+        @await Component.InvokeAsync(typeof(PortalLogoViewComponent), new {logoClass = "logo-default max-h-40px"})
+        @await Component.InvokeAsync(typeof(PortalLogoViewComponent), new {logoSkin = "light", logoClass = "logo-sticky max-h-40px"})
+    </a>
+</div>
