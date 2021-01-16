@@ -4,6 +4,7 @@
     {
         public static class Common
         {
+            public const string ProductionStatuses = "ProductionStatuses.ProductionStatuses";
             public const string Machines = "Machines.Machines";
             public const string Materials = "Materials.Materials";
             public const string SalesOrders = "SalesOrders.SalesOrders";

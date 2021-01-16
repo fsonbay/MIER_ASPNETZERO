@@ -22,16 +22,17 @@
                     <div class="col-3">
                         <label for="CustomerId">@L("Customer")</label>
                         <div class="col-12">
-                            @Html.DropDownList("CustomerId", new SelectList(Model.SalesOrderCustomerList, "Id", "DisplayName", (Model.IsEditMode ? Model.SalesOrder.CustomerId.ToString() : "")), " - select -", new { @class = "form-control", @required = "required" })
+                            @Html.DropDownList("CustomerId", new SelectList(Model.SalesOrderCustomerList, "Id", "DisplayName", 
+                                (Model.IsEditMode ? Model.SalesOrder.CustomerId.ToString() : "")), " - select -", new { @class = "form-control", @required = "required" })
                         </div>
                     </div>
                     <div class="col-2">
                         <label for="Date">@L("Date")</label>
-                        <input class="form-control m-input date-picker" id="SalesOrder_Date" type="text" name="Date" value="@Model.SalesOrder.Date" />
+                        <input id="SalesOrder_Date" name="Date" value="@Model.SalesOrder.Date" type="text" class="form-control m-input date-picker"/>
                     </div>
                     <div class="col-2">
-                        <label for="DueDate">@L("DueDate")</label>
-                        <input class="form-control m-input date-picker" id="SalesOrder_DueDate" type="text" name="DueDate" value="@Model.SalesOrder.DueDate" />
+                        <label for="Deadline">@L("Deadline")</label>
+                        <input id="SalesOrder_Deadline" name="DueDate" value="@Model.SalesOrder.Deadline" type="text" class="form-control m-input date-picker"/>
                     </div>
                 </div>
             </div>
@@ -49,8 +50,8 @@
 
             <div class="form-group col-12">
                 <div class="col-2 offset-10">
-                    <label for="TotalAmount">@L("TotalAmount")</label>
-                    <input id="TotalAmount" name="TotalAmount" type="text" class="form-control" readonly />
+                    <label for="Amount">@L("Total")</label>
+                    <input id="Amount" name="Amount" type="text" class="form-control" readonly />
                 </div>
             </div>
 

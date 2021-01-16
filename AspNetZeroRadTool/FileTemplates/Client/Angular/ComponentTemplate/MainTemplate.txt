@@ -93,4 +93,5 @@ export class {{Entity_Name_Plural_Here}}Component extends AppComponentBase {
     
     {{Master_Detail_Table_Select_Edit_Table_Here}}
     {{Master_Detail_Table_Row_Opener_Here}}
+    {{Master_Detail_Table_Close_All_Child_Rows_Here}}
 }

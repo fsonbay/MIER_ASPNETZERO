@@ -53,26 +53,23 @@ export class CreateOrEdit{{Entity_Name_Here}}Component extends AppComponentBase 
         }
         {{NP_Looped_Dropdown_GetAll_Here}}
     }
-
-    private saveInternal(): Observable<void> {
-            this.saving = true;
-            
-        {{Property_Nullable_Datetime_GetValue_Looped_Template_Here}}
-        return this._{{entity_Name_Plural_Here}}ServiceProxy.createOrEdit(this.{{entity_Name_Here}})
-         .pipe(finalize(() => { 
-            this.saving = false;               
-            this.notify.info(this.l('SavedSuccessfully'));
-         }));
-    }
     
     save(): void {
-        this.saveInternal().subscribe(x => {
+        this.saving = true;
+        {{Property_Nullable_Datetime_GetValue_Looped_Template_Here}}
+        this._{{entity_Name_Plural_Here}}ServiceProxy.createOrEdit(this.{{entity_Name_Here}}).subscribe(x => {
+             this.saving = false;               
+             this.notify.info(this.l('SavedSuccessfully'));
              this._router.navigate( ['/app/{{menu_Position_Here}}/{{namespace_Relative_Here}}/{{entity_Name_Plural_Here}}']);
         })
     }
     
     saveAndNew(): void {
-        this.saveInternal().subscribe(x => {
+        this.saving = true;
+        {{Property_Nullable_Datetime_GetValue_Looped_Template_Here}}
+        this._{{entity_Name_Plural_Here}}ServiceProxy.createOrEdit(this.{{entity_Name_Here}}).subscribe(x => {
+            this.saving = false;               
+            this.notify.info(this.l('SavedSuccessfully'));
             this.{{entity_Name_Here}} = new CreateOrEdit{{Entity_Name_Here}}Dto();
         })
     }

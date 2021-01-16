@@ -16,22 +16,26 @@ using DDM.Authorization;
 using Abp.Extensions;
 using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
-
+using DDM.EntityFrameworkCore.Repositories;
+using DDM.SalesOrderLines;
 
 namespace DDM.SalesOrders
 {
     [AbpAuthorize(AppPermissions.Pages_SalesOrders)]
     public class SalesOrdersAppService : DDMAppServiceBase, ISalesOrdersAppService
     {
-        private readonly IRepository<SalesOrder> _salesOrderRepository;
+        //private readonly IRepository<SalesOrder> _salesOrderRepository;
+        private readonly SalesOrderRepository _salesOrderRepository;
+
         private readonly IRepository<Customer, int> _lookup_customerRepository;
         private readonly IRepository<Machine, int> _lookup_machineRepository;
         private readonly IRepository<Material, int> _lookup_materialRepository;
 
-        public SalesOrdersAppService(IRepository<SalesOrder> salesOrderRepository, 
+        public SalesOrdersAppService(SalesOrderRepository salesOrderRepository,
             IRepository<Customer, int> lookup_customerRepository,
             IRepository<Machine, int> lookup_machineRepository,
-            IRepository<Material, int> lookup_materialRepository)
+            IRepository<Material, int> lookup_materialRepository
+            )
         {
             _salesOrderRepository = salesOrderRepository;
             _lookup_customerRepository = lookup_customerRepository;
@@ -48,8 +52,8 @@ namespace DDM.SalesOrders
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NumberFilter), e => e.Number == input.NumberFilter)
                         .WhereIf(input.MinDateFilter != null, e => e.Date >= input.MinDateFilter)
                         .WhereIf(input.MaxDateFilter != null, e => e.Date <= input.MaxDateFilter)
-                        .WhereIf(input.MinDueDateFilter != null, e => e.DueDate >= input.MinDueDateFilter)
-                        .WhereIf(input.MaxDueDateFilter != null, e => e.DueDate <= input.MaxDueDateFilter)
+                        .WhereIf(input.MinDeadlineFilter != null, e => e.Deadline >= input.MinDeadlineFilter)
+                        .WhereIf(input.MaxDeadlineFilter != null, e => e.Deadline <= input.MaxDeadlineFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CustomerNameFilter), e => e.CustomerFk != null && e.CustomerFk.Name == input.CustomerNameFilter);
 
             var pagedAndFilteredSalesOrders = filteredSalesOrders
@@ -66,7 +70,7 @@ namespace DDM.SalesOrders
                                   {
                                       Number = o.Number,
                                       Date = o.Date,
-                                      DueDate = o.DueDate,
+                                      Deadline = o.Deadline,
                                       Id = o.Id
                                   },
                                   CustomerName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
@@ -116,8 +120,6 @@ namespace DDM.SalesOrders
 
         public async Task CreateOrEdit(CreateOrEditSalesOrderDto input)
         {
-           int o =  _lookup_customerRepository.Count();
-
             if (input.Id == null)
             {
                 await Create(input);
@@ -128,46 +130,42 @@ namespace DDM.SalesOrders
             }
         }
 
-        //private string CreateSalesOrderNumber(DateTime salesOrderDate, int customerID)
-        //{
-        //    string prefix = "O" + salesOrderDate.ToString("yyyyMMdd");
-        //    int custOrderCount = await CountAsync();
-        //        //_salesOrderRepo.CountCustomerOrder(customerID) + 1;
-
-        //    return prefix + '-' + customerID + '-' + custOrderCount;
-        //}
+        private string CreateSalesOrderNumber(DateTime salesOrderDate, int customerId)
+        {
+            string prefix = "O" + salesOrderDate.ToString("yyyyMMdd");
+            int customerOrderCount = _salesOrderRepository.CountCustomerOrder(customerId) + 1;
+            return prefix + '-' + customerId + '-' + customerOrderCount;
+        }
 
 
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create)]
         protected virtual async Task Create(CreateOrEditSalesOrderDto input)
         {
-            //var salesOrder = new SalesOrder
-            //{
-            //    ID = viewModel.SalesOrderID,
-            //    SalesOrderNumber = CreateSalesOrderNumber(viewModel.SalesOrderDate, viewModel.CustomerID),
-            //    ProcessedBySurabaya = viewModel.ProcessedBySurabaya,
-            //    CustomerID = viewModel.CustomerID,
-            //    SalesOrderDate = viewModel.SalesOrderDate,
-            //    Deadline = viewModel.Deadline,
-            //    TotalAmount = decimal.Parse(viewModel.TotalAmountString.Replace(".", "")),
-            //    SalesInvoiceID = 0, //Default value will be replaced by actual value,
-            //    ProductionStatusID = 10, // 10 - New
-            //    MarkForDelete = false,
-            //    InsertBy = _userManager.GetUserName(User),
-            //    InsertTime = DateTime.Now
-            //};
+            var salesOrder = new SalesOrder
+            {
+                //Id = 0,
+                Number = CreateSalesOrderNumber(input.Date, input.CustomerId),
+                ProcessedBySurabaya = input.ProcessedBySurabaya,
+                CustomerId = input.CustomerId,
+                Date = input.Date,
+                Deadline = input.Deadline,
+                Amount = decimal.Parse(input.Amount.Replace(".", "")),
+                ProductionStatusId = 10, // 10 - New
+                MarkForDelete = false
+            };
 
-            //var salesOrder = new SalesOrder { 
-            //    Id = 0,
-            //    Number = 
-            
-            
-            
-            //};
+            //Iterate Sales Order Lines
+            var lineList = new List<SalesOrderLine>();
+            List<string> lineNames = new List<string>();
 
-           // var salesOrder = ObjectMapper.Map<SalesOrder>(input);
+            foreach (var salesOrderLine in input.SalesOrderLines.ToList())
+            {
+                //Create Sales Order Line
+                var markForDelete = salesOrderLine.MarkForDelete;
+                var name = salesOrderLine.Name;
+            }
 
-          //  await _salesOrderRepository.InsertAsync(salesOrder);
+
         }
 
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Edit)]

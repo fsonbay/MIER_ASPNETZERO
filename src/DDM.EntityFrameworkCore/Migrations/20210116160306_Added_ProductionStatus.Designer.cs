@@ -4,14 +4,16 @@ using DDM.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DDM.Migrations
 {
     [DbContext(typeof(DDMDbContext))]
-    partial class DDMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210116160306_Added_ProductionStatus")]
+    partial class Added_ProductionStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2066,17 +2068,13 @@ namespace DDM.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductionStatus");
+                    b.ToTable("ProductionStatuses");
                 });
 
             modelBuilder.Entity("DDM.SalesOrderLines.SalesOrderLine", b =>

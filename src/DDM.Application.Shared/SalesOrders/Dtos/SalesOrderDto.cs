@@ -10,7 +10,7 @@ namespace DDM.SalesOrders.Dtos
 
         public DateTime Date { get; set; }
 
-        public DateTime DueDate { get; set; }
+        public DateTime Deadline { get; set; }
 
         public int CustomerId { get; set; }
 

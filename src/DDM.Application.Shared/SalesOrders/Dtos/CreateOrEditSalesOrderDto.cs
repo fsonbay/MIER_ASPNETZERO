@@ -9,10 +9,10 @@ namespace DDM.SalesOrders.Dtos
     {
 
         public string Number { get; set; }
-
+        public bool ProcessedBySurabaya { get; set; }
         public DateTime Date { get; set; }
-
-        public DateTime DueDate { get; set; }
+        public DateTime Deadline { get; set; }
+        public string Amount { get; set; }
 
         public int CustomerId { get; set; }
 

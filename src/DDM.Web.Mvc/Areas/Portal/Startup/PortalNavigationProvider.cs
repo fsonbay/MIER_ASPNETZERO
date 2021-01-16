@@ -102,6 +102,13 @@ namespace DDM.Web.Areas.Portal.Startup
                         icon: "flaticon-more",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_CustomerCategories)
                     )
+                ).AddItem(new MenuItemDefinition(
+                        PortalPageNames.Common.ProductionStatuses,
+                        L("ProductionStatuses"),
+                        url: "Portal/ProductionStatuses",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ProductionStatuses)
+                    )
                 )
                 ).AddItem(new MenuItemDefinition(
                         PortalPageNames.Common.Administration,

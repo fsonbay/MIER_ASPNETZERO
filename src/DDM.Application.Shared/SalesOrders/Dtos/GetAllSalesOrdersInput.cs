@@ -12,8 +12,8 @@ namespace DDM.SalesOrders.Dtos
         public DateTime? MaxDateFilter { get; set; }
         public DateTime? MinDateFilter { get; set; }
 
-        public DateTime? MaxDueDateFilter { get; set; }
-        public DateTime? MinDueDateFilter { get; set; }
+        public DateTime? MaxDeadlineFilter { get; set; }
+        public DateTime? MinDeadlineFilter { get; set; }
 
         public string CustomerNameFilter { get; set; }
 

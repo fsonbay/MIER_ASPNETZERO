@@ -1,4 +1,6 @@
-﻿using DDM.SalesOrderLines;
+﻿using DDM.ProductionStatuses.Dtos;
+using DDM.ProductionStatuses;
+using DDM.SalesOrderLines;
 using DDM.Machines.Dtos;
 using DDM.Machines;
 using DDM.Materials.Dtos;
@@ -62,6 +64,8 @@ namespace DDM
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditProductionStatusDto, ProductionStatus>().ReverseMap();
+            configuration.CreateMap<ProductionStatusDto, ProductionStatus>().ReverseMap();
             configuration.CreateMap<CreateOrEditMachineDto, Machine>().ReverseMap();
             configuration.CreateMap<MachineDto, Machine>().ReverseMap();
             configuration.CreateMap<CreateOrEditMaterialDto, Material>().ReverseMap();

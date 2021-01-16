@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="DDM.ProductionStatuses.ProductionStatus">ProductionStatus</text>
+    <text name="ProductionStatusesHeaderInfo">Production statuses header info</text>
+    <text name="ProductionStatuses">Production statuses</text>
+    <text name="ProductionStatus">Production status</text>
+    <text name="CreateNewProductionStatus">Create new production status</text>
+    <text name="EditProductionStatus">Edit production status</text>
+    <text name="DeleteProductionStatus">Delete production status</text>
     <text name="SalesOrderLines">Sales order lines</text>
     <text name="SalesOrderLine">Sales order line</text>
     <text name="CreateNewSalesOrderLine">Create new sales order line</text>

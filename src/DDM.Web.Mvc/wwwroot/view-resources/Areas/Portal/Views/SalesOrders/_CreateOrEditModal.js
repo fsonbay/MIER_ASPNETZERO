@@ -34,7 +34,15 @@
 
             modal.find('#CustomerId').select2({
                 width: '100%'
+            }).on('change', function () {
+                $(this).valid();
             });
+
+            //$("#vedit-filter").select2({
+            //    // your options here
+            //}).on('change', function () {
+            //    $(this).valid();
+            //});
 
             _$salesOrderInformationForm = _modalManager.getModal().find('form[name=SalesOrderInformationsForm]');
             _$salesOrderInformationForm.validate();
@@ -252,9 +260,9 @@
             });
 
             var totalAmount = addSeparatorsNF(sum.toFixed(0), '.', ',', '.');
-            $("#TotalAmount").val(totalAmount);
-            $("#TotalAmount").css("background-color", "#E0E0E0");
-            $("#TotalAmount").css("color", "#003300");
+            $("#Amount").val(totalAmount);
+            $("#Amount").css("background-color", "#E0E0E0");
+            $("#Amount").css("color", "#003300");
         }
         function buttonVisibility() {
 
