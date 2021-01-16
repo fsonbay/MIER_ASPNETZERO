@@ -16,7 +16,7 @@ namespace DDM.SalesOrders.Dtos
 
         public int CustomerId { get; set; }
 
-        public List<SalesOrderLineDto> SalesOrderLines { get; set; }
+        public List<CreateOrEditSalesOrderLineDto> SalesOrderLines { get; set; }
 
     }
 }

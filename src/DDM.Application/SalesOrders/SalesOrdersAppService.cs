@@ -116,6 +116,8 @@ namespace DDM.SalesOrders
 
         public async Task CreateOrEdit(CreateOrEditSalesOrderDto input)
         {
+           int o =  _lookup_customerRepository.Count();
+
             if (input.Id == null)
             {
                 await Create(input);
@@ -126,12 +128,46 @@ namespace DDM.SalesOrders
             }
         }
 
+        //private string CreateSalesOrderNumber(DateTime salesOrderDate, int customerID)
+        //{
+        //    string prefix = "O" + salesOrderDate.ToString("yyyyMMdd");
+        //    int custOrderCount = await CountAsync();
+        //        //_salesOrderRepo.CountCustomerOrder(customerID) + 1;
+
+        //    return prefix + '-' + customerID + '-' + custOrderCount;
+        //}
+
+
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create)]
         protected virtual async Task Create(CreateOrEditSalesOrderDto input)
         {
-            var salesOrder = ObjectMapper.Map<SalesOrder>(input);
+            //var salesOrder = new SalesOrder
+            //{
+            //    ID = viewModel.SalesOrderID,
+            //    SalesOrderNumber = CreateSalesOrderNumber(viewModel.SalesOrderDate, viewModel.CustomerID),
+            //    ProcessedBySurabaya = viewModel.ProcessedBySurabaya,
+            //    CustomerID = viewModel.CustomerID,
+            //    SalesOrderDate = viewModel.SalesOrderDate,
+            //    Deadline = viewModel.Deadline,
+            //    TotalAmount = decimal.Parse(viewModel.TotalAmountString.Replace(".", "")),
+            //    SalesInvoiceID = 0, //Default value will be replaced by actual value,
+            //    ProductionStatusID = 10, // 10 - New
+            //    MarkForDelete = false,
+            //    InsertBy = _userManager.GetUserName(User),
+            //    InsertTime = DateTime.Now
+            //};
 
-            await _salesOrderRepository.InsertAsync(salesOrder);
+            //var salesOrder = new SalesOrder { 
+            //    Id = 0,
+            //    Number = 
+            
+            
+            
+            //};
+
+           // var salesOrder = ObjectMapper.Map<SalesOrder>(input);
+
+          //  await _salesOrderRepository.InsertAsync(salesOrder);
         }
 
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Edit)]
@@ -177,6 +213,7 @@ namespace DDM.SalesOrders
                     DisplayName = material == null || material.Name == null ? "" : material.Name.ToString()
                 }).ToListAsync();
         }
+
 
     }
 }

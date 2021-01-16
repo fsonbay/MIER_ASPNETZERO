@@ -59,28 +59,17 @@ namespace DDM.Web.Areas.Portal.Controllers
             {
                 //Empty models
                 var salesOrder = new CreateOrEditSalesOrderDto();
-                var line1 = new SalesOrderLineDto
+                var templateLine = new CreateOrEditSalesOrderLineDto
                 {
-                    Name="line 1",
-                    Description = "desc line 1", 
-                    SalesOrderId = 1,
-                    MachineId = 1,
-                    MaterialId = 1
+                    Name="",
+                    Description = "", 
+                    SalesOrderId = 0,
+                    MachineId = 0,
+                    MaterialId = 0
                 };
 
-                var line2 = new SalesOrderLineDto
-                {
-                    Name = "line 2",
-                    Description = "desc line 2", 
-                    SalesOrderId = 1,
-                    MachineId = 1,
-                    MaterialId = 1
-
-                };
-
-                var salesOrderLines = new List<SalesOrderLineDto>();
-                salesOrderLines.Add(line1);
-                //salesOrderLines.Add(line2);
+                var salesOrderLines = new List<CreateOrEditSalesOrderLineDto>();
+                salesOrderLines.Add(templateLine);
 
                 salesOrder.SalesOrderLines = salesOrderLines;
 
