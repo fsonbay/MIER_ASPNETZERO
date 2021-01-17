@@ -21,7 +21,7 @@ namespace DDM.EntityFrameworkCore.Repositories
 
         public int CountCustomerOrder(int customerId)
         {
-            var count = GetAll().Where(c => c.Id == customerId).Count();
+            var count = GetAll().Where(c => c.CustomerId == customerId).Count();
             return count;
 
         }

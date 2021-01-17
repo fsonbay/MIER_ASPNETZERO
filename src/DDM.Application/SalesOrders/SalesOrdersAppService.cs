@@ -48,7 +48,7 @@ namespace DDM.SalesOrders
 
             var filteredSalesOrders = _salesOrderRepository.GetAll()
                         .Include(e => e.CustomerFk)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Number.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Number.Contains(input.Filter) || e.CustomerFk.Name.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NumberFilter), e => e.Number == input.NumberFilter)
                         .WhereIf(input.MinDateFilter != null, e => e.Date >= input.MinDateFilter)
                         .WhereIf(input.MaxDateFilter != null, e => e.Date <= input.MaxDateFilter)
@@ -155,16 +155,48 @@ namespace DDM.SalesOrders
             };
 
             //Iterate Sales Order Lines
-            var lineList = new List<SalesOrderLine>();
-            List<string> lineNames = new List<string>();
+            var  salesOrderLineList = new List<SalesOrderLine>();
+            List<string> salesOrderLineNames = new List<string>();
 
-            foreach (var salesOrderLine in input.SalesOrderLines.ToList())
+            foreach (var item in input.SalesOrderLines.ToList())
             {
                 //Create Sales Order Line
-                var markForDelete = salesOrderLine.MarkForDelete;
-                var name = salesOrderLine.Name;
+                var markForDelete = item.MarkForDelete;
+                var name = item.Name;
+
+                if (markForDelete)
+                {
+                    //Remove from collection
+                    input.SalesOrderLines.Remove(item);
+                }
+                else
+                {
+                    var salesOrderLine = new SalesOrderLine
+                    {
+                        Id = 0,
+                        Name = item.Name,
+                        Description = item.Description,
+                        Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
+                        UnitPrice = decimal.Parse(item.UnitPrice.Replace(".", "")),
+                        LineAmount = decimal.Parse(item.LineAmount.Replace(".", "")),
+                        MaterialId = item.MaterialId,
+                        MachineId = item.MachineId
+                    };
+
+                    //Add item to collection
+                    salesOrderLineList.Add(salesOrderLine);
+                    salesOrderLineNames.Add(item.Name);
+
+                }
+
             }
 
+            //Add collection to parent
+            salesOrder.SalesOrderLineNames = string.Join(", ", salesOrderLineNames);
+            salesOrder.SalesOrderLines = salesOrderLineList;
+
+            //Create Sales Order
+            int id = _salesOrderRepository.InsertAndGetId(salesOrder);
 
         }
 

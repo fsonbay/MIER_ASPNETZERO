@@ -92,7 +92,7 @@
                 }
 
                 //ID
-                if ($(this).hasClass("ID")) {
+                if ($(this).hasClass("Id")) {
                     $(this).val('0');
                 }
             });
@@ -120,6 +120,8 @@
             }
 
             var salesOrder = _$salesOrderInformationForm.toObject({ mode: 'first' });
+
+            
 
             _modalManager.setBusy(true);
 
@@ -182,7 +184,7 @@
             $(this).parents('.subcat-set').find('.mark-for-delete').val("true");
 
             //Check Id, if ID = 0 ==> new set, remove. else hide.
-            var id = $(this).parents('.subcat-set').find('.ID').val();
+            var id = $(this).parents('.subcat-set').find('.Id').val();
 
             if (id === '0') {
                 $(this).parents('.subcat-set').remove();
