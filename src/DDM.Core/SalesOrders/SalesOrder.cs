@@ -6,6 +6,7 @@ using Abp.Domain.Entities.Auditing;
 using Abp.Domain.Entities;
 using System.Collections.Generic;
 using DDM.SalesOrderLines;
+using DDM.ProductionStatuses;
 
 namespace DDM.SalesOrders
 {
@@ -26,7 +27,7 @@ namespace DDM.SalesOrders
         public List<SalesOrderLine> SalesOrderLines { get; set; }
 
         public int ProductionStatusId { get; set; }
-
+        public ProductionStatus ProductionStatus { get; set; }
 
         public virtual int CustomerId { get; set; }
         [ForeignKey("CustomerId")]

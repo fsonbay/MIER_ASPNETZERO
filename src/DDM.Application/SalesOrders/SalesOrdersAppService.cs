@@ -34,6 +34,7 @@ namespace DDM.SalesOrders
 
         public SalesOrdersAppService(SalesOrderRepository salesOrderRepository,
             SalesInvoiceRepository salesInvoiceRepository,
+
             IRepository<Customer, int> lookup_customerRepository,
             IRepository<Machine, int> lookup_machineRepository,
             IRepository<Material, int> lookup_materialRepository
@@ -105,8 +106,10 @@ namespace DDM.SalesOrders
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<GetSalesOrderForEditOutput> GetSalesOrderForEdit(EntityDto input)
         {
-            var salesOrder = await _salesOrderRepository.FirstOrDefaultAsync(input.Id);
+            //FS: Modify
 
+            var salesOrder = _salesOrderRepository.GetIncludes(input.Id);
+            //var t = _salesOrderRepository.test(input.Id);
 
             var output = new GetSalesOrderForEditOutput { SalesOrder = ObjectMapper.Map<CreateOrEditSalesOrderDto>(salesOrder) };
 
