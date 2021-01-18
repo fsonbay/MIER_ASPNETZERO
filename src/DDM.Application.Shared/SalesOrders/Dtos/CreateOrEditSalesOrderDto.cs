@@ -7,7 +7,6 @@ namespace DDM.SalesOrders.Dtos
 {
     public class CreateOrEditSalesOrderDto : EntityDto<int?>
     {
-
         public string Number { get; set; }
         public bool ProcessedBySurabaya { get; set; }
         public DateTime Date { get; set; }

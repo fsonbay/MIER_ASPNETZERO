@@ -1,4 +1,5 @@
-﻿using DDM.ProductionStatuses;
+﻿using DDM.SalesInvoices;
+using DDM.ProductionStatuses;
 using DDM.SalesOrderLines;
 using DDM.Machines;
 using DDM.Materials;
@@ -26,6 +27,8 @@ namespace DDM.EntityFrameworkCore
 {
     public class DDMDbContext : AbpZeroDbContext<Tenant, Role, User, DDMDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<SalesInvoice> SalesInvoices { get; set; }
+
         public virtual DbSet<ProductionStatus> ProductionStatuses { get; set; }
 
         public virtual DbSet<SalesOrderLine> SalesOrderLines { get; set; }

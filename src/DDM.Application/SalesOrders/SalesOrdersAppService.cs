@@ -18,26 +18,29 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using DDM.EntityFrameworkCore.Repositories;
 using DDM.SalesOrderLines;
+using DDM.SalesInvoices;
 
 namespace DDM.SalesOrders
 {
     [AbpAuthorize(AppPermissions.Pages_SalesOrders)]
     public class SalesOrdersAppService : DDMAppServiceBase, ISalesOrdersAppService
     {
-        //private readonly IRepository<SalesOrder> _salesOrderRepository;
         private readonly SalesOrderRepository _salesOrderRepository;
+        private readonly SalesInvoiceRepository _salesInvoiceRepository;
 
         private readonly IRepository<Customer, int> _lookup_customerRepository;
         private readonly IRepository<Machine, int> _lookup_machineRepository;
         private readonly IRepository<Material, int> _lookup_materialRepository;
 
         public SalesOrdersAppService(SalesOrderRepository salesOrderRepository,
+            SalesInvoiceRepository salesInvoiceRepository,
             IRepository<Customer, int> lookup_customerRepository,
             IRepository<Machine, int> lookup_machineRepository,
             IRepository<Material, int> lookup_materialRepository
             )
         {
             _salesOrderRepository = salesOrderRepository;
+            _salesInvoiceRepository = salesInvoiceRepository;
             _lookup_customerRepository = lookup_customerRepository;
             _lookup_machineRepository = lookup_machineRepository;
             _lookup_materialRepository = lookup_materialRepository;
@@ -188,7 +191,6 @@ namespace DDM.SalesOrders
                     salesOrderLineNames.Add(item.Name);
 
                 }
-
             }
 
             //Add collection to parent
@@ -196,8 +198,23 @@ namespace DDM.SalesOrders
             salesOrder.SalesOrderLines = salesOrderLineList;
 
             //Create Sales Order
-            int id = _salesOrderRepository.InsertAndGetId(salesOrder);
+            int newSalesOrderId = _salesOrderRepository.InsertAndGetId(salesOrder);
 
+            //Create Sales Invoice
+            var salesInvoice = new SalesInvoice
+            {
+                Number = salesOrder.Number.Substring(1),
+                Date = salesOrder.Date,
+                DueDate = salesOrder.Deadline,
+                SalesOrderId = newSalesOrderId,
+                Amount = salesOrder.Amount,
+                Paid = 0,
+                Outstanding = salesOrder.Amount,
+                SalesInvoiceLineNames = salesOrder.SalesOrderLineNames,
+                MarkForDelete = false
+            };
+
+            int newSalesInvoiceId = _salesInvoiceRepository.InsertAndGetId(salesInvoice);
         }
 
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Edit)]

@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>
+  <texts>    <text name="SalesInvoices">Sales invoices</text>
+    <text name="SalesInvoice">Sales invoice</text>
+    <text name="DDM.SalesInvoices.SalesInvoice">SalesInvoice</text>
+    <text name="Outstanding">Outstanding</text>
+    <text name="SalesInvoicesHeaderInfo">Sales invoices header info</text>
+    <text name="CreateNewSalesInvoice">Create new sales invoice</text>
+    <text name="EditSalesInvoice">Edit sales invoice</text>
+    <text name="DeleteSalesInvoice">Delete sales invoice</text>
+    <text name="SalesOrderNumber">Sales order number</text>
+    <text name="PickSalesOrder">Pick sales order</text>
+
     <text name="DDM.ProductionStatuses.ProductionStatus">ProductionStatus</text>
     <text name="ProductionStatusesHeaderInfo">Production statuses header info</text>
     <text name="ProductionStatuses">Production statuses</text>
@@ -38,7 +48,7 @@
     <text name="DeleteSalesOrder">Delete sales order</text>
     <text name="CustomerName">Customer name</text>
     <text name="PickCustomer">Pick customer</text>
-    <text name="DueDateRange">Due date range</text>
+    <text name="DeadlineRange">Deadline range</text>
     <text name="VendorCategoryName">Vendor category name</text>
     <text name="PickVendorCategory">Pick vendor category</text>
     <text name="VendorCategories">Vendor categories</text>

@@ -1,0 +1,48 @@
+﻿@using DDM.Authorization
+@using DDM.Web.Areas.Portal.Models.SalesInvoices
+@using DDM.Web.Areas.Portal.Startup
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@model SalesInvoiceSalesOrderLookupTableViewModel
+
+@section Scripts
+    {
+    <script abp-src="/view-resources/Areas/Portal/Views/SalesInvoices/_SalesInvoiceSalesOrderLookupTableModal.js" asp-append-version="true"></script>
+}
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("PickSalesOrder")))
+
+
+
+<div class="@(await GetContainerClass())">
+    <div class="card card-custom gutter-b">
+        <div class="card-body">
+            <div class="form">
+                <div class="row align-items-center mb-4">
+                    <div class="col-xl-12">
+                        <div class="kt-group align-items-center">
+                            <div class="input-group">
+                                <input type="text" id="SalesOrderTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                <span class="input-group-btn">
+                                    <button id="GetSalesOrderButton" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <table id="SalesOrderTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>@L("Actions")</th>
+                            <th>@L("Number")</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithClose.cshtml")

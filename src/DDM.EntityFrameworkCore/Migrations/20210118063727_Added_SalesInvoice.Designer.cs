@@ -4,14 +4,16 @@ using DDM.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DDM.Migrations
 {
     [DbContext(typeof(DDMDbContext))]
-    partial class DDMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210118063727_Added_SalesInvoice")]
+    partial class Added_SalesInvoice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2092,11 +2094,8 @@ namespace DDM.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("MarkForDelete")
-                        .HasColumnType("bit");
+                    b.Property<string>("DueDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Number")
                         .IsRequired()
@@ -2107,9 +2106,6 @@ namespace DDM.Migrations
 
                     b.Property<decimal>("Paid")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("SalesInvoiceLineNames")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SalesOrderId")
                         .HasColumnType("int");

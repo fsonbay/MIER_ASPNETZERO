@@ -23,6 +23,14 @@ namespace DDM.Web.Areas.Portal.Startup
                     )
                 )
                 .AddItem(new MenuItemDefinition(
+                        PortalPageNames.Common.SalesInvoices,
+                        L("SalesInvoices"),
+                        url: "Portal/SalesInvoices",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_SalesInvoices)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
                         PortalPageNames.Common.Machines,
                         L("Machines"),
                         url: "Portal/Machines",

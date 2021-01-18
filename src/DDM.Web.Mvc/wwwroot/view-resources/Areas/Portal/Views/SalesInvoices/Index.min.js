@@ -1,8 +1,8 @@
 ﻿(function () {
     $(function () {
 
-        var _$salesOrdersTable = $('#SalesOrdersTable');
-        var _salesOrdersService = abp.services.app.salesOrders;
+        var _$salesInvoicesTable = $('#SalesInvoicesTable');
+        var _salesInvoicesService = abp.services.app.salesInvoices;
 		
         $('.date-picker').datetimepicker({
             locale: abp.localization.currentLanguage.name,
@@ -10,21 +10,21 @@
         });
 
         var _permissions = {
-            create: abp.auth.hasPermission('Pages.SalesOrders.Create'),
-            edit: abp.auth.hasPermission('Pages.SalesOrders.Edit'),
-            'delete': abp.auth.hasPermission('Pages.SalesOrders.Delete')
+            create: abp.auth.hasPermission('Pages.SalesInvoices.Create'),
+            edit: abp.auth.hasPermission('Pages.SalesInvoices.Edit'),
+            'delete': abp.auth.hasPermission('Pages.SalesInvoices.Delete')
         };
 
          var _createOrEditModal = new app.ModalManager({
-                    viewUrl: abp.appPath + 'Portal/SalesOrders/CreateOrEditModal',
-                    scriptUrl: abp.appPath + 'view-resources/Areas/Portal/Views/SalesOrders/_CreateOrEditModal.js',
-                    modalClass: 'CreateOrEditSalesOrderModal'
+                    viewUrl: abp.appPath + 'Portal/SalesInvoices/CreateOrEditModal',
+                    scriptUrl: abp.appPath + 'view-resources/Areas/Portal/Views/SalesInvoices/_CreateOrEditModal.js',
+                    modalClass: 'CreateOrEditSalesInvoiceModal'
                 });
                    
 
-		 var _viewSalesOrderModal = new app.ModalManager({
-            viewUrl: abp.appPath + 'Portal/SalesOrders/ViewsalesOrderModal',
-            modalClass: 'ViewSalesOrderModal'
+		 var _viewSalesInvoiceModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'Portal/SalesInvoices/ViewsalesInvoiceModal',
+            modalClass: 'ViewSalesInvoiceModal'
         });
 
 		
@@ -44,21 +44,26 @@
             return element.data("DateTimePicker").date().format("YYYY-MM-DDT23:59:59Z"); 
         }
 
-        var dataTable = _$salesOrdersTable.DataTable({
+        var dataTable = _$salesInvoicesTable.DataTable({
             paging: true,
             serverSide: true,
             processing: true,
             listAction: {
-                ajaxFunction: _salesOrdersService.getAll,
+                ajaxFunction: _salesInvoicesService.getAll,
                 inputFilter: function () {
                     return {
-					filter: $('#SalesOrdersTableFilter').val(),
+					filter: $('#SalesInvoicesTableFilter').val(),
 					numberFilter: $('#NumberFilterId').val(),
 					minDateFilter:  getDateFilter($('#MinDateFilterId')),
 					maxDateFilter:  getMaxDateFilter($('#MaxDateFilterId')),
-                    minDeadlineFilter: getDateFilter($('#MinDeadlineFilterId')),
-                    maxDeadlineFilter: getMaxDateFilter($('#MaxDeadlineFilterId')),
-					customerNameFilter: $('#CustomerNameFilterId').val()
+					dueDateFilter: $('#DueDateFilterId').val(),
+					minAmountFilter: $('#MinAmountFilterId').val(),
+					maxAmountFilter: $('#MaxAmountFilterId').val(),
+					minPaidFilter: $('#MinPaidFilterId').val(),
+					maxPaidFilter: $('#MaxPaidFilterId').val(),
+					minOutstandingFilter: $('#MinOutstandingFilterId').val(),
+					maxOutstandingFilter: $('#MaxOutstandingFilterId').val(),
+					salesOrderNumberFilter: $('#SalesOrderNumberFilterId').val()
                     };
                 }
             },
@@ -86,7 +91,7 @@
                                 text: app.localize('View'),
                                 iconStyle: 'far fa-eye mr-2',
                                 action: function (data) {
-                                    _viewSalesOrderModal.open({ id: data.record.salesOrder.id });
+                                    _viewSalesInvoiceModal.open({ id: data.record.salesInvoice.id });
                                 }
                         },
 						{
@@ -96,7 +101,7 @@
                                 return _permissions.edit;
                             },
                             action: function (data) {
-                            _createOrEditModal.open({ id: data.record.salesOrder.id });                                
+                            _createOrEditModal.open({ id: data.record.salesInvoice.id });                                
                             }
                         }, 
 						{
@@ -106,19 +111,19 @@
                                 return _permissions.delete;
                             },
                             action: function (data) {
-                                deleteSalesOrder(data.record.salesOrder);
+                                deleteSalesInvoice(data.record.salesInvoice);
                             }
                         }]
                     }
                 },
 					{
 						targets: 2,
-						 data: "salesOrder.number",
+						 data: "salesInvoice.number",
 						 name: "number"   
 					},
 					{
 						targets: 3,
-						 data: "salesOrder.date",
+						 data: "salesInvoice.date",
 						 name: "date" ,
 					render: function (date) {
 						if (date) {
@@ -130,38 +135,46 @@
 					},
 					{
 						targets: 4,
-						 data: "salesOrder.deadline",
-                        name: "deadline" ,
-					render: function (deadline) {
-                        if (deadline) {
-                            return moment(deadline).format('L');
-						}
-						return "";
-					}
-			  
+						 data: "salesInvoice.dueDate",
+						 name: "dueDate"   
 					},
 					{
 						targets: 5,
-						 data: "customerName" ,
-						 name: "customerFk.name" 
+						 data: "salesInvoice.amount",
+						 name: "amount"   
+					},
+					{
+						targets: 6,
+						 data: "salesInvoice.paid",
+						 name: "paid"   
+					},
+					{
+						targets: 7,
+						 data: "salesInvoice.outstanding",
+						 name: "outstanding"   
+					},
+					{
+						targets: 8,
+						 data: "salesOrderNumber" ,
+						 name: "salesOrderFk.number" 
 					}
             ]
         });
 
-        function getSalesOrders() {
+        function getSalesInvoices() {
             dataTable.ajax.reload();
         }
 
-        function deleteSalesOrder(salesOrder) {
+        function deleteSalesInvoice(salesInvoice) {
             abp.message.confirm(
                 '',
                 app.localize('AreYouSure'),
                 function (isConfirmed) {
                     if (isConfirmed) {
-                        _salesOrdersService.delete({
-                            id: salesOrder.id
+                        _salesInvoicesService.delete({
+                            id: salesInvoice.id
                         }).done(function () {
-                            getSalesOrders(true);
+                            getSalesInvoices(true);
                             abp.notify.success(app.localize('SuccessfullyDeleted'));
                         });
                     }
@@ -181,24 +194,24 @@
             $('#AdvacedAuditFiltersArea').slideUp();
         });
 
-        $('#CreateNewSalesOrderButton').click(function () {
+        $('#CreateNewSalesInvoiceButton').click(function () {
             _createOrEditModal.open();
         });        
 
 		
 
-        abp.event.on('app.createOrEditSalesOrderModalSaved', function () {
-            getSalesOrders();
+        abp.event.on('app.createOrEditSalesInvoiceModalSaved', function () {
+            getSalesInvoices();
         });
 
-		$('#GetSalesOrdersButton').click(function (e) {
+		$('#GetSalesInvoicesButton').click(function (e) {
             e.preventDefault();
-            getSalesOrders();
+            getSalesInvoices();
         });
 
 		$(document).keypress(function(e) {
 		  if(e.which === 13) {
-			getSalesOrders();
+			getSalesInvoices();
 		  }
 		});
 		

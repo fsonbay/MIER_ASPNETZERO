@@ -252,8 +252,7 @@
                     var parent = $(this).parents('.subcat-set');
                     if (parent.is(':visible')) {
                         sum += parseFloat(lineAmount);
-                        $(this).css("background-color", "#E0E0E0");
-                        $(this).css("color", "#003300");
+                        $(this).addClass("bg-secondary");
                     }
                 }
                 else if (lineAmount.length !== 0) {
@@ -263,8 +262,7 @@
 
             var totalAmount = addSeparatorsNF(sum.toFixed(0), '.', ',', '.');
             $("#Amount").val(totalAmount);
-            $("#Amount").css("background-color", "#E0E0E0");
-            $("#Amount").css("color", "#003300");
+            $("#Amount").addClass("bg-secondary font-weight-bold");
         }
         function buttonVisibility() {
 

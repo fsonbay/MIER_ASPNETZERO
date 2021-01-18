@@ -1,4 +1,6 @@
-﻿using DDM.ProductionStatuses.Dtos;
+﻿using DDM.SalesInvoices.Dtos;
+using DDM.SalesInvoices;
+using DDM.ProductionStatuses.Dtos;
 using DDM.ProductionStatuses;
 using DDM.SalesOrderLines;
 using DDM.Machines.Dtos;
@@ -64,6 +66,8 @@ namespace DDM
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditSalesInvoiceDto, SalesInvoice>().ReverseMap();
+            configuration.CreateMap<SalesInvoiceDto, SalesInvoice>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductionStatusDto, ProductionStatus>().ReverseMap();
             configuration.CreateMap<ProductionStatusDto, ProductionStatus>().ReverseMap();
             configuration.CreateMap<CreateOrEditMachineDto, Machine>().ReverseMap();

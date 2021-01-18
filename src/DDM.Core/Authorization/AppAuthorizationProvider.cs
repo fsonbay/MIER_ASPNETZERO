@@ -30,6 +30,11 @@ namespace DDM.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var salesInvoices = pages.CreateChildPermission(AppPermissions.Pages_SalesInvoices, L("SalesInvoices"));
+            salesInvoices.CreateChildPermission(AppPermissions.Pages_SalesInvoices_Create, L("CreateNewSalesInvoice"));
+            salesInvoices.CreateChildPermission(AppPermissions.Pages_SalesInvoices_Edit, L("EditSalesInvoice"));
+            salesInvoices.CreateChildPermission(AppPermissions.Pages_SalesInvoices_Delete, L("DeleteSalesInvoice"));
+
             var productionStatuses = pages.CreateChildPermission(AppPermissions.Pages_ProductionStatuses, L("ProductionStatuses"));
             productionStatuses.CreateChildPermission(AppPermissions.Pages_ProductionStatuses_Create, L("CreateNewProductionStatus"));
             productionStatuses.CreateChildPermission(AppPermissions.Pages_ProductionStatuses_Edit, L("EditProductionStatus"));

@@ -20,9 +20,7 @@ namespace DDM.SalesOrders
         public virtual DateTime Deadline { get; set; }
         public decimal Amount { get; set; }
 
-
         public bool? MarkForDelete { get; set; }
-
 
         public string SalesOrderLineNames { get; set; }
         public List<SalesOrderLine> SalesOrderLines { get; set; }

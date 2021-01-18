@@ -1,0 +1,79 @@
+﻿
+@using System.Globalization
+@using DDM.Web.Areas.Portal.Models.Common.Modals
+@using DDM.Web.Areas.Portal.Models.SalesInvoices
+@model CreateOrEditSalesInvoiceModalViewModel
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditSalesInvoice")) : L("CreateNewSalesInvoice")))
+
+<div class="modal-body">
+        <div id="SalesInvoiceInformationsTab">
+            <form name="SalesInvoiceInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.SalesInvoice.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="SalesOrderNumber">@L("SalesOrder")</label>
+									    <div class="input-group">
+											<input class="form-control" id="SalesOrderNumber" name="salesOrderNumber" value="@Model.SalesOrderNumber" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenSalesOrderLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearSalesOrderNumberButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="SalesInvoice_SalesOrderId" value="@Model.SalesInvoice.SalesOrderId" type="text" name="salesOrderId" required hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="SalesInvoice_SalesOrderId" value="" type="text" name="salesOrderId" required hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="SalesInvoice_Number">@L("Number")</label>
+									<input class="form-control" id="SalesInvoice_Number" value="@Model.SalesInvoice.Number" type="text" name="number"  required    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SalesInvoice_Date">@L("Date")</label>
+									<input class="form-control m-input date-picker" id="SalesInvoice_Date" type="text" name="date" value="@Model.SalesInvoice.Date"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="SalesInvoice_DueDate">@L("DueDate")</label>
+									<input class="form-control" id="SalesInvoice_DueDate" value="@Model.SalesInvoice.DueDate" type="text" name="dueDate"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="SalesInvoice_Amount">@L("Amount")</label>
+									<input class="form-control m-input" id="SalesInvoice_Amount" value="@Model.SalesInvoice.Amount.ToString(CultureInfo.InvariantCulture)" type="number" name="amount"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="SalesInvoice_Paid">@L("Paid")</label>
+									<input class="form-control m-input" id="SalesInvoice_Paid" value="@Model.SalesInvoice.Paid.ToString(CultureInfo.InvariantCulture)" type="number" name="paid"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="SalesInvoice_Outstanding">@L("Outstanding")</label>
+									<input class="form-control m-input" id="SalesInvoice_Outstanding" value="@Model.SalesInvoice.Outstanding.ToString(CultureInfo.InvariantCulture)" type="number" name="outstanding"  />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

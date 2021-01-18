@@ -45,8 +45,9 @@ namespace DDM.Web.Areas.Portal.Controllers
                 getSalesOrderForEditOutput = await _salesOrdersAppService.GetSalesOrderForEdit(new EntityDto { Id = (int)id });
 
 
+
                 //TODO : GET LINES BASED ON ORDER ID
-                //getSalesOrderLineForEditOutput
+               //getSalesOrderLineForEditOutput
 
                 //getSalesOrderLineForEditOutput = new GetSalesOrderLineForEditOutput
                 //{
@@ -78,25 +79,7 @@ namespace DDM.Web.Areas.Portal.Controllers
                     SalesOrder = salesOrder
                 };
 
-
-                ////TODO : CREATE NEW LINE LIST WITH DEFAULT VALUES including material and machine selection list
-                //var orderLine = new CreateOrEditSalesOrderLineDto();
-                //orderLine.Id = 0;
-                //orderLine.Name = "";
-                //orderLine.Description = "";
-
-                //orderLine.MachineList = await _salesOrderLinesAppService.GetAllMachineForTableDropdown();
-                //orderLine.MaterialList = await _salesOrderLinesAppService.GetAllMaterialForTableDropdown();
-
-                //getSalesOrderLineForEditOutput = new GetSalesOrderLineForEditOutput
-                //{
-                //    SalesOrderLines = new List<CreateOrEditSalesOrderLineDto>()
-                //};
-
-                //getSalesOrderLineForEditOutput.SalesOrderLines.Add(orderLine);
-
             }
-
 
             var viewModel = new CreateOrEditSalesOrderModalViewModel()
             {
