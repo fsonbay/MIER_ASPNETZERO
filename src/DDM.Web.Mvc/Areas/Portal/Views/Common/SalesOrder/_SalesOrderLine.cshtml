@@ -8,12 +8,12 @@
     <div class="col-2">
         <label for="SalesOrderLines_Name">@L("Name")</label>
         <textarea id="SalesOrderLines[0]_Name" name="SalesOrderLines[0].Name" value="@item.Name" type="text" class="form-control"
-                    minlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MinNameLength" maxlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MaxNameLength" required/>
+                  minlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MinNameLength" maxlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MaxNameLength" required>@item.Name</textarea>
     </div>
     <div class="col-3">
         <label for="SalesOrderLines_Description">@L("Description")</label>
         <textarea id="SalesOrderLines[0]_Description" name="SalesOrderLines[0].Description" value="@item.Description" type="text" class="form-control"
-                  minlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MinDescriptionLength" maxlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MaxDescriptionLength" />
+                  minlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MinDescriptionLength" maxlength="@DDM.SalesOrderLines.SalesOrderLineConsts.MaxDescriptionLength">@item.Description</textarea>
     </div>
     <div class="col-1">
         <label for="SalesOrderLines_Material">@L("Material")</label>

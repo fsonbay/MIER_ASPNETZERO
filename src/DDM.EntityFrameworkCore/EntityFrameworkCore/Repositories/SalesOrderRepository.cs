@@ -13,8 +13,9 @@ namespace DDM.EntityFrameworkCore.Repositories
     public interface ISalesOrderRepository : IRepository<SalesOrder, int>
     {
         int CountCustomerOrder(int customerId);
-
+        SalesOrder GetIncludes(int salesOrderId);
     }
+
     public class SalesOrderRepository : DDMRepositoryBase<SalesOrder, int>, ISalesOrderRepository
     {
         private readonly IDbContextProvider<DDMDbContext> _dbContextProvider;
@@ -25,6 +26,14 @@ namespace DDM.EntityFrameworkCore.Repositories
         {
             _dbContextProvider = dbContextProvider;
         }
+
+        //TEST CONTEXT USAGE
+        //public SalesOrder test(int id)
+        //{
+        //    return _ctx.SalesOrders
+        //        .Where(p => p.Id == id)
+        //        .FirstOrDefault();
+        //}
 
         public int CountCustomerOrder(int customerId)
         {
@@ -42,12 +51,10 @@ namespace DDM.EntityFrameworkCore.Repositories
                 .FirstOrDefault();
         }
 
-        //public SalesOrder test(int id)
-        //{
-        //    return _ctx.SalesOrders
-        //        .Where(p => p.Id == id)
-        //        .FirstOrDefault();
-        //}
+        public void Update()
+        { 
+        }
+
 
     }
 }

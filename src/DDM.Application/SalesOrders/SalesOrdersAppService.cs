@@ -27,6 +27,7 @@ namespace DDM.SalesOrders
     {
         private readonly SalesOrderRepository _salesOrderRepository;
         private readonly SalesInvoiceRepository _salesInvoiceRepository;
+        private readonly SalesOrderLineRepository _salesOrderLineRepository;
 
         private readonly IRepository<Customer, int> _lookup_customerRepository;
         private readonly IRepository<Machine, int> _lookup_machineRepository;
@@ -34,7 +35,7 @@ namespace DDM.SalesOrders
 
         public SalesOrdersAppService(SalesOrderRepository salesOrderRepository,
             SalesInvoiceRepository salesInvoiceRepository,
-
+            SalesOrderLineRepository salesOrderLineRepository,
             IRepository<Customer, int> lookup_customerRepository,
             IRepository<Machine, int> lookup_machineRepository,
             IRepository<Material, int> lookup_materialRepository
@@ -42,6 +43,7 @@ namespace DDM.SalesOrders
         {
             _salesOrderRepository = salesOrderRepository;
             _salesInvoiceRepository = salesInvoiceRepository;
+            _salesOrderLineRepository = salesOrderLineRepository;
             _lookup_customerRepository = lookup_customerRepository;
             _lookup_machineRepository = lookup_machineRepository;
             _lookup_materialRepository = lookup_materialRepository;
@@ -106,12 +108,44 @@ namespace DDM.SalesOrders
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<GetSalesOrderForEditOutput> GetSalesOrderForEdit(EntityDto input)
         {
-            //FS: Modify
-
             var salesOrder = _salesOrderRepository.GetIncludes(input.Id);
-            //var t = _salesOrderRepository.test(input.Id);
 
-            var output = new GetSalesOrderForEditOutput { SalesOrder = ObjectMapper.Map<CreateOrEditSalesOrderDto>(salesOrder) };
+            var createOrEditSalesOrderDto = new CreateOrEditSalesOrderDto
+            {
+                Id = salesOrder.Id,
+                Number = salesOrder.Number,
+                ProcessedBySurabaya = salesOrder.ProcessedBySurabaya,
+                Date = salesOrder.Date,
+                Deadline = salesOrder.Deadline,
+                Amount = salesOrder.Amount.ToString("N0"),
+                CustomerId = salesOrder.CustomerId
+            };
+
+            var createOrEditSalesOrderLineDtoList = new List<CreateOrEditSalesOrderLineDto>();
+
+            foreach(var salesOrderLine in salesOrder.SalesOrderLines.ToList())
+            {
+                var createOrEditSalesOrderLineDto = new CreateOrEditSalesOrderLineDto
+                {
+                    Id = salesOrderLine.Id,
+                    Name = salesOrderLine.Name,
+                    Description = salesOrderLine.Description,
+                    MaterialId = salesOrderLine.MaterialId,
+                    MachineId = salesOrderLine.MachineId,
+                    Quantity = salesOrderLine.Quantity.ToString("N0"),
+                    UnitPrice = salesOrderLine.UnitPrice.ToString("N0"),
+                    LineAmount = salesOrderLine.LineAmount.ToString("N0"),
+                    MarkForDelete = false
+                };
+
+                //Add createOrEditSalesOrderLineDto to list
+                createOrEditSalesOrderLineDtoList.Add(createOrEditSalesOrderLineDto);
+            };
+
+            //Assign line list to nested SalesOrderLines 
+            createOrEditSalesOrderDto.SalesOrderLines = createOrEditSalesOrderLineDtoList;
+
+            var output = new GetSalesOrderForEditOutput { SalesOrder = createOrEditSalesOrderDto };
 
 
             if (output.SalesOrder.CustomerId != null)
@@ -217,14 +251,80 @@ namespace DDM.SalesOrders
                 MarkForDelete = false
             };
 
-            int newSalesInvoiceId = _salesInvoiceRepository.InsertAndGetId(salesInvoice);
+            int newSalesInvoiceId = await _salesInvoiceRepository.InsertAndGetIdAsync(salesInvoice);
         }
 
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Edit)]
         protected virtual async Task Update(CreateOrEditSalesOrderDto input)
         {
-            var salesOrder = await _salesOrderRepository.FirstOrDefaultAsync((int)input.Id);
-            ObjectMapper.Map(input, salesOrder);
+
+            var salesOrder = _salesOrderRepository.Get((int)input.Id);
+            salesOrder.Amount = 666;
+
+            //var salesOrder = new SalesOrder
+            //{
+            //    Id = (int)input.Id,
+            //    Number = input.Number,
+            //    ProcessedBySurabaya = input.ProcessedBySurabaya,
+            //    CustomerId = input.CustomerId,
+            //    Date = input.Date,
+            //    Deadline = input.Deadline,
+            //    Amount = decimal.Parse(input.Amount.Replace(".", "")),
+            //    ProductionStatusId = 10, // 10 - New
+            //    MarkForDelete = false
+            //};
+
+            ////Iterate Sales Order Lines
+            //var salesOrderLineList = new List<SalesOrderLine>();
+            //List<string> salesOrderLineNames = new List<string>();
+
+            //foreach (var item in input.SalesOrderLines.ToList())
+            //{
+            //    var id = (int)item.Id;
+            //    var markForDelete = item.MarkForDelete;
+            //    var name = item.Name;
+
+            //    if (markForDelete)
+            //    {
+            //        //Existing item
+            //        if (id != 0)
+            //        {
+            //            //Delete from database
+            //            var deleteItem = _salesOrderLineRepository.Get(id);
+            //            await _salesOrderLineRepository.DeleteAsync(id);
+            //        }
+
+            //        //Remove from collection
+            //        input.SalesOrderLines.Remove(item);
+            //    }
+            //    else
+            //    {
+            //        var salesOrderLine = new SalesOrderLine
+            //        {
+            //            Id = (int)item.Id,
+            //            Name = item.Name,
+            //            Description = item.Description,
+            //            Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
+            //            UnitPrice = decimal.Parse(item.UnitPrice.Replace(".", "")),
+            //            LineAmount = decimal.Parse(item.LineAmount.Replace(".", "")),
+            //            SalesOrderId = salesOrder.Id,
+            //            MaterialId = item.MaterialId,
+            //            MachineId = item.MachineId
+            //        };
+
+            //        //ADD SUB TO COLLECTION
+            //        salesOrderLineNames.Add(item.Name);
+            //        salesOrderLineList.Add(salesOrderLine);
+            //    }
+            //}
+
+            ////ADD SUBS TO PARENT
+            //salesOrder.SalesOrderLineNames = string.Join(", ", salesOrderLineNames);
+            //salesOrder.SalesOrderLines = salesOrderLineList;
+
+            ////Update
+            //_salesOrderRepository.Update(salesOrder);
+
         }
 
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Delete)]
