@@ -14,17 +14,16 @@ namespace DDM.EntityFrameworkCore.Repositories
     {
         int CountCustomerOrder(int customerId);
 
-
     }
     public class SalesOrderRepository : DDMRepositoryBase<SalesOrder, int>, ISalesOrderRepository
     {
-        //private readonly IDbContextProvider<DDMDbContext> _dbContextProvider;
-        //private DDMDbContext _ctx => _dbContextProvider.GetDbContext();
+        private readonly IDbContextProvider<DDMDbContext> _dbContextProvider;
+        private DDMDbContext _ctx => _dbContextProvider.GetDbContext();
 
         public SalesOrderRepository(IDbContextProvider<DDMDbContext> dbContextProvider)
               : base(dbContextProvider)
         {
-            //_dbContextProvider = dbContextProvider;
+            _dbContextProvider = dbContextProvider;
         }
 
         public int CountCustomerOrder(int customerId)
