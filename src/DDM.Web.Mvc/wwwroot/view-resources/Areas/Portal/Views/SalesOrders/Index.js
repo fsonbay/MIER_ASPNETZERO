@@ -21,14 +21,10 @@
             modalClass: 'CreateOrEditSalesOrderModal'
         });
 
-
         var _viewSalesOrderModal = new app.ModalManager({
             viewUrl: abp.appPath + 'Portal/SalesOrders/ViewsalesOrderModal',
             modalClass: 'ViewSalesOrderModal'
         });
-
-
-
 
         var getDateFilter = function (element) {
             if (element.data("DateTimePicker").date() == null) {
@@ -156,7 +152,7 @@
                 {
                     targets: 8,
                     data: null,
-                    defaultContent: "<button class='btn btn-brand'>Edit Status</button>"
+                    defaultContent: "<button id='OpenProductionStatus' class='btn btn-outline-primary'>Edit Status</button>"
                 }
 
             ]
@@ -164,9 +160,19 @@
 
         $('#SalesOrdersTable tbody').on('click', 'button', function () {
             alert(1);
-            //var data = table.row($(this).parents('tr')).data();
-            //alert(data[0] + "'s salary is: " + data[5]);
+            var data = dataTable.row($(this).parents('tr')).data();
+            alert(data[1] + "'s salary is: " + data[5]);
         });
+
+        //$('#OpenSalesOrderLookupTableButton').click(function () {
+
+        //    var salesInvoice = _$salesInvoiceInformationForm.serializeFormToObject();
+
+        //    _SalesInvoicesalesOrderLookupTableModal.open({ id: salesInvoice.salesOrderId, displayName: salesInvoice.salesOrderNumber }, function (data) {
+        //        _$salesInvoiceInformationForm.find('input[name=salesOrderNumber]').val(data.displayName);
+        //        _$salesInvoiceInformationForm.find('input[name=salesOrderId]').val(data.id);
+        //    });
+        //});
 
         function getSalesOrders() {
             dataTable.ajax.reload();
@@ -204,8 +210,6 @@
         $('#CreateNewSalesOrderButton').click(function () {
             _createOrEditModal.open();
         });
-
-
 
         abp.event.on('app.createOrEditSalesOrderModalSaved', function () {
             getSalesOrders();
