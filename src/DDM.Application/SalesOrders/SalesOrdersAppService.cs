@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using DDM.EntityFrameworkCore.Repositories;
 using DDM.SalesOrderLines;
 using DDM.SalesInvoices;
+using System.Globalization;
 
 namespace DDM.SalesOrders
 {
@@ -51,11 +52,12 @@ namespace DDM.SalesOrders
 
         public async Task<PagedResultDto<GetSalesOrderForViewDto>> GetAll(GetAllSalesOrdersInput input)
         {
-
             var filteredSalesOrders = _salesOrderRepository.GetAll()
                         .Include(e => e.CustomerFk)
+                        .Include(s => s.ProductionStatusFK)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Number.Contains(input.Filter) || e.CustomerFk.Name.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NumberFilter), e => e.Number == input.NumberFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.NotesFilter), e => e.Number == input.NotesFilter)
                         .WhereIf(input.MinDateFilter != null, e => e.Date >= input.MinDateFilter)
                         .WhereIf(input.MaxDateFilter != null, e => e.Date <= input.MaxDateFilter)
                         .WhereIf(input.MinDeadlineFilter != null, e => e.Deadline >= input.MinDeadlineFilter)
@@ -67,19 +69,19 @@ namespace DDM.SalesOrders
                 .PageBy(input);
 
             var salesOrders = from o in pagedAndFilteredSalesOrders
-                              join o1 in _lookup_customerRepository.GetAll() on o.CustomerId equals o1.Id into j1
-                              from s1 in j1.DefaultIfEmpty()
-
                               select new GetSalesOrderForViewDto()
                               {
                                   SalesOrder = new SalesOrderDto
                                   {
+                                      Id = o.Id,
                                       Number = o.Number,
                                       Date = o.Date,
                                       Deadline = o.Deadline,
-                                      Id = o.Id
+                                      Notes = o.Notes
                                   },
-                                  CustomerName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
+
+                                  CustomerName = o.CustomerFk.Name,
+                                  ProductionStatus = o.ProductionStatusFK.Name
                               };
 
             var totalCount = await filteredSalesOrders.CountAsync();
@@ -117,7 +119,7 @@ namespace DDM.SalesOrders
                 ProcessedBySurabaya = salesOrder.ProcessedBySurabaya,
                 Date = salesOrder.Date,
                 Deadline = salesOrder.Deadline,
-                Amount = salesOrder.Amount.ToString("N0"),
+                Amount = salesOrder.Amount.ToString("N0", new CultureInfo("id")),
                 CustomerId = salesOrder.CustomerId
             };
 
@@ -132,9 +134,9 @@ namespace DDM.SalesOrders
                     Description = salesOrderLine.Description,
                     MaterialId = salesOrderLine.MaterialId,
                     MachineId = salesOrderLine.MachineId,
-                    Quantity = salesOrderLine.Quantity.ToString("N0"),
-                    UnitPrice = salesOrderLine.UnitPrice.ToString("N0"),
-                    LineAmount = salesOrderLine.LineAmount.ToString("N0"),
+                    Quantity = salesOrderLine.Quantity.ToString("N0", new CultureInfo("id")),
+                    UnitPrice = salesOrderLine.UnitPrice.ToString("N0", new CultureInfo("id")),
+                    LineAmount = salesOrderLine.LineAmount.ToString("N0", new CultureInfo("id")),
                     MarkForDelete = false
                 };
 
@@ -257,71 +259,67 @@ namespace DDM.SalesOrders
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Edit)]
         protected virtual async Task Update(CreateOrEditSalesOrderDto input)
         {
-
             var salesOrder = _salesOrderRepository.Get((int)input.Id);
-            salesOrder.Amount = 666;
 
-            //var salesOrder = new SalesOrder
-            //{
-            //    Id = (int)input.Id,
-            //    Number = input.Number,
-            //    ProcessedBySurabaya = input.ProcessedBySurabaya,
-            //    CustomerId = input.CustomerId,
-            //    Date = input.Date,
-            //    Deadline = input.Deadline,
-            //    Amount = decimal.Parse(input.Amount.Replace(".", "")),
-            //    ProductionStatusId = 10, // 10 - New
-            //    MarkForDelete = false
-            //};
+            //Iterate Sales Order Lines
+            var salesOrderLineList = new List<SalesOrderLine>();
+            List<string> salesOrderLineNames = new List<string>();
 
-            ////Iterate Sales Order Lines
-            //var salesOrderLineList = new List<SalesOrderLine>();
-            //List<string> salesOrderLineNames = new List<string>();
+            foreach (var item in input.SalesOrderLines.ToList())
+            {
+                var id = (int)item.Id;
+                var markForDelete = item.MarkForDelete;
+                var name = item.Name;
 
-            //foreach (var item in input.SalesOrderLines.ToList())
-            //{
-            //    var id = (int)item.Id;
-            //    var markForDelete = item.MarkForDelete;
-            //    var name = item.Name;
+                if (markForDelete)
+                {
+                    //Existing item
+                    if (id != 0)
+                    {
+                        //Delete from database
+                        var deleteItem = _salesOrderLineRepository.Get(id);
+                        await _salesOrderLineRepository.DeleteAsync(id);
+                    }
 
-            //    if (markForDelete)
-            //    {
-            //        //Existing item
-            //        if (id != 0)
-            //        {
-            //            //Delete from database
-            //            var deleteItem = _salesOrderLineRepository.Get(id);
-            //            await _salesOrderLineRepository.DeleteAsync(id);
-            //        }
+                    //Remove from collection
+                    input.SalesOrderLines.Remove(item);
+                }
+                else
+                {
+                    var salesOrderLine = new SalesOrderLine
+                    {
+                        Id = (int)item.Id,
+                        Name = item.Name,
+                        Description = item.Description,
+                        Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
+                        UnitPrice = decimal.Parse(item.UnitPrice.Replace(".", "")),
+                        LineAmount = decimal.Parse(item.LineAmount.Replace(".", "")),
+                        SalesOrderId = salesOrder.Id,
+                        MaterialId = item.MaterialId,
+                        MachineId = item.MachineId
+                    };
 
-            //        //Remove from collection
-            //        input.SalesOrderLines.Remove(item);
-            //    }
-            //    else
-            //    {
-            //        var salesOrderLine = new SalesOrderLine
-            //        {
-            //            Id = (int)item.Id,
-            //            Name = item.Name,
-            //            Description = item.Description,
-            //            Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
-            //            UnitPrice = decimal.Parse(item.UnitPrice.Replace(".", "")),
-            //            LineAmount = decimal.Parse(item.LineAmount.Replace(".", "")),
-            //            SalesOrderId = salesOrder.Id,
-            //            MaterialId = item.MaterialId,
-            //            MachineId = item.MachineId
-            //        };
+                    //ADD SUB TO COLLECTION
+                    salesOrderLineNames.Add(item.Name);
+                    salesOrderLineList.Add(salesOrderLine);
+                }
+            }
 
-            //        //ADD SUB TO COLLECTION
-            //        salesOrderLineNames.Add(item.Name);
-            //        salesOrderLineList.Add(salesOrderLine);
-            //    }
-            //}
+            //ADD SUBS TO PARENT
+            salesOrder.SalesOrderLineNames = string.Join(", ", salesOrderLineNames);
+            salesOrder.SalesOrderLines = salesOrderLineList;
 
-            ////ADD SUBS TO PARENT
-            //salesOrder.SalesOrderLineNames = string.Join(", ", salesOrderLineNames);
-            //salesOrder.SalesOrderLines = salesOrderLineList;
+            salesOrder.Id = (int)input.Id;
+            salesOrder.Number = input.Number;
+            salesOrder.ProcessedBySurabaya = input.ProcessedBySurabaya;
+            salesOrder.CustomerId = input.CustomerId;
+            salesOrder.Date = input.Date;
+            salesOrder.Deadline = input.Deadline;
+            salesOrder.Amount = decimal.Parse(input.Amount.Replace(".", ""));
+            salesOrder.ProductionStatusId = 10; // 10 - New
+            salesOrder.MarkForDelete = false;
 
+         
             ////Update
             //_salesOrderRepository.Update(salesOrder);
 

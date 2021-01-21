@@ -20,14 +20,15 @@ namespace DDM.SalesOrders
         public virtual DateTime Date { get; set; }
         public virtual DateTime Deadline { get; set; }
         public decimal Amount { get; set; }
-
         public bool? MarkForDelete { get; set; }
+        public string Notes { get; set; }
 
         public string SalesOrderLineNames { get; set; }
         public List<SalesOrderLine> SalesOrderLines { get; set; }
 
         public int ProductionStatusId { get; set; }
-        public ProductionStatus ProductionStatus { get; set; }
+        [ForeignKey("ProductionStatusId")]
+        public ProductionStatus ProductionStatusFK { get; set; }
 
         public virtual int CustomerId { get; set; }
         [ForeignKey("CustomerId")]

@@ -5,6 +5,7 @@
         public SalesOrderDto SalesOrder { get; set; }
 
         public string CustomerName { get; set; }
+        public string ProductionStatus { get; set; }
 
     }
 }

@@ -8,6 +8,7 @@ namespace DDM.SalesOrders.Dtos
         public string Filter { get; set; }
 
         public string NumberFilter { get; set; }
+        public string NotesFilter { get; set; }
 
         public DateTime? MaxDateFilter { get; set; }
         public DateTime? MinDateFilter { get; set; }

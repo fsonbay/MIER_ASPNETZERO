@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 
 namespace DDM.SalesOrders.Dtos
@@ -12,8 +13,9 @@ namespace DDM.SalesOrders.Dtos
 
         public DateTime Deadline { get; set; }
 
+        public decimal Amount { get; set; }
+        public string Notes { get; set; }
+
         public int CustomerId { get; set; }
-
-
     }
 }

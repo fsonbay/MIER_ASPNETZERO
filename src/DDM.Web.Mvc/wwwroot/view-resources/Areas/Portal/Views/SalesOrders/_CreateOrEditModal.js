@@ -1,7 +1,6 @@
 ﻿(function ($) {
     app.modals.CreateOrEditSalesOrderModal = function () {
 
-
         var _salesOrdersService = abp.services.app.salesOrders;
 
         var _modalManager;
@@ -23,14 +22,12 @@
                 format: 'L'
             });
 
-            //FS: Datetimepicker format and default value
-            //modal.find('.date-picker').datetimepicker({
-            //    format: 'DD/MM/YYYY' // format you want to show on datetimepicker
-            //});
-
-            var d = new Date();
-            var today = d.getDate() + "/" + "0" + (d.getMonth() + 1) + "/" + d.getFullYear(); //January = 0.
-            modal.find('.date-picker').val(today);
+            //On create mode, populate date-picker with today's date
+            if (!modal.find('#Id').length) {
+                var d = new Date();
+                var today = d.getDate() + "/" + "0" + (d.getMonth() + 1) + "/" + d.getFullYear(); //January = 0.
+                modal.find('.date-picker').val(today);
+            }
 
             modal.find('#CustomerId').select2({
                 width: '100%'
@@ -38,18 +35,11 @@
                 $(this).valid();
             });
 
-            //$("#vedit-filter").select2({
-            //    // your options here
-            //}).on('change', function () {
-            //    $(this).valid();
-            //});
-
             _$salesOrderInformationForm = _modalManager.getModal().find('form[name=SalesOrderInformationsForm]');
             _$salesOrderInformationForm.validate();
 
             //FS : Popup modal size
             modal.find(".modal-dialog").addClass("modal-xxl");
-
         };
 
         $('#OpenCustomerLookupTableButton').click(function () {
@@ -66,11 +56,6 @@
             _$salesOrderInformationForm.find('input[name=customerName]').val('');
             _$salesOrderInformationForm.find('input[name=customerId]').val('');
         });
-
-        //Wrappper
-        var wrapper = $('.subcat-sets');
-
-        buttonVisibility();
 
         $('#AddOrderLine').click(function (e) {
             e.preventDefault();
@@ -121,7 +106,7 @@
 
             var salesOrder = _$salesOrderInformationForm.toObject({ mode: 'first' });
 
-            
+
 
             _modalManager.setBusy(true);
 
@@ -135,73 +120,6 @@
                     _modalManager.setBusy(false);
                 });
         };
-
-        //FS : Helper methods
-        $(".calc").on("keyup", function () {
-            
-            var i = $(this).attr('name');
-            var start_pos = i.indexOf('[') + 1;
-            var end_pos = i.indexOf(']', start_pos);
-            var index = i.substring(start_pos, end_pos);
-
-            var quantityName = 'input[name="SalesOrderLines[' + index + '].Quantity"';
-            var unitPriceName = 'input[name="SalesOrderLines[' + index + '].UnitPrice"';
-            var amountName = 'input[name="SalesOrderLines[' + index + '].LineAmount"';
-
-            var quantity = $(quantityName).val();
-            var unitPrice = $(unitPriceName).val();
-
-            quantity = quantity.replace(/\./g, '');
-            unitPrice = unitPrice.replace(/\./g, '');
-
-            var amount = addSeparatorsNF((unitPrice * quantity).toFixed(0), '.', ',', '.');
-            $(amountName).val(amount);
-
-            calculateTotalAmount();
-        });
-        $('.number-format').keyup(function (event) {
-
-            // skip for arrow keys
-            if (event.which >= 37 && event.which <= 40) {
-                event.preventDefault();
-            }
-
-            $(this).val(function (index, value) {
-
-                //clean previously added dot
-                value = value.replace(/\./g, '');
-
-                //reformat
-                return addSeparatorsNF(value, '.', ',', '.');
-            });
-        });
-        $('.delete-subcat').click(function (e) {
-
-            //Cancel default postback
-            e.preventDefault();
-
-            //Set hidden value
-            $(this).parents('.subcat-set').find('.mark-for-delete').val("true");
-
-            //Check Id, if ID = 0 ==> new set, remove. else hide.
-            var id = $(this).parents('.subcat-set').find('.Id').val();
-
-            if (id === '0') {
-                $(this).parents('.subcat-set').remove();
-            }
-            else {
-                $(this).parents('.subcat-set').hide();
-            }
-
-            //Reorder index
-            reorderIndex();
-
-            //Buttons
-            buttonVisibility();
-
-            //Calculation
-            calculateTotalAmount();
-        });
 
         function reorderIndex() {
             $(".subcat-set").each(function () {
@@ -275,5 +193,90 @@
                 $('.subcat-set .delete-subcat').show();
             }
         }
+
+        //Wrappper
+        var wrapper = $('.subcat-sets');
+        buttonVisibility();
+        reorderIndex();
+
+        //FS : Helper methods
+        $(".calc").on("keyup", function () {
+
+            var i = $(this).attr('name');
+            var start_pos = i.indexOf('[') + 1;
+            var end_pos = i.indexOf(']', start_pos);
+            var index = i.substring(start_pos, end_pos);
+
+            var quantityName = 'input[name="SalesOrderLines[' + index + '].Quantity"';
+            var unitPriceName = 'input[name="SalesOrderLines[' + index + '].UnitPrice"';
+            var amountName = 'input[name="SalesOrderLines[' + index + '].LineAmount"';
+
+            var quantity = $(quantityName).val();
+            var unitPrice = $(unitPriceName).val();
+
+            quantity = quantity.replace(/\./g, '');
+            unitPrice = unitPrice.replace(/\./g, '');
+
+            var amount = addSeparatorsNF((unitPrice * quantity).toFixed(0), '.', ',', '.');
+            $(amountName).val(amount);
+
+            calculateTotalAmount();
+        });
+        $('.number-format').keyup(function (event) {
+
+            // skip for arrow keys
+            if (event.which >= 37 && event.which <= 40) {
+                event.preventDefault();
+            }
+
+            $(this).val(function (index, value) {
+
+                //clean previously added dot
+                value = value.replace(/\./g, '');
+
+                //reformat
+                return addSeparatorsNF(value, '.', ',', '.');
+            });
+        });
+        $('.delete-subcat').click(function (e) {
+
+            //Cancel default postback
+            e.preventDefault();
+
+            //Set hidden value
+            $(this).parents('.subcat-set').find('.mark-for-delete').val("true");
+
+            //Check Id, if ID = 0 ==> new set, remove. else hide.
+            var id = $(this).parents('.subcat-set').find('.Id').val();
+
+            if (id === '0') {
+                $(this).parents('.subcat-set').remove();
+            }
+            else {
+                $(this).parents('.subcat-set').hide();
+            }
+
+            //Reorder index
+            reorderIndex();
+
+            //Buttons
+            buttonVisibility();
+
+            //Calculation
+            calculateTotalAmount();
+        });
+
+
+
+
+
     };
+
+
+
+
+
+
+
+
 })(jQuery);
