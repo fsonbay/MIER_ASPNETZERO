@@ -26,6 +26,12 @@
             modalClass: 'ViewSalesOrderModal'
         });
 
+        var _editProductionStatusModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'Portal/SalesOrders/EditProductionStatusModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/Portal/Views/SalesOrders/_EditProductionStatusModal.js',
+            modalClass: 'EditProductionStatusModal'
+        });
+
         var getDateFilter = function (element) {
             if (element.data("DateTimePicker").date() == null) {
                 return null;
@@ -82,6 +88,7 @@
                                 text: app.localize('View'),
                                 iconStyle: 'far fa-eye mr-2',
                                 action: function (data) {
+                                    
                                     _viewSalesOrderModal.open({ id: data.record.salesOrder.id });
                                 }
                             },
@@ -152,17 +159,57 @@
                 {
                     targets: 8,
                     data: null,
-                    defaultContent: "<button id='OpenProductionStatus' class='btn btn-outline-primary'>Edit Status</button>"
-                }
+                    orderable: false,
+                    defaultContent: '',
+                    rowAction: {
+                        element: $("<div/>")
+                            .addClass("text-center")
+                            .append($("<button/>")
+                                .addClass("btn btn-outline-primary")
+                                .attr("title", app.localize("EditProductionStatus"))
+                                .text("Edit Status")
+                        ).click(function () {
 
+                            var salesOrderId = $(this).data().salesOrder.id;
+               
+
+                            _editProductionStatusModal.open({ id: salesOrderId });
+
+                       //     showAuditLogDetails($(this).data());
+
+
+                            })
+                    }
+                }
             ]
         });
 
-        $('#SalesOrdersTable tbody').on('click', 'button', function () {
-            alert(1);
-            var data = dataTable.row($(this).parents('tr')).data();
-            alert(data[1] + "'s salary is: " + data[5]);
-        });
+        //function showAuditLogDetails(auditLog) {
+
+        //    _editProductionStatusModal.open({ id: data.record.salesOrder.id });
+
+        //    var id = auditLog.customerName;
+        //    alert(id);
+
+        //};
+
+
+        //$('#SalesOrdersTable').on('click', 'a.delete', function (e) {
+        //    e.preventDefault();
+        //    alert(1);
+        //    table.row($(this).parents('tr')).remove().draw();
+        //});
+
+        //$('#SalesOrdersTable tbody').on('click', 'button', function (e) {
+        //    e.preventDefault();
+        //    var table = $('#example').DataTable();
+        //    var data = table.row($(this).closest('tr')).data()
+        //    alert(data);
+
+        //    //alert(1);
+        //    //var data = dataTable.row($(this).parents('tr')).data();
+        //    //alert(data[1] + "'s salary is: " + data[5]);
+        //});
 
         //$('#OpenSalesOrderLookupTableButton').click(function () {
 
@@ -225,8 +272,6 @@
                 getSalesOrders();
             }
         });
-
-
 
     });
 })();

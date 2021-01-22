@@ -108,5 +108,24 @@ namespace DDM.Web.Areas.Portal.Controllers
             return PartialView("_ViewSalesOrderModal", model);
         }
 
+        public async Task<PartialViewResult> EditProductionStatusModal(int id)
+        {
+            var getSalesOrderForViewDto = await _salesOrdersAppService.GetSalesOrderForView(id);
+
+
+            return null;
+
+            //var getSalesOrderForViewDto = await _salesOrdersAppService.GetSalesOrderForView(id);
+
+            //var model = new SalesOrderViewModel()
+            //{
+            //    SalesOrder = getSalesOrderForViewDto.SalesOrder,
+            //    CustomerName = getSalesOrderForViewDto.CustomerName
+
+            //};
+
+            //return PartialView("_ViewSalesOrderModal", model);
+        }
+
     }
 }
