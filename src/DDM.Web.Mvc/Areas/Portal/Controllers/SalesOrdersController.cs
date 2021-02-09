@@ -19,7 +19,7 @@ namespace DDM.Web.Areas.Portal.Controllers
     public class SalesOrdersController : DDMControllerBase
     {
         private readonly ISalesOrdersAppService _salesOrdersAppService;
-      
+
         public SalesOrdersController(ISalesOrdersAppService salesOrdersAppService)
         {
             _salesOrdersAppService = salesOrdersAppService;
@@ -44,10 +44,8 @@ namespace DDM.Web.Areas.Portal.Controllers
             {
                 getSalesOrderForEditOutput = await _salesOrdersAppService.GetSalesOrderForEdit(new EntityDto { Id = (int)id });
 
-
-
                 //TODO : GET LINES BASED ON ORDER ID
-               //getSalesOrderLineForEditOutput
+                //getSalesOrderLineForEditOutput
 
                 //getSalesOrderLineForEditOutput = new GetSalesOrderLineForEditOutput
                 //{
@@ -55,15 +53,14 @@ namespace DDM.Web.Areas.Portal.Controllers
                 //};
 
             }
-
             else
             {
                 //Empty models
                 var salesOrder = new CreateOrEditSalesOrderDto();
                 var templateLine = new CreateOrEditSalesOrderLineDto
                 {
-                    Name="",
-                    Description = "", 
+                    Name = "",
+                    Description = "",
                     SalesOrderId = 0,
                     MachineId = 0,
                     MaterialId = 0
@@ -110,22 +107,21 @@ namespace DDM.Web.Areas.Portal.Controllers
 
         public async Task<PartialViewResult> EditProductionStatusModal(int id)
         {
-            var getSalesOrderForViewDto = await _salesOrdersAppService.GetSalesOrderForView(id);
+            GetSalesOrderForEditOutput getSalesOrderForEditOutput;
+            getSalesOrderForEditOutput = await _salesOrdersAppService.GetSalesOrderForEdit(new EntityDto { Id = (int)id });
 
+            var viewModel = new EditProductionStatusViewModel()
+            {
+                SalesOrderId = (int)getSalesOrderForEditOutput.SalesOrder.Id,
+                ProductionStatusId = getSalesOrderForEditOutput.SalesOrder.ProductionStatusId,
+                Notes = getSalesOrderForEditOutput.SalesOrder.Notes,
 
-            return null;
+                ProductionStatusList = await _salesOrdersAppService.GetAllProductionStatusForTableDropdown()
+            };
 
-            //var getSalesOrderForViewDto = await _salesOrdersAppService.GetSalesOrderForView(id);
+            return PartialView("_EditProductionStatusModal", viewModel);
 
-            //var model = new SalesOrderViewModel()
-            //{
-            //    SalesOrder = getSalesOrderForViewDto.SalesOrder,
-            //    CustomerName = getSalesOrderForViewDto.CustomerName
-
-            //};
-
-            //return PartialView("_ViewSalesOrderModal", model);
         }
-
     }
+
 }

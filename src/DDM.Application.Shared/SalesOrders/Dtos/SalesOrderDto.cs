@@ -15,7 +15,6 @@ namespace DDM.SalesOrders.Dtos
         public decimal Amount { get; set; }
         public string Notes { get; set; }
 
-
         public int CustomerId { get; set; }
         public int ProductionStatusId { get; set; }
     }

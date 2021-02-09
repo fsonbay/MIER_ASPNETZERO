@@ -1,4 +1,8 @@
-﻿(function ($) {
+﻿
+/*SalesOrder/_CreateOrEditModal.js*/
+
+(function ($) {
+
     app.modals.CreateOrEditSalesOrderModal = function () {
 
         var _salesOrdersService = abp.services.app.salesOrders;
@@ -105,8 +109,6 @@
             }
 
             var salesOrder = _$salesOrderInformationForm.toObject({ mode: 'first' });
-
-
 
             _modalManager.setBusy(true);
 
@@ -271,12 +273,5 @@
 
 
     };
-
-
-
-
-
-
-
 
 })(jQuery);

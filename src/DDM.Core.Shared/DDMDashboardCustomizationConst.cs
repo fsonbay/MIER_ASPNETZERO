@@ -20,6 +20,9 @@
                 public const string RegionalStats = "Widgets_Tenant_RegionalStats";
                 public const string SalesSummary = "Widgets_Tenant_SalesSummary";
                 public const string TopStats = "Widgets_Tenant_TopStats";
+
+
+
             }
 
             public class Host

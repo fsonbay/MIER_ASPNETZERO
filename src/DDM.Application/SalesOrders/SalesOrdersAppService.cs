@@ -20,6 +20,7 @@ using DDM.EntityFrameworkCore.Repositories;
 using DDM.SalesOrderLines;
 using DDM.SalesInvoices;
 using System.Globalization;
+using DDM.ProductionStatuses;
 
 namespace DDM.SalesOrders
 {
@@ -30,16 +31,19 @@ namespace DDM.SalesOrders
         private readonly SalesInvoiceRepository _salesInvoiceRepository;
         private readonly SalesOrderLineRepository _salesOrderLineRepository;
 
+
         private readonly IRepository<Customer, int> _lookup_customerRepository;
         private readonly IRepository<Machine, int> _lookup_machineRepository;
         private readonly IRepository<Material, int> _lookup_materialRepository;
+        private readonly IRepository<ProductionStatus, int> _lookup_productionStatusRepository;
 
         public SalesOrdersAppService(SalesOrderRepository salesOrderRepository,
             SalesInvoiceRepository salesInvoiceRepository,
             SalesOrderLineRepository salesOrderLineRepository,
             IRepository<Customer, int> lookup_customerRepository,
             IRepository<Machine, int> lookup_machineRepository,
-            IRepository<Material, int> lookup_materialRepository
+            IRepository<Material, int> lookup_materialRepository,
+            IRepository<ProductionStatus, int> lookup_productionStatusRepository
             )
         {
             _salesOrderRepository = salesOrderRepository;
@@ -48,6 +52,7 @@ namespace DDM.SalesOrders
             _lookup_customerRepository = lookup_customerRepository;
             _lookup_machineRepository = lookup_machineRepository;
             _lookup_materialRepository = lookup_materialRepository;
+            _lookup_productionStatusRepository = lookup_productionStatusRepository;
         }
 
         public async Task<PagedResultDto<GetSalesOrderForViewDto>> GetAll(GetAllSalesOrdersInput input)
@@ -120,7 +125,9 @@ namespace DDM.SalesOrders
                 Date = salesOrder.Date,
                 Deadline = salesOrder.Deadline,
                 Amount = salesOrder.Amount.ToString("N0", new CultureInfo("id")),
-                CustomerId = salesOrder.CustomerId
+                CustomerId = salesOrder.CustomerId,
+                ProductionStatusId = salesOrder.ProductionStatusId,
+                Notes = salesOrder.Notes
             };
 
             var createOrEditSalesOrderLineDtoList = new List<CreateOrEditSalesOrderLineDto>();
@@ -172,12 +179,22 @@ namespace DDM.SalesOrders
             }
         }
 
+        public async Task UpdateProductionStatus(EditSalesOrderProductionStatusDto input)
+        {
+            var salesOrder = await _salesOrderRepository.GetAsync((int)input.SalesOrderId);
+
+            salesOrder.ProductionStatusId = input.ProductionStatusID;
+            salesOrder.Notes = input.Notes;
+
+        }
+
         private string CreateSalesOrderNumber(DateTime salesOrderDate, int customerId)
         {
             string prefix = "O" + salesOrderDate.ToString("yyyyMMdd");
             int customerOrderCount = _salesOrderRepository.CountCustomerOrder(customerId) + 1;
             return prefix + '-' + customerId + '-' + customerOrderCount;
         }
+
 
 
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create)]
@@ -330,7 +347,6 @@ namespace DDM.SalesOrders
         {
             await _salesOrderRepository.DeleteAsync(input.Id);
         }
-        [AbpAuthorize(AppPermissions.Pages_SalesOrders)]
 
         public async Task<List<SalesOrderCustomerLookupTableDto>> GetAllCustomerForTableDropdown()
         {
@@ -362,6 +378,15 @@ namespace DDM.SalesOrders
                 }).ToListAsync();
         }
 
+        public async Task<List<SalesOrderProductionStatusLookupTableDto>> GetAllProductionStatusForTableDropdown()
+        {
+            return await _lookup_productionStatusRepository.GetAll()
+                .Select(productionStatus => new SalesOrderProductionStatusLookupTableDto
+                {
+                    Id = productionStatus.Id,
+                    DisplayName = productionStatus == null || productionStatus.Name == null ? "" : productionStatus.Name.ToString()
+                }).ToListAsync();
+        }
 
     }
 }

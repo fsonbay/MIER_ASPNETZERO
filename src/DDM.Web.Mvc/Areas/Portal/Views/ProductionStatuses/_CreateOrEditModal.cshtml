@@ -7,30 +7,26 @@
 @await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditProductionStatus")) : L("CreateNewProductionStatus")))
 
 <div class="modal-body">
-        <div id="ProductionStatusInformationsTab">
-            <form name="ProductionStatusInformationsForm" role="form" novalidate class="form-validation">
+    <div id="ProductionStatusInformationsTab">
+        <form name="ProductionStatusInformationsForm" role="form" novalidate class="form-validation">
 
-                @if (Model.IsEditMode)
-                {
-                    <input type="hidden" name="id" value="@Model.ProductionStatus.Id" />
-                }
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.ProductionStatus.Id" />
+            }
 
-				
+            <div class="form-group">
+                <label for="ProductionStatus_Name">@L("Name")</label>
+                <input class="form-control" id="ProductionStatus_Name" value="@Model.ProductionStatus.Name" type="text" name="name" required maxlength="@DDM.ProductionStatuses.ProductionStatusConsts.MaxNameLength" minlength="@DDM.ProductionStatuses.ProductionStatusConsts.MinNameLength" />
+            </div>
 
-				
-								<div class="form-group">
-									<label for="ProductionStatus_Name">@L("Name")</label>
-									<input class="form-control" id="ProductionStatus_Name" value="@Model.ProductionStatus.Name" type="text" name="name"  required  maxlength="@DDM.ProductionStatuses.ProductionStatusConsts.MaxNameLength"  minlength="@DDM.ProductionStatuses.ProductionStatusConsts.MinNameLength"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ProductionStatus_Description">@L("Description")</label>
-									<input class="form-control" id="ProductionStatus_Description" value="@Model.ProductionStatus.Description" type="text" name="description"     />
-								</div>
-					
+            <div class="form-group">
+                <label for="ProductionStatus_Description">@L("Description")</label>
+                <input class="form-control" id="ProductionStatus_Description" value="@Model.ProductionStatus.Description" type="text" name="description" />
+            </div>
 
-            </form>
-        </div>
+        </form>
+    </div>
 </div>
 
 @await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

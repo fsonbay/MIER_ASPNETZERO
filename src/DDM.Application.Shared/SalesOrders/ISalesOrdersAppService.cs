@@ -23,5 +23,6 @@ namespace DDM.SalesOrders
         Task<List<SalesOrderCustomerLookupTableDto>> GetAllCustomerForTableDropdown();
         Task<List<SalesOrderMachineLookupTableDto>> GetAllMachineForTableDropdown();
         Task<List<SalesOrderMaterialLookupTableDto>> GetAllMaterialForTableDropdown();
+        Task<List<SalesOrderProductionStatusLookupTableDto>> GetAllProductionStatusForTableDropdown();
     }
 }
