@@ -52,7 +52,7 @@ namespace DDM.DashboardCustomization.Definitions
                 DDMDashboardCustomizationConsts.Widgets.Tenant.GeneralStats,
                 "WidgetGeneralStats",
                 side: MultiTenancySides.Tenant,
-                permissions: tenantWidgetsDefaultPermission.Concat(new List<string>{ AppPermissions.Pages_Administration_AuditLogs }).ToList());
+                permissions: tenantWidgetsDefaultPermission.Concat(new List<string> { AppPermissions.Pages_Administration_AuditLogs }).ToList());
 
             var profitShare = new WidgetDefinition(
                 DDMDashboardCustomizationConsts.Widgets.Tenant.ProfitShare,
@@ -85,6 +85,15 @@ namespace DDM.DashboardCustomization.Definitions
                 side: MultiTenancySides.Tenant,
                 permissions: tenantWidgetsDefaultPermission);
 
+
+            //FS
+            var salesOrderStats = new WidgetDefinition(
+                DDMDashboardCustomizationConsts.Widgets.Tenant.SalesOrderStats,
+                "WidgetSalesOrderStats",
+                side: MultiTenancySides.Tenant,
+                permissions: tenantWidgetsDefaultPermission);
+
+
             WidgetDefinitions.Add(generalStats);
             WidgetDefinitions.Add(dailySales);
             WidgetDefinitions.Add(profitShare);
@@ -92,7 +101,10 @@ namespace DDM.DashboardCustomization.Definitions
             WidgetDefinitions.Add(regionalStats);
             WidgetDefinitions.Add(topStats);
             WidgetDefinitions.Add(salesSummary);
+
             // Add your tenant side widgets here
+            WidgetDefinitions.Add(salesOrderStats);
+
 
             #endregion
 
@@ -153,7 +165,14 @@ namespace DDM.DashboardCustomization.Definitions
                 DDMDashboardCustomizationConsts.DashboardNames.DefaultTenantDashboard,
                 new List<string>
                 {
-                    generalStats.Id, dailySales.Id, profitShare.Id, memberActivity.Id, regionalStats.Id, topStats.Id, salesSummary.Id
+                    generalStats.Id, 
+                    dailySales.Id, 
+                    profitShare.Id, 
+                    memberActivity.Id, 
+                    regionalStats.Id, 
+                    topStats.Id, 
+                    salesSummary.Id, 
+                    salesOrderStats.Id
                 });
 
             DashboardDefinitions.Add(defaultTenantDashboard);

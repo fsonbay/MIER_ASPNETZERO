@@ -95,5 +95,12 @@ namespace DDM.Tenants.Dashboard
                 BouncePercent = DashboardRandomDataGenerator.GetRandomInt(10, 100)
             };
         }
+
+
+        //FS
+        public int GetSalesOrderStats()
+        {
+            return 1;
+        }
     }
 }

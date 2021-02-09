@@ -1012,6 +1012,9 @@
     <text name="PerWeek">Per week</text>
     <text name="ThereIsNoEditionToUpgrade">There is no edition to upgrade</text>
     <text name="RoleIsInheritedFromOrganizationUnit">This role is inherited from one of users organizations</text>
+    
+    
+    <!--FS : Dashboard-->
     <text name="AddWidget">Add widget</text>
     <text name="AddPage">Add page</text>
     <text name="PageName">Page name</text>
@@ -1038,6 +1041,9 @@
     <text name="WidgetEditionStatistics">Edition Statistics</text>
     <text name="WidgetSubscriptionExpiringTenants">Subscription Expiring Tenants</text>
     <text name="WidgetRecentTenants">Recent Tenants</text>
+    
+    
+    
     <text name="BackToDefaultPage">Back To Default</text>
     <text name="BackToDefaultPageWarningMessage">Are you sure to remove "{0}" page and back to default?</text>
     <text name="DashboardFilters">Dashboard Filters</text>

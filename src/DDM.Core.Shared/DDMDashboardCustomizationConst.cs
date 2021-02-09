@@ -21,7 +21,7 @@
                 public const string SalesSummary = "Widgets_Tenant_SalesSummary";
                 public const string TopStats = "Widgets_Tenant_TopStats";
 
-
+                public const string SalesOrderStats = "Widgets_Tenant_SalesOrderStats";
 
             }
 
@@ -32,6 +32,7 @@
                 public const string EditionStatistics = "Widgets_Host_EditionStatistics";
                 public const string SubscriptionExpiringTenants = "Widgets_Host_SubscriptionExpiringTenants";
                 public const string RecentTenants = "Widgets_Host_RecentTenants";
+
             }
         }
 
