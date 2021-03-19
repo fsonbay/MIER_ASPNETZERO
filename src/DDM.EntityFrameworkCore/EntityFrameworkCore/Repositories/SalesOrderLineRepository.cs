@@ -9,6 +9,9 @@ namespace DDM.EntityFrameworkCore.Repositories
 {
     public interface ISalesOrderLineRepository : IRepository<SalesOrderLine, int>
     {
+        SalesOrder GetIncludes(int salesOrderId);
+
+        Job GetJobs();
     }
 
     public class SalesOrderLineRepository : DDMRepositoryBase<SalesOrderLine, int>, ISalesOrderLineRepository

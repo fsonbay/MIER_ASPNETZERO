@@ -87,6 +87,7 @@ namespace DDM.Web.DashboardCustomization
                     10));
 
             //add your tenant side widget definitions here
+            //FS
             WidgetViewDefinitions.Add(DDMDashboardCustomizationConsts.Widgets.Tenant.SalesOrderStats,
                 new WidgetViewDefinition(
                     DDMDashboardCustomizationConsts.Widgets.Tenant.SalesOrderStats,
@@ -95,6 +96,16 @@ namespace DDM.Web.DashboardCustomization
                     jsAndCssFileRoot + "SalesOrderStats/SalesOrderStats.min.css",
                     12,
                     10));
+
+            WidgetViewDefinitions.Add(DDMDashboardCustomizationConsts.Widgets.Tenant.NewSalesOrderStats,
+                new WidgetViewDefinition(
+                    DDMDashboardCustomizationConsts.Widgets.Tenant.NewSalesOrderStats,
+                    viewFileRoot + "NewSalesOrderStats.cshtml",
+                    jsAndCssFileRoot + "NewSalesOrderStats/NewSalesOrderStats.min.js",
+                    jsAndCssFileRoot + "NewSalesOrderStats/NewSalesOrderStats.min.css",
+                    12,
+                    10));
+
 
 
             #endregion

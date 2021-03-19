@@ -22,6 +22,7 @@
                 public const string TopStats = "Widgets_Tenant_TopStats";
 
                 public const string SalesOrderStats = "Widgets_Tenant_SalesOrderStats";
+                public const string NewSalesOrderStats = "Widgets_Tenant_NewSalesOrderStats";
 
             }
 

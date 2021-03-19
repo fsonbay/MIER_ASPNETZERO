@@ -2,6 +2,7 @@
 using Abp.Authorization;
 using DDM.Authorization;
 using DDM.Tenants.Dashboard.Dto;
+using System;
 
 namespace DDM.Tenants.Dashboard
 {
@@ -81,6 +82,8 @@ namespace DDM.Tenants.Dashboard
 
         public GetRegionalStatsOutput GetRegionalStats()
         {
+            var i = DashboardRandomDataGenerator.GenerateRegionalStat();
+
             return new GetRegionalStatsOutput(
                 DashboardRandomDataGenerator.GenerateRegionalStat()
             );
@@ -101,6 +104,23 @@ namespace DDM.Tenants.Dashboard
         public int GetSalesOrderStats()
         {
             return 1;
+        }
+
+        public GetNewSalesOrderOutput GetNewSalesOrderStats()
+        {
+            var o = DashboardRandomDataGenerator.GenerateNewSalesOrderStat();
+
+            return new GetNewSalesOrderOutput(
+                DashboardRandomDataGenerator.GenerateNewSalesOrderStat()
+                );
+
+            //return new GetNewSalesOrderOutput
+            //{
+            //    CustomerName = "test",
+            //    OrderDate = DateTime.Now,
+            //    Deadline = DateTime.Now
+            //};
+
         }
     }
 }

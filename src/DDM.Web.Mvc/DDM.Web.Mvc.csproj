@@ -204,5 +204,6 @@
     <_ContentIncludedByDefault Remove="wwwroot\Common\Styles\Themes\theme12\metronic-customize.less" />
     <_ContentIncludedByDefault Remove="wwwroot\Common\Styles\Themes\theme12\metronic-customize.min.css" />
     <_ContentIncludedByDefault Remove="Areas\Portal\Views\Shared\Components\PortalTopBar\Default.cshtml" />
+    <_ContentIncludedByDefault Remove="wwwroot\view-resources\Areas\Portal\Views\CustomizableDashboard\Widgets\NewSalesOrderStats\NewSalesOrderStats.min.css" />
   </ItemGroup>
 </Project>

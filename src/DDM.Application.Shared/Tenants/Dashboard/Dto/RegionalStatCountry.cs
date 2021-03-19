@@ -13,5 +13,6 @@ namespace DDM.Tenants.Dashboard.Dto
         public decimal AveragePrice { get; set; }
 
         public decimal TotalPrice { get; set; }
+
     }
 }

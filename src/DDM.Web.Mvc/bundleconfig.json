@@ -16,5 +16,17 @@
     "inputFiles": [
       "wwwroot/view-resources/Areas/Portal/Views/SalesOrders/Index.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Areas/Portal/Views/CustomizableDashboard/Widgets/NewSalesOrderStats/NewSalesOrderStats.min.css",
+    "inputFiles": [
+      "wwwroot/view-resources/Areas/Portal/Views/CustomizableDashboard/Widgets/NewSalesOrderStats/NewSalesOrderStats.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Areas/Portal/Views/CustomizableDashboard/Widgets/NewSalesOrderStats/NewSalesOrderStats.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Areas/Portal/Views/CustomizableDashboard/Widgets/NewSalesOrderStats/NewSalesOrderStats.js"
+    ]
   }
 ]

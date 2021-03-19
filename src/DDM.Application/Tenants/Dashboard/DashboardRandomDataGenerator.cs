@@ -8,7 +8,7 @@ namespace DDM.Tenants.Dashboard
     {
         private const string DateFormat = "yyyy-MM-dd";
         private static readonly Random Random;
-        public static string[] CountryNames = { "Argentina", "China", "France", "Italy", "Japan", "Netherlands", "Russia", "Spain", "Turkey", "United States"};
+        public static string[] CountryNames = { "Argentina", "China", "France", "Italy", "Japan", "Netherlands", "Russia", "Spain", "Turkey", "United States" };
 
         static DashboardRandomDataGenerator()
         {
@@ -155,6 +155,23 @@ namespace DDM.Tenants.Dashboard
             }
 
             return stats;
+        }
+        public static List<NewSalesOrderStat> GenerateNewSalesOrderStat()
+        {
+            var stats = new List<NewSalesOrderStat>();
+            for (var i = 0; i < 4; i++)
+            {
+                stats.Add(new NewSalesOrderStat
+                {
+                    CustomerName = "Customer" + i,
+                    OrderDate = DateTime.Now,
+                    Deadline = DateTime.Now 
+
+                }) ;
+            }
+
+            return stats;
+
         }
     }
 }

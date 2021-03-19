@@ -87,12 +87,17 @@ namespace DDM.DashboardCustomization.Definitions
 
 
             //FS
+            var newSalesOrderStats = new WidgetDefinition(
+                DDMDashboardCustomizationConsts.Widgets.Tenant.NewSalesOrderStats,
+                "WidgetNewSalesOrderStats",
+                side: MultiTenancySides.Tenant,
+                permissions: tenantWidgetsDefaultPermission);
+
             var salesOrderStats = new WidgetDefinition(
                 DDMDashboardCustomizationConsts.Widgets.Tenant.SalesOrderStats,
                 "WidgetSalesOrderStats",
                 side: MultiTenancySides.Tenant,
                 permissions: tenantWidgetsDefaultPermission);
-
 
             WidgetDefinitions.Add(generalStats);
             WidgetDefinitions.Add(dailySales);
@@ -102,7 +107,9 @@ namespace DDM.DashboardCustomization.Definitions
             WidgetDefinitions.Add(topStats);
             WidgetDefinitions.Add(salesSummary);
 
+
             // Add your tenant side widgets here
+            WidgetDefinitions.Add(newSalesOrderStats);
             WidgetDefinitions.Add(salesOrderStats);
 
 
@@ -172,7 +179,8 @@ namespace DDM.DashboardCustomization.Definitions
                     regionalStats.Id, 
                     topStats.Id, 
                     salesSummary.Id, 
-                    salesOrderStats.Id
+                    salesOrderStats.Id,
+                    newSalesOrderStats.Id
                 });
 
             DashboardDefinitions.Add(defaultTenantDashboard);

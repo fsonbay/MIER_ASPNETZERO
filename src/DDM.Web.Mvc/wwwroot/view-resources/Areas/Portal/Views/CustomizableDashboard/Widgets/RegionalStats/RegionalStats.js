@@ -103,6 +103,7 @@
                         var container = $(_$Container[i]);
                 
                         var $tableBody = container.find('#region_statistics_content table tbody');
+
                         for (var rowIndex = 0; rowIndex < result.stats.length; rowIndex++) {
                             var stat = result.stats[rowIndex];
                             var $tr = $('<tr></tr>').append(
@@ -141,6 +142,7 @@
         };
 
         refreshInitregionalStats();
+
     };
 
     initRegionalStats();
