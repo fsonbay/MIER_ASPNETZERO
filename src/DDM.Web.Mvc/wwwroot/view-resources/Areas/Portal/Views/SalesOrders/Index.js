@@ -255,6 +255,7 @@
         });
 
         $('#CreateNewSalesOrderButton').click(function () {
+          
             _createOrEditModal.open();
         });
 

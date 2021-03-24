@@ -152,6 +152,7 @@
         });
 
         $('#CreateNewMachineButton').click(function () {
+         //   alert(1);
             _createOrEditModal.open();
         });        
 
@@ -161,7 +162,8 @@
             getMachines();
         });
 
-		$('#GetMachinesButton').click(function (e) {
+        $('#GetMachinesButton').click(function (e) {
+            alert(1);
             e.preventDefault();
             getMachines();
         });

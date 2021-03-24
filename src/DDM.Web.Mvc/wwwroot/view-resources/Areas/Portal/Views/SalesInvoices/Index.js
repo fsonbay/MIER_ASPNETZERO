@@ -195,6 +195,7 @@
         });
 
         $('#CreateNewSalesInvoiceButton').click(function () {
+    
             _createOrEditModal.open();
         });        
 

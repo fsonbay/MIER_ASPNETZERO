@@ -28,5 +28,11 @@
     "inputFiles": [
       "wwwroot/view-resources/Areas/Portal/Views/CustomizableDashboard/Widgets/NewSalesOrderStats/NewSalesOrderStats.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Areas/Portal/Views/Machines/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Areas/Portal/Views/Machines/Index.js"
+    ]
   }
 ]
