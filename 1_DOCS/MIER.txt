@@ -1,0 +1,22 @@
+
+Dashboard Reports:
+- Monthly Number of Orders
+- Monthly New Customer
+
+
+Order creation:
+
+- Wizard
+
+1:
+ - Select Customer (new customer popup window - stay in page)
+ - Order date (auto select today)
+ - Deadline (shorthand : Today 1 day 2 days 3 days 4 days 5 days A week A month)
+
+2: Order details
+ - Auto populate : 
+   - Panel MDF 
+   - Panel Acrylic 
+   - Jasa Potong CNC 
+   - Jasa Potong Laser 
+   - Jasa Grafir Laser

@@ -1,0 +1,66 @@
+CONNECTION STRING :
+- DDM.WEB.MVC/appsettings.json
+- DDM.WEB.HOST/appsettings.json
+
+REPOSITORIES:
+- DDM.EntityFrameworkCore/EntityFrameworkCore/Repositories
+
+MENU
+- DDM.Web.MVC/Areas/Portal/Startup/PortalNavigationProvider.cs
+
+PAGES 
+- DDM.Web.MVC/Areas/Portal/Startup/PortalPageNames.cs
+
+AUTHORIZATION
+- DDM.Core/Authorization/AppPermissions.cs
+- DDM.Core/Authorization/AppAuthorizationProvider.cs
+
+OBJECT MAPPER
+- DDM.Application/CustomDtoMapper.cs
+
+BASE MODEL
+- DDM.Core/DDM_Metadata
+
+SERVICES
+- DDM.Application/DDM_Metadata
+
+SERVICES INTERFACE
+- DDM.Application.Shared/DDM_Metadata
+
+DTO
+- DDM.ApplicationShared/Dtos
+
+LOCALIZATION
+- DDM.Core/Localization/DDM/DDM.xml
+
+JS
+- DDM.Web.MVC/view-resources/Areas/Portal/Views
+
+DASHBOARD
+- DDM.Web.MVC/Areas/Portal/Views/Shared/Components/CustomizableDashboard/Index.cshtml
+
+WIDGETS
+- APPSERVICE : DDM.Application/Tenants/Dashboard/TenantDashboardAppService.cshtml
+- VIEW : DDM.Web.MVC/Areas/Portal/Views/Shared/Components/CustomizableDashboard/Widgets/
+- JS,CSS : DDM.Web.MVC/wwwroot/view-resources/Portal/Views/CustomizableDashboard/Widgets/
+- CONSTANTS : DDM.Core.Shared/DDMDashboardCustomizationConst.cs
+- VIEW CONFIG : DDM.Web.Core/DashboardCustomization/DashboardViewConfiguration.cs
+- MAIN CONFIG : DDM.Core/DashboardCustomization/Definitions/DashboardConfiguration.cs
+
+METRONIC
+- util.js : DDM.Web.MVC/wwwroot/mentronic/core/util.js
+- wizard js : DDM.Web.MVC/wwwroot/common/script/wizard/wizard.js
+- wizard css : DDM.Web.MVC/wwwroot/metronic/common/css/wizard/wizard-1.css
+
+
+
+CLIENT SCRIPT 
+yarn
+npm run build
+npm run create-bundles
+
+
+
+
+
+ 
