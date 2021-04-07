@@ -255,8 +255,10 @@
         });
 
         $('#CreateNewSalesOrderButton').click(function () {
+
+            document.location.href = abp.appPath + "Portal/SalesOrders/CreateOrEdit";
           
-            _createOrEditModal.open();
+            //_createOrEditModal.open();
         });
 
         abp.event.on('app.createOrEditSalesOrderModalSaved', function () {

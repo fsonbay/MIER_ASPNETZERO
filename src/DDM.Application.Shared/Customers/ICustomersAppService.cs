@@ -14,7 +14,7 @@ namespace DDM.Customers
 
         Task<GetCustomerForViewDto> GetCustomerForView(int id);
 
-        Task<GetCustomerForEditOutput> GetCustomerForEdit(EntityDto input);
+        Task<GetCustomerForEditOutput> GetCustomerForEdit(NullableIdDto input);
 
         Task CreateOrEdit(CreateOrEditCustomerDto input);
 

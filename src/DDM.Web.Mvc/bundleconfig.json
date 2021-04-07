@@ -34,5 +34,23 @@
     "inputFiles": [
       "wwwroot/view-resources/Areas/Portal/Views/Machines/Index.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/metronic/common/css/wizard-1.min.css",
+    "inputFiles": [
+      "wwwroot/metronic/common/css/wizard-1.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/metronic/common/css/wizard/wizard-1.min.css",
+    "inputFiles": [
+      "wwwroot/metronic/common/css/wizard/wizard-1.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Areas/Portal/Views/SalesOrders/CreateOrEdit.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Areas/Portal/Views/SalesOrders/CreateOrEdit.js"
+    ]
   }
 ]

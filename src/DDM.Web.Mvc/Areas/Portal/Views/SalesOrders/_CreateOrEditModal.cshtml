@@ -4,67 +4,16 @@
 @using DDM.Web.Areas.Portal.Models.SalesOrders
 @model CreateOrEditSalesOrderModalViewModel
 
+
 @await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditSalesOrder")) : L("CreateNewSalesOrder")))
 
 <div class="modal-body">
     <div id="SalesOrderInformationsTab">
         <form name="SalesOrderInformationsForm" role="form" novalidate class="form-validation">
 
-            @*Auto Focus*@
-            <input type="text" autofocus="autofocus" style="display:none" />
-
-            @if (Model.IsEditMode)
-            {
-                <input type="hidden" name="Id" id="Id" value="@Model.SalesOrder.Id" />
-            }
-
-            <div class="form-horizontal col-md-auto">
-                <div class="form-group row">
-                    @if (Model.IsEditMode)
-                    {
-                        <div class="col-2">
-                            <label for="Number">@L("Number")</label>
-                            <input id="SalesOrder_Number" name="Number" value="@Model.SalesOrder.Number" type="text" class="form-control bg-secondary"  readonly />
-                        </div>
-                    }
-
-                    <div class="col-3">
-                        <label for="CustomerId">@L("Customer")</label>
-                        <div class="col-12">
-                            @Html.DropDownList("CustomerId", new SelectList(Model.SalesOrderCustomerList, "Id", "DisplayName",
-                                (Model.IsEditMode ? Model.SalesOrder.CustomerId.ToString() : "")), " - select -", new { @class = "form-control", @required = "required" })
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <label for="Date">@L("Date")</label>
-                        <input id="SalesOrder_Date" name="Date" value="@Model.SalesOrder.Date" type="text" class="form-control m-input date-picker" />
-                    </div>
-                    <div class="col-2">
-                        <label for="Deadline">@L("Deadline")</label>
-                        <input id="SalesOrder_Deadline" name="Deadline" value="@Model.SalesOrder.Deadline" type="text" class="form-control m-input date-picker" />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-2">
-                    <label class="control-label">Order Lines</label>
-                    <button id="AddOrderLine" name="AddOrderLine" class="btn btn-link">@L("Add")</button>
-                    <span class="text text-muted">(CTRL L)</span>
-                </div>
-            </div>
-
-            <div class="form-group subcat-sets">
-                @await Html.PartialAsync("~/Areas/Portal/Views/Common/SalesOrder/_SalesOrderLine.cshtml", Model)
-            </div>
-
-            <div class="form-group col-12">
-                <div class="col-2 offset-10">
-                    <label for="Amount">@L("Total")</label>
-                    <input id="Amount" name="Amount" value="@Model.SalesOrder.Amount" type="text" class="form-control" readonly />
-                </div>
-            </div>
 
         </form>
+
     </div>
 </div>
 

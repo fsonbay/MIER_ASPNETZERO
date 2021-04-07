@@ -127,6 +127,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="Areas\Portal\Views\SalesOrders\Index1.cshtml" />
     <Content Remove="bundleconfig.json" />
     <Content Remove="wwwroot\swagger\ui\index.html" />
   </ItemGroup>

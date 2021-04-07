@@ -89,18 +89,29 @@ namespace DDM.Customers
             return output;
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Customers_Edit)]
-        public async Task<GetCustomerForEditOutput> GetCustomerForEdit(EntityDto input)
+        [AbpAuthorize(AppPermissions.Pages_Customers_Create, AppPermissions.Pages_Customers_Edit)]
+        public async Task<GetCustomerForEditOutput> GetCustomerForEdit(NullableIdDto input)
         {
-            var customer = await _customerRepository.FirstOrDefaultAsync(input.Id);
-
-            var output = new GetCustomerForEditOutput { Customer = ObjectMapper.Map<CreateOrEditCustomerDto>(customer) };
-
-            if (output.Customer.CustomerCategoryId != null)
+            Customer customer = null;
+            if (input.Id.HasValue)
             {
-                var _lookupCustomerCategory = await _lookup_customerCategoryRepository.FirstOrDefaultAsync((int)output.Customer.CustomerCategoryId);
-                output.CustomerCategoryName = _lookupCustomerCategory?.Name?.ToString();
+                customer = await _customerRepository.FirstOrDefaultAsync((int)input.Id);
             }
+
+            var output = new GetCustomerForEditOutput();
+
+            output = new GetCustomerForEditOutput { Customer = ObjectMapper.Map<CreateOrEditCustomerDto>(customer) };
+
+            //Customer
+            output.Customer = customer != null
+                ? ObjectMapper.Map<CreateOrEditCustomerDto>(customer)
+                : new CreateOrEditCustomerDto();
+
+            //Customer categories
+            output.CustomerCategories = _lookup_customerCategoryRepository
+                .GetAll()
+                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Description + ")") { IsSelected = output.Customer.CustomerCategoryId == c.Id })
+                .ToList();
 
             return output;
         }

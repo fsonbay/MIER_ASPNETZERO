@@ -36,6 +36,63 @@ namespace DDM.Web.Areas.Portal.Controllers
         }
 
         [AbpMvcAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
+        public async Task<ActionResult> CreateOrEdit(int? id)
+        {
+
+            GetSalesOrderForEditOutput getSalesOrderForEditOutput;
+
+            if (id.HasValue)
+            {
+                getSalesOrderForEditOutput = await _salesOrdersAppService.GetSalesOrderForEdit(new EntityDto { Id = (int)id });
+
+                //TODO : GET LINES BASED ON ORDER ID
+                //getSalesOrderLineForEditOutput
+
+                //getSalesOrderLineForEditOutput = new GetSalesOrderLineForEditOutput
+                //{
+                //    SalesOrderLines = new List<CreateOrEditSalesOrderLineDto>()
+                //};
+
+            }
+            else
+            {
+                //Empty models
+                var salesOrder = new CreateOrEditSalesOrderDto();
+                var templateLine = new CreateOrEditSalesOrderLineDto
+                {
+                    Name = "",
+                    Description = "",
+                    SalesOrderId = 0,
+                    MachineId = 0,
+                    MaterialId = 0
+                };
+
+                var salesOrderLines = new List<CreateOrEditSalesOrderLineDto>();
+                salesOrderLines.Add(templateLine);
+
+                salesOrder.SalesOrderLines = salesOrderLines;
+
+                getSalesOrderForEditOutput = new GetSalesOrderForEditOutput
+                {
+                    SalesOrder = salesOrder
+                };
+
+            }
+
+            var viewModel = new CreateOrEditSalesOrderModalViewModel()
+            {
+                SalesOrder = getSalesOrderForEditOutput.SalesOrder,
+                CustomerName = getSalesOrderForEditOutput.CustomerName,
+
+                SalesOrderCustomerList = await _salesOrdersAppService.GetAllCustomerForTableDropdown(),
+                SalesOrderMachineList = await _salesOrdersAppService.GetAllMachineForTableDropdown(),
+                SalesOrderMaterialList = await _salesOrdersAppService.GetAllMaterialForTableDropdown()
+            };
+
+            return View(viewModel);
+        }
+
+        [AbpMvcAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<PartialViewResult> CreateOrEditModal(int? id)
         {
             GetSalesOrderForEditOutput getSalesOrderForEditOutput;

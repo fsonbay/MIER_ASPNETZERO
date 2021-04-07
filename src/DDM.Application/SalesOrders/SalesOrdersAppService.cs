@@ -112,9 +112,17 @@ namespace DDM.SalesOrders
             return output;
         }
 
-        [AbpAuthorize(AppPermissions.Pages_SalesOrders_Edit)]
+        [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<GetSalesOrderForEditOutput> GetSalesOrderForEdit(EntityDto input)
         {
+            //SalesOrder language = null;
+            //if (input.Id.HasValue)
+            //{
+            //    language = await _languageRepository.GetAsync(input.Id.Value);
+            //}
+
+
+
             var salesOrder = _salesOrderRepository.GetIncludes(input.Id);
 
             var createOrEditSalesOrderDto = new CreateOrEditSalesOrderDto
@@ -166,6 +174,8 @@ namespace DDM.SalesOrders
             return output;
 
         }
+
+
 
         public async Task CreateOrEdit(CreateOrEditSalesOrderDto input)
         {

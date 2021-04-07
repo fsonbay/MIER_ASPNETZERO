@@ -1,0 +1,273 @@
+﻿@using DDM.Authorization
+@using DDM.Web.Areas.Portal.Models.SourceConnection
+@using DDM.Web.Areas.Portal.Startup
+@model SourceConnectionViewModel
+
+@{ ViewBag.CurrentPageName = PortalPageNames.Metadata.SourceConnection; }
+
+<div class="kt-content  kt-grid_item kt-grid_item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    @if (Model.IsEditMode)
+                    {
+        <span>@L("EditSourceConnection")</span> }
+                    else
+                    {
+        <span>@L("CreateSourceConnection")</span>}
+                </h3>
+                <span class="kt-subheader_separator kt-subheader_separator--v"></span>
+                <span class="kt-subheader__desc">
+                    @if (Model.IsEditMode)
+                    {
+        <span> @Model.SourceConnection.Name</span> }
+                    else
+                    {
+        <span>@L("CreateSourceConnectionInfo")</span>}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="@(await GetContainerClass()) kt-grid_item kt-grid_item--fluid">
+        <div class="kt-portlet">
+            <div class="kt-portlet__body">
+
+                <div class="form-group align-items-center">
+
+                    <div class="form-group">
+                        <button id="BackButton" class="btn btn-primary blue back-button"><i class="la la-arrow-left"></i> @L("Back")</button>
+                    </div>
+
+
+                    <!-- begin:: Content -->
+                    <div class="kt-container  kt-container--fluid  kt-grid_item kt-grid_item--fluid">
+                        <div class="kt-portlet">
+                            <div class="kt-portlet_body kt-portlet_body--fit">
+
+                                <div class="kt-grid  kt-wizard-v1 kt-wizard-v1--white" id="kt_wizard_v1" data-ktwizard-state="step-first">
+
+                                    <div class="kt-grid__item">
+
+                                        <!--begin: Form Wizard Nav -->
+                                        <div class="kt-wizard-v1__nav">
+                                            <div class="kt-wizard-v1__nav-items">
+
+                                                <!--doc: Replace A tag with SPAN tag to disable the step link click -->
+                                                <!--begin::Wizard Step 1 Nav-->
+                                                <a class="kt-wizard-v1__nav-item" href="#" data-ktwizard-type="step" data-ktwizard-state="current">
+                                                    <div class="kt-wizard-v1__nav-body">
+                                                        <div class="kt-wizard-v1__nav-icon">
+                                                            <i class="flaticon-list"></i>
+                                                        </div>
+                                                        <div class="kt-wizard-v1__nav-label">
+                                                            1. @L("SourceDetails")
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <!--end::Wizard Step 1 Nav-->
+                                                <!--begin::Wizard Step 2 Nav-->
+                                                <a class="kt-wizard-v1__nav-item" href="#" data-ktwizard-type="step">
+                                                    <div class="kt-wizard-v1__nav-body">
+                                                        <div class="kt-wizard-v1__nav-icon">
+                                                            <i class="flaticon-responsive"></i>
+                                                        </div>
+                                                        <div class="kt-wizard-v1__nav-label">
+                                                            2. @L("SourceSettings")
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <!--end::Wizard Step 2 Nav-->
+                                                <!--begin::Wizard Step 3 Nav-->
+                                                <a class="kt-wizard-v1__nav-item" href="#" data-ktwizard-type="step">
+                                                    <div class="kt-wizard-v1__nav-body">
+                                                        <div class="kt-wizard-v1__nav-icon">
+                                                            <i class="flaticon-globe"></i>
+                                                        </div>
+                                                        <div class="kt-wizard-v1__nav-label">
+                                                            3. @L("ReviewAndSubmit")
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <!--end::Wizard Step 4 Nav-->
+                                            </div>
+                                        </div>
+                                        <!--end: Form Wizard Nav -->
+                                    </div>
+
+                                    <div class="kt-grid_item kt-griditem--fluid kt-wizard-v1_wrapper">
+                                        <!--begin: Form Wizard Form-->
+
+                                        <form class="kt-form form-validation" id="kt_form" name="CreateOrEditForm" role="form" novalidate>
+
+                                            <!--begin: Form Wizard Step 1-->
+                                            <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
+                                                <div class="kt-heading kt-heading--md">@L("SourceDetailsInfo")</div>
+                                                <div class="kt-form_section kt-form_section--first">
+                                                    <div class="kt-wizard-v1__form">
+                                                        <div class="form-group">
+                                                            <label for="Name">@L("Name")</label>
+                                                            <input id="Name" name="Name" class="form-control" value="@Model.SourceConnection.Name" type="text" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="Owner">@L("Owner")</label>
+                                                            <input id="Owner" name="Owner" class="form-control" value="@Model.SourceConnection.Owner" type="text" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="SourceTypeId">@L("SourceType")</label>
+                                                            <select id="SourceTypeId" name="SourceTypeId" class="form-control">
+                                                                @foreach (var sourceType in Model.SourceType)
+                                                                {
+                                                    <option value="@sourceType.Value" selected="@sourceType.IsSelected">@sourceType.DisplayText</option>}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end: Form Wizard Step 1-->
+                                            <!--begin: Form Wizard Step 2-->
+                                            <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
+                                                <div class="kt-heading kt-heading--md">@L("SourceSettingsInfo")</div>
+                                                <div class="kt-form_section kt-form_section--first">
+                                                    <div class="kt-wizard-v1__form">
+                                                        <div class="form-group">
+                                                            <label for="Host">@L("Host")</label>
+                                                            <input id="Host" name="Host" class="form-control" value="@Model.SourceConnection.Host" type="text" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="Port">@L("Port")</label>
+                                                            <input id="Port" name="Port" class="form-control" value="@Model.SourceConnection.Port" type="text" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="Database">@L("Database")</label>
+                                                            <input id="Database" name="Database" class="form-control" value="@Model.SourceConnection.Database" type="text" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="Username">@L("Username")</label>
+                                                            <input id="Username" name="Username" class="form-control" value="@Model.SourceConnection.Username" type="text" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="Password">@L("Password")</label>
+                                                            <input id="Password" name="Password" class="form-control" value="@Model.SourceConnection.Password" type="text" />
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end: Form Wizard Step 2-->
+                                            <!--begin: Form Wizard Step 3-->
+                                            <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
+                                                <div class="kt-heading kt-heading--md">@L("ReviewAndSubmitInfo")</div>
+                                                <div class="kt-form_section kt-form_section--first">
+                                                    <div class="kt-wizard-v1__review">
+                                                        <div class="kt-wizard-v1__review-item">
+                                                            <div class="kt-wizard-v1__review-title">
+                                                                @L("SourceDetails")
+                                                            </div>
+                                                            <div class="kt-wizard-v1__review-content">
+                                                                <div class="form-group">
+                                                                    <label for="vName">@L("Name") : </label>
+                                                                    <label id="vName"></label>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="vOwner">@L("Owner") : </label>
+                                                                    <label id="vOwner"></label>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="vSourceType">@L("SourceType") : </label>
+                                                                    <label id="vSourceType"></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="kt-wizard-v1__review-item">
+                                                            <div class="kt-wizard-v1__review-title">
+                                                                @L("SourceSettings")
+                                                            </div>
+                                                            <div class="kt-wizard-v1__review-content">
+                                                                <div class="form-group">
+                                                                    <label for="vHost">@L("Host") : </label>
+                                                                    <label id="vHost"></label>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="vPort">@L("Port") : </label>
+                                                                    <label id="vPort"></label>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="vDatabase">@L("Database") : </label>
+                                                                    <label id="vDatabase"></label>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="vUsername">@L("Username") : </label>
+                                                                    <label id="vUsername"></label>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="vPassword">@L("Password") : </label>
+                                                                    <label id="vPassword"></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end: Form Wizard Step -->
+                                            <!--begin: Form Actions -->
+                                            <div class="kt-form__actions">
+                                                <button class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-prev">
+                                                    @L("Previous")
+
+                                                </button>
+                                                <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-submit">
+                                                    @L("Submit")
+
+                                                </button>
+                                                <button class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-next">
+                                                    @L("NextStep")
+
+                                                </button>
+                                            </div>
+                                            <!--end: Form Actions -->
+                                        </form>
+
+                                        <!--end: Form Wizard Form-->
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end:: Content -->
+
+
+                    <form name="CreateOrEditForm" role="form" novalidate class="form-validation">
+
+                        @if (Model.IsEditMode)
+                        {
+            <input type="hidden" name="id" value="@Model.SourceConnection.Id" />}
+
+                    </form>
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/Portal/Views/SourceConnection/CreateOrEdit.js" asp-append-version="true"></script>
+}
+
+@section Styles
+{
+    <link rel="stylesheet" abp-href="/metronic/common/css/wizard/wizadrd-1.css" asp-append-version="true" />
+}

@@ -36,27 +36,9 @@ namespace DDM.Web.Areas.Portal.Controllers
         [AbpMvcAuthorize(AppPermissions.Pages_Customers_Create, AppPermissions.Pages_Customers_Edit)]
         public async Task<PartialViewResult> CreateOrEditModal(int? id)
         {
-            GetCustomerForEditOutput getCustomerForEditOutput;
-
-            if (id.HasValue)
-            {
-                getCustomerForEditOutput = await _customersAppService.GetCustomerForEdit(new EntityDto { Id = (int)id });
-            }
-            else
-            {
-                getCustomerForEditOutput = new GetCustomerForEditOutput
-                {
-                    Customer = new CreateOrEditCustomerDto()
-                };
-            }
-
-            var viewModel = new CreateOrEditCustomerModalViewModel()
-            {
-                Customer = getCustomerForEditOutput.Customer,
-                CustomerCategoryName = getCustomerForEditOutput.CustomerCategoryName,
-                CustomerCustomerCategoryList = await _customersAppService.GetAllCustomerCategoryForTableDropdown(),
-            };
-
+            GetCustomerForEditOutput output;
+            output = await _customersAppService.GetCustomerForEdit(new NullableIdDto { Id = id });
+            var viewModel = ObjectMapper.Map<CreateOrEditCustomerModalViewModel>(output);
             return PartialView("_CreateOrEditModal", viewModel);
         }
 
