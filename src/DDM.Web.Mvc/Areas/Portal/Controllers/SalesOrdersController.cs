@@ -11,6 +11,9 @@ using Abp.Application.Services.Dto;
 using Abp.Extensions;
 using System.Collections.Generic;
 using DDM.SalesOrderLines;
+using DDM.Customers;
+using DDM.Customers.Dtos;
+using DDM.Web.Areas.Portal.Models.Customers;
 
 namespace DDM.Web.Areas.Portal.Controllers
 {
@@ -19,10 +22,13 @@ namespace DDM.Web.Areas.Portal.Controllers
     public class SalesOrdersController : DDMControllerBase
     {
         private readonly ISalesOrdersAppService _salesOrdersAppService;
+        private readonly ICustomersAppService _customersAppService;
 
-        public SalesOrdersController(ISalesOrdersAppService salesOrdersAppService)
+        public SalesOrdersController(ISalesOrdersAppService salesOrdersAppService,
+            ICustomersAppService customersAppService)
         {
             _salesOrdersAppService = salesOrdersAppService;
+            _customersAppService = customersAppService;
         }
 
         public ActionResult Index()
@@ -89,7 +95,7 @@ namespace DDM.Web.Areas.Portal.Controllers
 
             //}
 
-            //var viewModel = new CreateOrEditSalesOrderModalViewModel()
+            //var viewModel = new CreateOrEditSalesOrderViewModel()
             //{
             //    SalesOrder = getSalesOrderForEditOutput.SalesOrder,
             //    CustomerName = getSalesOrderForEditOutput.CustomerName,
@@ -102,60 +108,82 @@ namespace DDM.Web.Areas.Portal.Controllers
             //return View(viewModel);
         }
 
+        [AbpMvcAuthorize(AppPermissions.Pages_Customers_Create, AppPermissions.Pages_Customers_Edit)]
+        public async Task<PartialViewResult> CreateCustomerModal(int? id)
+        {
+            GetCustomerForEditOutput output;
+            output = await _customersAppService.GetCustomerForEdit(new NullableIdDto { Id = id });
+            var viewModel = ObjectMapper.Map<CreateOrEditCustomerModalViewModel>(output);
+            return PartialView("_CreateOrEditModal", viewModel);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         [AbpMvcAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<PartialViewResult> CreateOrEditModal(int? id)
         {
-            GetSalesOrderForEditOutput getSalesOrderForEditOutput;
+            return PartialView();
 
-            if (id.HasValue)
-            {
-                getSalesOrderForEditOutput = await _salesOrdersAppService.GetSalesOrderForEdit(new EntityDto { Id = (int)id });
+            //GetSalesOrderForEditOutput getSalesOrderForEditOutput;
 
-                //TODO : GET LINES BASED ON ORDER ID
-                //getSalesOrderLineForEditOutput
+            //if (id.HasValue)
+            //{
+            //    getSalesOrderForEditOutput = await _salesOrdersAppService.GetSalesOrderForEdit(new EntityDto { Id = (int)id });
 
-                //getSalesOrderLineForEditOutput = new GetSalesOrderLineForEditOutput
-                //{
-                //    SalesOrderLines = new List<CreateOrEditSalesOrderLineDto>()
-                //};
+            //    //TODO : GET LINES BASED ON ORDER ID
+            //    //getSalesOrderLineForEditOutput
 
-            }
-            else
-            {
-                //Empty models
-                var salesOrder = new CreateOrEditSalesOrderDto();
-                var templateLine = new CreateOrEditSalesOrderLineDto
-                {
-                    Name = "",
-                    Description = "",
-                    SalesOrderId = 0,
-                    MachineId = 0,
-                    MaterialId = 0
-                };
+            //    //getSalesOrderLineForEditOutput = new GetSalesOrderLineForEditOutput
+            //    //{
+            //    //    SalesOrderLines = new List<CreateOrEditSalesOrderLineDto>()
+            //    //};
 
-                var salesOrderLines = new List<CreateOrEditSalesOrderLineDto>();
-                salesOrderLines.Add(templateLine);
+            //}
+            //else
+            //{
+            //    //Empty models
+            //    var salesOrder = new CreateOrEditSalesOrderDto();
+            //    var templateLine = new CreateOrEditSalesOrderLineDto
+            //    {
+            //        Name = "",
+            //        Description = "",
+            //        SalesOrderId = 0,
+            //        MachineId = 0,
+            //        MaterialId = 0
+            //    };
 
-                salesOrder.SalesOrderLines = salesOrderLines;
+            //    var salesOrderLines = new List<CreateOrEditSalesOrderLineDto>();
+            //    salesOrderLines.Add(templateLine);
 
-                getSalesOrderForEditOutput = new GetSalesOrderForEditOutput
-                {
-                    SalesOrder = salesOrder
-                };
+            //    salesOrder.SalesOrderLines = salesOrderLines;
 
-            }
+            //    getSalesOrderForEditOutput = new GetSalesOrderForEditOutput
+            //    {
+            //        SalesOrder = salesOrder
+            //    };
 
-            var viewModel = new CreateOrEditSalesOrderModalViewModel()
-            {
-                SalesOrder = getSalesOrderForEditOutput.SalesOrder,
-                CustomerName = getSalesOrderForEditOutput.CustomerName,
+            //}
 
-                SalesOrderCustomerList = await _salesOrdersAppService.GetAllCustomerForTableDropdown(),
-                SalesOrderMachineList = await _salesOrdersAppService.GetAllMachineForTableDropdown(),
-                SalesOrderMaterialList = await _salesOrdersAppService.GetAllMaterialForTableDropdown()
-            };
+            //var viewModel = new CreateOrEditSalesOrderViewModel()
+            //{
+            //    SalesOrder = getSalesOrderForEditOutput.SalesOrder,
+            //    CustomerName = getSalesOrderForEditOutput.CustomerName,
 
-            return PartialView("_CreateOrEditModal", viewModel);
+            //    SalesOrderCustomerList = await _salesOrdersAppService.GetAllCustomerForTableDropdown(),
+            //    SalesOrderMachineList = await _salesOrdersAppService.GetAllMachineForTableDropdown(),
+            //    SalesOrderMaterialList = await _salesOrdersAppService.GetAllMaterialForTableDropdown()
+            //};
+
+            //return PartialView("_CreateOrEditModal", viewModel);
         }
 
         public async Task<PartialViewResult> ViewSalesOrderModal(int id)
@@ -174,19 +202,21 @@ namespace DDM.Web.Areas.Portal.Controllers
 
         public async Task<PartialViewResult> EditProductionStatusModal(int id)
         {
-            GetSalesOrderForEditOutput getSalesOrderForEditOutput;
-            getSalesOrderForEditOutput = await _salesOrdersAppService.GetSalesOrderForEdit(new EntityDto { Id = (int)id });
+            return PartialView();
 
-            var viewModel = new EditProductionStatusViewModel()
-            {
-                SalesOrderId = (int)getSalesOrderForEditOutput.SalesOrder.Id,
-                ProductionStatusId = getSalesOrderForEditOutput.SalesOrder.ProductionStatusId,
-                Notes = getSalesOrderForEditOutput.SalesOrder.Notes,
+            //GetSalesOrderForEditOutput getSalesOrderForEditOutput;
+            //getSalesOrderForEditOutput = await _salesOrdersAppService.GetSalesOrderForEdit(new EntityDto { Id = (int)id });
 
-                ProductionStatusList = await _salesOrdersAppService.GetAllProductionStatusForTableDropdown()
-            };
+            //var viewModel = new EditProductionStatusViewModel()
+            //{
+            //    SalesOrderId = (int)getSalesOrderForEditOutput.SalesOrder.Id,
+            //    ProductionStatusId = getSalesOrderForEditOutput.SalesOrder.ProductionStatusId,
+            //    Notes = getSalesOrderForEditOutput.SalesOrder.Notes,
 
-            return PartialView("_EditProductionStatusModal", viewModel);
+            //    ProductionStatusList = await _salesOrdersAppService.GetAllProductionStatusForTableDropdown()
+            //};
+
+            //return PartialView("_EditProductionStatusModal", viewModel);
 
         }
     }

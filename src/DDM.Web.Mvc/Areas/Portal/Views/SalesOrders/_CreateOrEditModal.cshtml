@@ -2,7 +2,7 @@
 @using System.Globalization
 @using DDM.Web.Areas.Portal.Models.Common.Modals
 @using DDM.Web.Areas.Portal.Models.SalesOrders
-@model CreateOrEditSalesOrderModalViewModel
+@model CreateOrEditSalesOrderViewModel
 
 
 @await Html.PartialAsync("~/Areas/Portal/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditSalesOrder")) : L("CreateNewSalesOrder")))

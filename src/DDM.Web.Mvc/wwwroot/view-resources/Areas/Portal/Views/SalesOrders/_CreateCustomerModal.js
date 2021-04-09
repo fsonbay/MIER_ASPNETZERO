@@ -1,7 +1,9 @@
-﻿(function ($) {
+﻿
+/*SalesOrders/_CreateCustomerModal.js*/
 
+(function ($) {
 
-    app.modals.CreateOrEditCustomerModal = function () {
+    app.modals.CreateCustomerModal = function () {
 
         var _modalManager;
         var _customersService = abp.services.app.customers;
@@ -10,7 +12,7 @@
         this.init = function (modalManager) {
             _modalManager = modalManager;
 
-			var modal = _modalManager.getModal();
+            var modal = _modalManager.getModal();
             modal.find('.date-picker').datetimepicker({
                 locale: abp.localization.currentLanguage.name,
                 format: 'L'
@@ -36,19 +38,20 @@
             }
 
             var customer = _$customerInformationForm.serializeFormToObject();
-			
-			 _modalManager.setBusy(true);
-			 _customersService.createOrEdit(
-				customer
-			 ).done(function () {
-               abp.notify.info(app.localize('SavedSuccessfully'));
-               _modalManager.close();
-               abp.event.trigger('app.createOrEditCustomerModalSaved');
-			 }).always(function () {
-               _modalManager.setBusy(false);
-			});
+
+            _modalManager.setBusy(true);
+            _customersService.createOrEdit(
+                customer
+            ).done(function () {
+                abp.notify.info(app.localize('SavedSuccessfully'));
+                _modalManager.close();
+                abp.event.trigger('app.createCustomerModalSaved');
+                window.top.location.reload();
+            }).always(function () {
+                _modalManager.setBusy(false);
+
+            });
         };
     };
-
 
 })(jQuery);

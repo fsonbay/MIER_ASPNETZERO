@@ -5,7 +5,13 @@
     $(function () {
 
 		var _salesOrdersService = abp.services.app.salesOrders;
+		var _$createNewCustomerButton = $('#CreateNewCustomerButton');
 
+		var _createCustomerModal = new app.ModalManager({
+			viewUrl: abp.appPath + 'Portal/Customers/CreateOrEditModal',
+			scriptUrl: abp.appPath + 'view-resources/Areas/Portal/Views/SalesOrders/_CreateCustomerModal.js',
+			modalClass: 'CreateCustomerModal'
+		});
 
 		var KTWizard1 = function () {
 			// Base elements
@@ -167,6 +173,14 @@
 		}();
 		jQuery(document).ready(function () {
 			KTWizard1.init();
+		});
+
+		_$createNewCustomerButton.click(function () {
+			_createCustomerModal.open();
+
+			//alert(1);
+
+			//_createOrEditModal.open();
 		});
 
     });
