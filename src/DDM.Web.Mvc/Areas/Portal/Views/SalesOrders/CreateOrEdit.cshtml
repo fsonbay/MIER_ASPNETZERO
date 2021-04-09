@@ -101,18 +101,17 @@
                                         <label for="CustomerId">@L("Customer")</label>
                                         <div class="form-inline">
                                             <div class="form-group col-6">
-                                                @Html.DropDownList("CustomerId", new SelectList(Model.SalesOrderCustomerList, "Id", "DisplayName",
-                                                (Model.IsEditMode ? Model.SalesOrder.CustomerId.ToString() : "")), " - select -", new { @class = "form-control col-12", @required = "required" })
-
-                                                @*@Html.DropDownList(
-        "Name",
-        Model.SalesOrderCustomerList.Select(i => i.ToSelectListItem()),
-        new
-        {
-            @class = "form-control selectpicker",
-            data_live_search = "true",
-            id = "LanguageNameEdit"
-        })*@
+                                                @*@Html.DropDownList("CustomerId", new SelectList(Model.SalesOrderCustomerList, "Id", "DisplayName",
+        (Model.IsEditMode ? Model.SalesOrder.CustomerId.ToString() : "")), " - select -", new { @class = "form-control col-12", @required = "required" })*@
+                                                @Html.DropDownList(
+                                                "CustomerId",
+                                                Model.Cus.Select(i => i.ToSelectListItem()),
+                                                    new
+                                                    {
+                                                        @class = "form-control selectpicker",
+                                                        data_live_search = "true",
+                                                        id = "CustomerCategoryEdit"
+                                                    })
 
                                             </div>
                                             <div class="form-group">

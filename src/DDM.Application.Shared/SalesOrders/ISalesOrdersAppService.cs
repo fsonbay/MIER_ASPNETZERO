@@ -14,7 +14,7 @@ namespace DDM.SalesOrders
 
         Task<GetSalesOrderForViewDto> GetSalesOrderForView(int id);
 
-        Task<GetSalesOrderForEditOutput> GetSalesOrderForEdit(EntityDto input);
+        Task<GetSalesOrderForEditOutput> GetSalesOrderForEdit(NullableIdDto input);
 
         Task CreateOrEdit(CreateOrEditSalesOrderDto input);
 

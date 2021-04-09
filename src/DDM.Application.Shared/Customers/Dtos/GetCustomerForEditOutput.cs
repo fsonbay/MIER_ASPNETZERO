@@ -9,9 +9,7 @@ namespace DDM.Customers.Dtos
     {
         public CreateOrEditCustomerDto Customer { get; set; }
         public List<ComboboxItemDto> CustomerCategories { get; set; }
-
         public string CustomerCategoryName { get; set; }
-
         public GetCustomerForEditOutput()
         {
             CustomerCategories = new List<ComboboxItemDto>();

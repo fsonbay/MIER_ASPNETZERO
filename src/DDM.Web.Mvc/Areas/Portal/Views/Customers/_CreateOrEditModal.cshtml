@@ -16,44 +16,38 @@
                 <input type="hidden" name="id" value="@Model.Customer.Id" />
             }
 
-        <div class="form-group col-8">
-            <label for="customerCategoryId">@L("CustomerCategory")</label>
-            @Html.DropDownList(
-            "customerCategoryId",
-            Model.CustomerCategories.Select(i => i.ToSelectListItem()),
-                new
-                {
-                    @class = "form-control selectpicker",
-                    data_live_search = "true",
-                    id = "CustomerCategoryEdit"
-                })
-        </div>
+            <div class="form-group col-8">
+                <label for="customerCategoryId">@L("CustomerCategory")</label>
+                @Html.DropDownList(
+                "customerCategoryId",
+                Model.CustomerCategories.Select(i => i.ToSelectListItem()),
+                    new
+                    {
+                        @class = "form-control selectpicker",
+                        data_live_search = "true",
+                        id = "CustomerCategoryEdit"
+                    })
+            </div>
             <div class="form-group col-8">
                 <label for="Customer_Name">@L("Name")</label>
                 <input class="form-control" id="Customer_Name" value="@Model.Customer.Name" type="text" name="name" required maxlength="@DDM.Customers.CustomerConsts.MaxNameLength" minlength="@DDM.Customers.CustomerConsts.MinNameLength" />
             </div>
-
             <div class="form-group col-8">
                 <label for="Customer_Company">@L("Company")</label>
                 <input class="form-control" id="Customer_Company" value="@Model.Customer.Company" type="text" name="company" />
             </div>
-
             <div class="form-group col-4">
                 <label for="Customer_Phone">@L("Phone")</label>
                 <input class="form-control" id="Customer_Phone" value="@Model.Customer.Phone" type="text" name="phone" />
             </div>
-
             <div class="form-group col-8">
                 <label for="Customer_Email">@L("Email")</label>
                 <input class="form-control" id="Customer_Email" value="@Model.Customer.Email" type="text" name="email" />
             </div>
-
-            <div class="form-group">
+            <div class="form-group col-10">
                 <label for="Customer_Address">@L("Address")</label>
-                <input class="form-control" id="Customer_Address" value="@Model.Customer.Address" type="text" name="address" />
+                <textarea id="Customer_Address" name="address" rows="3" maxlength="256" class="form-control">@Model.Customer.Address</textarea>
             </div>
-
-
         </form>
     </div>
 </div>

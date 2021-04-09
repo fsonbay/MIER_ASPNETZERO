@@ -9,8 +9,11 @@ namespace DDM.SalesOrders.Dtos
     {
         public CreateOrEditSalesOrderDto SalesOrder { get; set; }
         public List<ComboboxItemDto> Customers { get; set; }
-
         public string CustomerName { get; set; }
+        public GetSalesOrderForEditOutput()
+        {
+            Customers = new List<ComboboxItemDto>();
+        }
 
     }
 }

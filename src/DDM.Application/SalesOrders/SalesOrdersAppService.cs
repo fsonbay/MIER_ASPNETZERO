@@ -113,8 +113,54 @@ namespace DDM.SalesOrders
         }
 
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
-        public async Task<GetSalesOrderForEditOutput> GetSalesOrderForEdit(EntityDto input)
+        public async Task<GetSalesOrderForEditOutput> GetSalesOrderForEdit(NullableIdDto input)
         {
+            SalesOrder salesOrder = null;
+            if (input.Id.HasValue)
+            {
+                salesOrder = await _salesOrderRepository.FirstOrDefaultAsync((int)input.Id);
+            }
+
+            var output = new GetSalesOrderForEditOutput();
+            output = new GetSalesOrderForEditOutput { SalesOrder = ObjectMapper.Map<CreateOrEditSalesOrderDto>(salesOrder) };
+
+            //Sales Order
+            output.SalesOrder = salesOrder != null
+                ? ObjectMapper.Map<CreateOrEditSalesOrderDto>(salesOrder)
+                : new CreateOrEditSalesOrderDto();
+
+            //Customer
+            output.Customers = _lookup_customerRepository
+                .GetAll()
+                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")") { IsSelected = output.SalesOrder.CustomerId == c.Id })
+                .ToList();
+
+            return output;
+
+
+            //Customer customer = null;
+            //if (input.Id.HasValue)
+            //{
+            //    customer = await _customerRepository.FirstOrDefaultAsync((int)input.Id);
+            //}
+
+            //var output = new GetCustomerForEditOutput();
+
+            //output = new GetCustomerForEditOutput { Customer = ObjectMapper.Map<CreateOrEditCustomerDto>(customer) };
+
+            ////Customer
+            //output.Customer = customer != null
+            //    ? ObjectMapper.Map<CreateOrEditCustomerDto>(customer)
+            //    : new CreateOrEditCustomerDto();
+
+            ////Customer categories
+            //output.CustomerCategories = _lookup_customerCategoryRepository
+            //    .GetAll()
+            //    .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Description + ")") { IsSelected = output.Customer.CustomerCategoryId == c.Id })
+            //    .ToList();
+
+            //return output;
+
             //SalesOrder language = null;
             //if (input.Id.HasValue)
             //{
@@ -123,55 +169,55 @@ namespace DDM.SalesOrders
 
 
 
-            var salesOrder = _salesOrderRepository.GetIncludes(input.Id);
+            //var salesOrder = _salesOrderRepository.GetIncludes(input.Id);
 
-            var createOrEditSalesOrderDto = new CreateOrEditSalesOrderDto
-            {
-                Id = salesOrder.Id,
-                Number = salesOrder.Number,
-                ProcessedBySurabaya = salesOrder.ProcessedBySurabaya,
-                Date = salesOrder.Date,
-                Deadline = salesOrder.Deadline,
-                Amount = salesOrder.Amount.ToString("N0", new CultureInfo("id")),
-                CustomerId = salesOrder.CustomerId,
-                ProductionStatusId = salesOrder.ProductionStatusId,
-                Notes = salesOrder.Notes
-            };
+            //var createOrEditSalesOrderDto = new CreateOrEditSalesOrderDto
+            //{
+            //    Id = salesOrder.Id,
+            //    Number = salesOrder.Number,
+            //    ProcessedBySurabaya = salesOrder.ProcessedBySurabaya,
+            //    Date = salesOrder.Date,
+            //    Deadline = salesOrder.Deadline,
+            //    Amount = salesOrder.Amount.ToString("N0", new CultureInfo("id")),
+            //    CustomerId = salesOrder.CustomerId,
+            //    ProductionStatusId = salesOrder.ProductionStatusId,
+            //    Notes = salesOrder.Notes
+            //};
 
-            var createOrEditSalesOrderLineDtoList = new List<CreateOrEditSalesOrderLineDto>();
+            //var createOrEditSalesOrderLineDtoList = new List<CreateOrEditSalesOrderLineDto>();
 
-            foreach(var salesOrderLine in salesOrder.SalesOrderLines.ToList())
-            {
-                var createOrEditSalesOrderLineDto = new CreateOrEditSalesOrderLineDto
-                {
-                    Id = salesOrderLine.Id,
-                    Name = salesOrderLine.Name,
-                    Description = salesOrderLine.Description,
-                    MaterialId = salesOrderLine.MaterialId,
-                    MachineId = salesOrderLine.MachineId,
-                    Quantity = salesOrderLine.Quantity.ToString("N0", new CultureInfo("id")),
-                    UnitPrice = salesOrderLine.UnitPrice.ToString("N0", new CultureInfo("id")),
-                    LineAmount = salesOrderLine.LineAmount.ToString("N0", new CultureInfo("id")),
-                    MarkForDelete = false
-                };
+            //foreach(var salesOrderLine in salesOrder.SalesOrderLines.ToList())
+            //{
+            //    var createOrEditSalesOrderLineDto = new CreateOrEditSalesOrderLineDto
+            //    {
+            //        Id = salesOrderLine.Id,
+            //        Name = salesOrderLine.Name,
+            //        Description = salesOrderLine.Description,
+            //        MaterialId = salesOrderLine.MaterialId,
+            //        MachineId = salesOrderLine.MachineId,
+            //        Quantity = salesOrderLine.Quantity.ToString("N0", new CultureInfo("id")),
+            //        UnitPrice = salesOrderLine.UnitPrice.ToString("N0", new CultureInfo("id")),
+            //        LineAmount = salesOrderLine.LineAmount.ToString("N0", new CultureInfo("id")),
+            //        MarkForDelete = false
+            //    };
 
-                //Add createOrEditSalesOrderLineDto to list
-                createOrEditSalesOrderLineDtoList.Add(createOrEditSalesOrderLineDto);
-            };
+            //    //Add createOrEditSalesOrderLineDto to list
+            //    createOrEditSalesOrderLineDtoList.Add(createOrEditSalesOrderLineDto);
+            //};
 
-            //Assign line list to nested SalesOrderLines 
-            createOrEditSalesOrderDto.SalesOrderLines = createOrEditSalesOrderLineDtoList;
+            ////Assign line list to nested SalesOrderLines 
+            //createOrEditSalesOrderDto.SalesOrderLines = createOrEditSalesOrderLineDtoList;
 
-            var output = new GetSalesOrderForEditOutput { SalesOrder = createOrEditSalesOrderDto };
+            //var output = new GetSalesOrderForEditOutput { SalesOrder = createOrEditSalesOrderDto };
 
 
-            if (output.SalesOrder.CustomerId != null)
-            {
-                var _lookupCustomer = await _lookup_customerRepository.FirstOrDefaultAsync((int)output.SalesOrder.CustomerId);
-                output.CustomerName = _lookupCustomer?.Name?.ToString();
-            }
+            //if (output.SalesOrder.CustomerId != null)
+            //{
+            //    var _lookupCustomer = await _lookup_customerRepository.FirstOrDefaultAsync((int)output.SalesOrder.CustomerId);
+            //    output.CustomerName = _lookupCustomer?.Name?.ToString();
+            //}
 
-            return output;
+            //return output;
 
         }
 
