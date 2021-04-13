@@ -128,6 +128,20 @@ namespace DDM.Customers
             }
         }
 
+        public int CreateNewCustomer(CreateOrEditCustomerDto input)
+        {
+            var i = CreateAndGetId(input);
+            return i;
+        }
+
+        [AbpAuthorize(AppPermissions.Pages_Customers_Create)]
+        protected virtual int CreateAndGetId(CreateOrEditCustomerDto input)
+        {
+            var customer = ObjectMapper.Map<Customer>(input);
+            int id =  _customerRepository.InsertAndGetId(customer);
+            return id;
+        }
+
         [AbpAuthorize(AppPermissions.Pages_Customers_Create)]
         protected virtual async Task Create(CreateOrEditCustomerDto input)
         {

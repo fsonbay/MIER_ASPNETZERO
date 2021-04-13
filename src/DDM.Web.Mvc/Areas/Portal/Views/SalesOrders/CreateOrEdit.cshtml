@@ -102,27 +102,27 @@
                                 <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
                                     <h3 class="mb-10 font-weight-bold text-dark">Select Customer and Specify Order date and Deadline</h3>
                                     <!--begin::Input-->
-                                    <div class="form-group fv-plugins-icon-container">
+                                    <div class="form-group">
                                         <label for="CustomerId">@L("Customer")</label>
+                                        <div class="col-10">
 
-                                        <div class="form-group col-10">
+                                            @*<select class="js-data-example-ajax"></select>*@
+                                            
+                                            @*@Html.DropDownList()*@
+
                                             @Html.DropDownList(
                                             "CustomerId",
                                             Model.Customers.Select(i => i.ToSelectListItem()),
                                                 new
                                                 {
-                                                    @class = "form-control selectpicker col-8",
+                                                    //@class = "form-control selectpicker col-8",
                                                     data_live_search = "true",
-                                                    id = "CustomerCategoryEdit"
+                                                    id = "CustomerId"
                                                 })
+
                                             <button id="CreateNewCustomerButton" class="btn btn-link">@L("CreateNewCustomer")</button>
+                                        
                                         </div>
-                                        <div class="form-group">
-                                          
-
-                                        </div>
-
-
                                     </div>
                                     <div class="form-group">
                                         <label for="Date">@L("Date")</label>

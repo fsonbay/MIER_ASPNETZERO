@@ -40,18 +40,40 @@
             var customer = _$customerInformationForm.serializeFormToObject();
 
             _modalManager.setBusy(true);
-            _customersService.createOrEdit(
+            _customersService.createNewCustomer(
                 customer
-            ).done(function () {
+            ).done(function (result) {
                 abp.notify.info(app.localize('SavedSuccessfully'));
                 _modalManager.close();
                 abp.event.trigger('app.createCustomerModalSaved');
-                window.top.location.reload();
+
+                alert(customer.name + '-' + customer.company);
+
+                $('#CustomerId').append($('<option>', {
+                    value: 1,
+                    text: 'My option',
+                    selected: true
+                   
+                }));
+
+                //Refresh page
+               // alert(result);
+               //window.top.location.reload();
+
+               // $('#CustomerId').val(5)
+                //$("#CustomerId").val(result).change();
+
+            //  alert($('#CustomerId').val());
+              
+
             }).always(function () {
                 _modalManager.setBusy(false);
 
             });
         };
+
+
+
     };
 
 })(jQuery);

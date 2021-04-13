@@ -176,8 +176,9 @@
 		});
 
 		_$createNewCustomerButton.click(function () {
-			_createCustomerModal.open();
-
+				_createCustomerModal.open();
+			//var result = 5;
+			//$("#CustomerId").val(result);
 			//alert(1);
 
 			//_createOrEditModal.open();
