@@ -3,6 +3,8 @@
 
 (function ($) {
 
+
+
     app.modals.CreateCustomerModal = function () {
 
         var _modalManager;
@@ -28,10 +30,12 @@
             _$customerInformationForm = _modalManager.getModal().find('form[name=CustomerInformationsForm]');
             _$customerInformationForm.validate();
         };
+
         this.save = function () {
             if (!_$customerInformationForm.valid()) {
                 return;
             }
+
             if ($('#CustomerCategoryEdit').prop('required') && $('#CustomerCategoryEdit').val() == '') {
                 abp.message.error(app.localize('{0}IsRequired', app.localize('CustomerCategory')));
                 return;
@@ -43,28 +47,18 @@
             _customersService.createNewCustomer(
                 customer
             ).done(function (result) {
-                abp.notify.info(app.localize('SavedSuccessfully'));
+                abp.notify.info(app.localize('NewCustomerAddedSuccessfully'));
                 _modalManager.close();
                 abp.event.trigger('app.createCustomerModalSaved');
 
-                alert(customer.name + '-' + customer.company);
-
+                var cust = customer.name + ' (' + customer.company + ')';
                 $('#CustomerId').append($('<option>', {
-                    value: 1,
-                    text: 'My option',
+                    value: result,
+                    text: cust,
                     selected: true
-                   
                 }));
 
-                //Refresh page
-               // alert(result);
-               //window.top.location.reload();
-
-               // $('#CustomerId').val(5)
-                //$("#CustomerId").val(result).change();
-
-            //  alert($('#CustomerId').val());
-              
+                $('.selectpicker').selectpicker('refresh');            
 
             }).always(function () {
                 _modalManager.setBusy(false);

@@ -134,6 +134,19 @@ namespace DDM.SalesOrders
                 .GetAll()
                 .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")") { IsSelected = output.SalesOrder.CustomerId == c.Id })
                 .ToList();
+            
+            //Default selected null on insert mode
+            if (!input.Id.HasValue)
+            {
+                ComboboxItemDto DefaultSelected = new ComboboxItemDto
+                {
+                    DisplayText = "Please select...",
+                    IsSelected = true,
+                    Value = ""
+                };
+
+                output.Customers.Add(DefaultSelected);
+            }
 
             return output;
 
@@ -270,7 +283,7 @@ namespace DDM.SalesOrders
             };
 
             //Iterate Sales Order Lines
-            var  salesOrderLineList = new List<SalesOrderLine>();
+            var salesOrderLineList = new List<SalesOrderLine>();
             List<string> salesOrderLineNames = new List<string>();
 
             foreach (var item in input.SalesOrderLines.ToList())
@@ -392,7 +405,7 @@ namespace DDM.SalesOrders
             salesOrder.ProductionStatusId = 10; // 10 - New
             salesOrder.MarkForDelete = false;
 
-         
+
             ////Update
             //_salesOrderRepository.Update(salesOrder);
 

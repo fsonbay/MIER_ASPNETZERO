@@ -100,22 +100,18 @@
 
                                 <!--begin::Wizard Step 1-->
                                 <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-                                    <h3 class="mb-10 font-weight-bold text-dark">Select Customer and Specify Order date and Deadline</h3>
+                                    <h3 class="mb-10 font-weight-bold text-dark">Select Customer and Specify Date and Deadline</h3>
                                     <!--begin::Input-->
                                     <div class="form-group">
                                         <label for="CustomerId">@L("Customer")</label>
                                         <div class="col-10">
-
-                                            @*<select class="js-data-example-ajax"></select>*@
-                                            
-                                            @*@Html.DropDownList()*@
 
                                             @Html.DropDownList(
                                             "CustomerId",
                                             Model.Customers.Select(i => i.ToSelectListItem()),
                                                 new
                                                 {
-                                                    //@class = "form-control selectpicker col-8",
+                                                    @class = "form-control selectpicker col-8",
                                                     data_live_search = "true",
                                                     id = "CustomerId"
                                                 })
