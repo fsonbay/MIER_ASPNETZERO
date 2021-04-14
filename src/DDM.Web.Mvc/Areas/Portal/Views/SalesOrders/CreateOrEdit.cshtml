@@ -100,7 +100,7 @@
 
                                 <!--begin::Wizard Step 1-->
                                 <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-                                    <h3 class="mb-10 font-weight-bold text-dark">Select Customer and Specify Date and Deadline</h3>
+                                    <h4 class="mb-10 font-weight-bold text-black-50">Select customer, date and deadline</h4>
                                     <!--begin::Input-->
                                     <div class="row">
                                         <div class="col-8">
@@ -128,16 +128,16 @@
                                                 <input id="SalesOrder_Date" name="Date" value="@Model.SalesOrder.Date" type="text" class="form-control m-input date-picker" />
                                             </div>
                                         </div>
-                                        <div class="col-8">
+                                        <div class="col-7">
                                             <div class="form-group">
                                                 <label for="Deadline">@L("Deadline")</label>
                                                 <div class="input-group">
-                                                    <input id="SalesOrder_Deadline" name="Deadline" value="@Model.SalesOrder.Deadline" type="text" class="form-control m-input date-picker" />
-                                                    <button id="1Button" class="btn btn-text-info">+ 1 </button>
-                                                    <button id="2Button" class="btn btn-text-info">+ 2 </button>
-                                                    <button id="3Button" class="btn btn-text-info">+ 3 </button>
-                                                    <button id="4Button" class="btn btn-text-info">+ 4 </button>
-                                                    <button id="5Button" class="btn btn-text-info">+ 5 </button>
+                                                    <input id="SalesOrder_Deadline" name="Deadline" value="@Model.SalesOrder.Deadline" type="text" class="form-control m-input date-picker" required />
+                                                    <button id="1Button" class="btn btn-text-info" title="Deadline +1 day">+ 1 </button>
+                                                    <button id="2Button" class="btn btn-text-info" title="Deadline +2 days">+ 2 </button>
+                                                    <button id="3Button" class="btn btn-text-info" title="Deadline +3 days">+ 3 </button>
+                                                    <button id="4Button" class="btn btn-text-info" title="Deadline +4 days">+ 4 </button>
+                                                    <button id="5Button" class="btn btn-text-info" title="Deadline +5 days">+ 5 </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -147,7 +147,7 @@
                                 <!--end::Wizard Step 1-->
                                 <!--begin::Wizard Step 2-->
                                 <div class="pb-5" data-wizard-type="step-content">
-                                    <h4 class="mb-10 font-weight-bold text-dark">Enter order details</h4>
+                                    <h4 class="mb-10 font-weight-bold text-black-50">Enter order details</h4>
                                     <!--begin::Input-->
                                     <div class="form-group fv-plugins-icon-container">
                                         <label>Customer</label>
@@ -168,6 +168,7 @@
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Wizard Step 2-->
+
                                 <!--begin::Wizard Step 5-->
                                 <div class="pb-5" data-wizard-type="step-content">
                                     <!--begin::Section-->

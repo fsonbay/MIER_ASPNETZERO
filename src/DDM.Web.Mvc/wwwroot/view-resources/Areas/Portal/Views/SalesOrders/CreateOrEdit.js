@@ -48,6 +48,7 @@
                 // Validation before going to next page
                 wizard.on('beforeNext', function (wizardObj) {
                     if (validator.form() !== true) {
+                      
                         wizardObj.stop();  // don't go to the next step
                     }
                 });
@@ -73,16 +74,18 @@
 
                     // Validation rules
                     rules: {
+
                         //= Step 1
-                        customer: {
-                            required: false
+                        CustomerId: {
+                            required: true
                         },
-                        date: {
-                            required: false
+                        Date: {
+                            required: true
                         },
-                        deadline: {
-                            required: false
+                        Deadline: {
+                            required: true
                         },
+
                         //= Step 2
                         package: {
                             required: true
@@ -147,7 +150,6 @@
                     }
                 });
             }
-
             var initSubmit = function () {
                 var btn = formEl.find('[data-ktwizard-type="action-submit"]');
 
@@ -176,7 +178,6 @@
                     }
                 });
             }
-
             return {
                 // public functions
                 init: function () {
@@ -199,10 +200,49 @@
 
         _$1Btn.click(function () {
 
-            var deadline = _$deadline.val();
-            alert(deadline);
+            var deadlineString = _$deadline.val();
+            var deadlineParts = deadlineString.split("/");
+            var deadlineObject = new Date(+deadlineParts[2], deadlineParts[1] - 1, +deadlineParts[0]);
+
+            deadlineObject.setDate(deadlineObject.getDate() + 1);
+            _$deadline.val(deadlineObject);
         });
-        
+
+        _$2Btn.click(function () {
+            var deadline = _$deadline.val();
+            var date = parseInt(deadline.substring(0, 2));
+            var date_2 = date + 2;
+            var updatedDate = deadline.replaceAt(0, date_2.toString());
+            _$deadline.val(updatedDate);
+        });
+
+        _$3Btn.click(function () {
+            var deadline = _$deadline.val();
+            var date = parseInt(deadline.substring(0, 2));
+            var date_3 = date + 3;
+            var updatedDate = deadline.replaceAt(0, date_3.toString());
+            _$deadline.val(updatedDate);
+        });
+
+        _$4Btn.click(function () {
+            var deadline = _$deadline.val();
+            var date = parseInt(deadline.substring(0, 2));
+            var date_4 = date + 4;
+            var updatedDate = deadline.replaceAt(0, date_4.toString());
+            _$deadline.val(updatedDate);
+        });
+
+        _$5Btn.click(function () {
+            var deadline = _$deadline.val();
+            var date = parseInt(deadline.substring(0, 2));
+            var date_5 = date + 5;
+            var updatedDate = deadline.replaceAt(0, date_5.toString());
+            _$deadline.val(updatedDate);
+        });
+
+        String.prototype.replaceAt = function (index, replacement) {
+            return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+        }
 
         function SetDefaultDate() {
             var currentYear = (new Date).getFullYear();
