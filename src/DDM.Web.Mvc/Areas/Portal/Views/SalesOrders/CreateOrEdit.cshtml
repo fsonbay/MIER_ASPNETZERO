@@ -102,33 +102,45 @@
                                 <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
                                     <h3 class="mb-10 font-weight-bold text-dark">Select Customer and Specify Date and Deadline</h3>
                                     <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label for="CustomerId">@L("Customer")</label>
-                                        <div class="col-10">
-
-                                            @Html.DropDownList(
-                                            "CustomerId",
-                                            Model.Customers.Select(i => i.ToSelectListItem()),
-                                                new
-                                                {
-                                                    @class = "form-control selectpicker col-8",
-                                                    data_live_search = "true",
-                                                    id = "CustomerId"
-                                                })
-
-                                            <button id="CreateNewCustomerButton" class="btn btn-link">@L("CreateNewCustomer")</button>
-                                        
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <label for="CustomerId">@L("Customer")</label>
+                                                <div class="input-group">
+                                                    @Html.DropDownList(
+                                                          "CustomerId",
+                                                          Model.Customers.Select(i => i.ToSelectListItem()),
+                                                              new
+                                                              {
+                                                                  @class = "form-control selectpicker",
+                                                                  data_live_search = "true",
+                                                                  id = "CustomerId"
+                                                              })
+                                                    <button id="CreateNewCustomerButton" class="btn btn-text-info" title="Create New Customer"><i class="fa fa-plus"></i></button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="Date">@L("Date")</label>
-                                        <input id="SalesOrder_Date" name="Date" value="@Model.SalesOrder.Date" type="text" class="form-control m-input date-picker" />
-                                        <span class="form-text text-muted">Please enter your Address.</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Deadline">@L("Deadline")</label>
-                                        <input id="SalesOrder_Deadline" name="Deadline" value="@Model.SalesOrder.Deadline" type="text" class="form-control m-input date-picker" />
-                                        <span class="form-text text-muted">Please enter your Address.</span>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="Date">@L("Date")</label>
+                                                <input id="SalesOrder_Date" name="Date" value="@Model.SalesOrder.Date" type="text" class="form-control m-input date-picker" />
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <label for="Deadline">@L("Deadline")</label>
+                                                <div class="input-group">
+                                                    <input id="SalesOrder_Deadline" name="Deadline" value="@Model.SalesOrder.Deadline" type="text" class="form-control m-input date-picker" />
+                                                    <button id="1Button" class="btn btn-text-info">+ 1 </button>
+                                                    <button id="2Button" class="btn btn-text-info">+ 2 </button>
+                                                    <button id="3Button" class="btn btn-text-info">+ 3 </button>
+                                                    <button id="4Button" class="btn btn-text-info">+ 4 </button>
+                                                    <button id="5Button" class="btn btn-text-info">+ 5 </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!--end::Input-->
                                 </div>

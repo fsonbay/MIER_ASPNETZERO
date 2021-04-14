@@ -4,185 +4,217 @@
 (function () {
     $(function () {
 
-		var _salesOrdersService = abp.services.app.salesOrders;
-		var _$createNewCustomerButton = $('#CreateNewCustomerButton');
+        var _salesOrdersService = abp.services.app.salesOrders;
+        var _$newCustBtn = $('#CreateNewCustomerButton');
+        var _$1Btn = $('#1Button');
+        var _$2Btn = $('#2Button');
+        var _$3Btn = $('#3Button');
+        var _$4Btn = $('#4Button');
+        var _$5Btn = $('#5Button');
+        var _$deadline = $('#SalesOrder_Deadline');
 
-		var _createCustomerModal = new app.ModalManager({
-			viewUrl: abp.appPath + 'Portal/Customers/CreateOrEditModal',
-			scriptUrl: abp.appPath + 'view-resources/Areas/Portal/Views/SalesOrders/_CreateCustomerModal.js',
-			modalClass: 'CreateCustomerModal'
-		});
 
-		var KTWizard1 = function () {
-			// Base elements
-			var wizardEl;
-			var formEl;
-			var validator;
-			var wizard;
+        var _createCustomerModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'Portal/Customers/CreateOrEditModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/Portal/Views/SalesOrders/_CreateCustomerModal.js',
+            modalClass: 'CreateCustomerModal'
+        });
 
-			// Private functions
-			var initWizard = function () {
-				// Initialize form wizard
-				wizard = new KTWizard('kt_wizard', {
-					startStep: 1
-				});
 
-				// Validation before going to next page
-				wizard.on('beforeNext', function (wizardObj) {
-					if (validator.form() !== true) {
-						wizardObj.stop();  // don't go to the next step
-					}
-				});
+        
+        SetDefaultDate();
 
-				wizard.on('beforePrev', function (wizardObj) {
-					if (validator.form() !== true) {
-						wizardObj.stop();  // don't go to the next step
-					}
-				});
+        $('.date-picker').datetimepicker({
+            locale: abp.localization.currentLanguage.name,
+            format: 'DD/MM/YYYY'
+            
+        });
+      
 
-				// Change event
-				wizard.on('change', function (wizard) {
-					setTimeout(function () {
-						KTUtil.scrollTop();
-					}, 500);
-				});
-			}
+        var KTWizard1 = function () {
+            // Base elements
+            var wizardEl;
+            var formEl;
+            var validator;
+            var wizard;
 
-			var initValidation = function () {
-				validator = formEl.validate({
-					// Validate only visible fields
-					ignore: ":hidden",
+            // Private functions
+            var initWizard = function () {
+                // Initialize form wizard
+                wizard = new KTWizard('kt_wizard', {
+                    startStep: 1
+                });
 
-					// Validation rules
-					rules: {
-						//= Step 1
-						customer: {
-							required: false
-						},
-						date: {
-							required: false
-						},
-						deadline: {
-							required: false
-						},
-						//= Step 2
-						package: {
-							required: true
-						},
-						weight: {
-							required: true
-						},
-						width: {
-							required: true
-						},
-						height: {
-							required: true
-						},
-						length: {
-							required: true
-						},
+                // Validation before going to next page
+                wizard.on('beforeNext', function (wizardObj) {
+                    if (validator.form() !== true) {
+                        wizardObj.stop();  // don't go to the next step
+                    }
+                });
 
-						//= Step 3
-						delivery: {
-							required: true
-						},
-						packaging: {
-							required: true
-						},
-						preferreddelivery: {
-							required: true
-						},
+                wizard.on('beforePrev', function (wizardObj) {
+                    if (validator.form() !== true) {
+                        wizardObj.stop();  // don't go to the next step
+                    }
+                });
 
-						//= Step 4
-						locaddress1: {
-							required: true
-						},
-						locpostcode: {
-							required: true
-						},
-						loccity: {
-							required: true
-						},
-						locstate: {
-							required: true
-						},
-						loccountry: {
-							required: true
-						},
-					},
+                // Change event
+                wizard.on('change', function (wizard) {
+                    setTimeout(function () {
+                        KTUtil.scrollTop();
+                    }, 500);
+                });
+            }
 
-					// Display error  
-					invalidHandler: function (event, validator) {
-						KTUtil.scrollTop();
+            var initValidation = function () {
+                validator = formEl.validate({
+                    // Validate only visible fields
+                    ignore: ":hidden",
 
-						//swal.fire({
-						//	"title": "",
-						//	"text": "There are some errors in your submission. Please correct them.",
-						//	"type": "error",
-						//	"confirmButtonClass": "btn btn-secondary"
-						//});
-					},
+                    // Validation rules
+                    rules: {
+                        //= Step 1
+                        customer: {
+                            required: false
+                        },
+                        date: {
+                            required: false
+                        },
+                        deadline: {
+                            required: false
+                        },
+                        //= Step 2
+                        package: {
+                            required: true
+                        },
+                        weight: {
+                            required: true
+                        },
+                        width: {
+                            required: true
+                        },
+                        height: {
+                            required: true
+                        },
+                        length: {
+                            required: true
+                        },
 
-					// Submit valid form
-					submitHandler: function (form) {
+                        //= Step 3
+                        delivery: {
+                            required: true
+                        },
+                        packaging: {
+                            required: true
+                        },
+                        preferreddelivery: {
+                            required: true
+                        },
 
-					}
-				});
-			}
+                        //= Step 4
+                        locaddress1: {
+                            required: true
+                        },
+                        locpostcode: {
+                            required: true
+                        },
+                        loccity: {
+                            required: true
+                        },
+                        locstate: {
+                            required: true
+                        },
+                        loccountry: {
+                            required: true
+                        },
+                    },
 
-			var initSubmit = function () {
-				var btn = formEl.find('[data-ktwizard-type="action-submit"]');
+                    // Display error  
+                    invalidHandler: function (event, validator) {
+                        KTUtil.scrollTop();
 
-				btn.on('click', function (e) {
-					e.preventDefault();
+                        //swal.fire({
+                        //	"title": "",
+                        //	"text": "There are some errors in your submission. Please correct them.",
+                        //	"type": "error",
+                        //	"confirmButtonClass": "btn btn-secondary"
+                        //});
+                    },
 
-					if (validator.form()) {
-						// See: src\js\framework\base\app.js
-						KTApp.progress(btn);
-						//KTApp.block(formEl);
+                    // Submit valid form
+                    submitHandler: function (form) {
 
-						// See: http://malsup.com/jquery/form/#ajaxSubmit
-						formEl.ajaxSubmit({
-							success: function () {
-								KTApp.unprogress(btn);
-								//KTApp.unblock(formEl);
+                    }
+                });
+            }
 
-								//swal.fire({
-								//	"title": "",
-								//	"text": "The application has been successfully submitted!",
-								//	"type": "success",
-								//	"confirmButtonClass": "btn btn-secondary"
-								//});
-							}
-						});
-					}
-				});
-			}
+            var initSubmit = function () {
+                var btn = formEl.find('[data-ktwizard-type="action-submit"]');
 
-			return {
-				// public functions
-				init: function () {
-					wizardEl = KTUtil.getById('kt_wizard');
-					formEl = $('#SalesOrderInformationsForm');
+                btn.on('click', function (e) {
+                    e.preventDefault();
 
-					initWizard();
-					initValidation();
-					initSubmit();
-				}
-			};
-		}();
-		jQuery(document).ready(function () {
-			KTWizard1.init();
-		});
+                    if (validator.form()) {
+                        // See: src\js\framework\base\app.js
+                        KTApp.progress(btn);
+                        //KTApp.block(formEl);
 
-		_$createNewCustomerButton.click(function () {
-				_createCustomerModal.open();
-			//var result = 5;
-			//$("#CustomerId").val(result);
-			//alert(1);
+                        // See: http://malsup.com/jquery/form/#ajaxSubmit
+                        formEl.ajaxSubmit({
+                            success: function () {
+                                KTApp.unprogress(btn);
+                                //KTApp.unblock(formEl);
 
-			//_createOrEditModal.open();
-		});
+                                //swal.fire({
+                                //	"title": "",
+                                //	"text": "The application has been successfully submitted!",
+                                //	"type": "success",
+                                //	"confirmButtonClass": "btn btn-secondary"
+                                //});
+                            }
+                        });
+                    }
+                });
+            }
+
+            return {
+                // public functions
+                init: function () {
+                    wizardEl = KTUtil.getById('kt_wizard');
+                    formEl = $('#SalesOrderInformationsForm');
+
+                    initWizard();
+                    initValidation();
+                    initSubmit();
+                }
+            };
+        }();
+        jQuery(document).ready(function () {
+            KTWizard1.init();
+        });
+
+        _$newCustBtn.click(function () {
+            _createCustomerModal.open();
+        });
+
+        _$1Btn.click(function () {
+
+            var deadline = _$deadline.val();
+            alert(deadline);
+        });
+        
+
+        function SetDefaultDate() {
+            var currentYear = (new Date).getFullYear();
+            var currentMonth = (new Date).getMonth() + 1;
+            var currentDate = (new Date).getDate();
+
+            var today = currentDate + '/' + currentMonth + '/' + currentYear;
+
+            $('#SalesOrder_Date').val(today);
+            $('#SalesOrder_Deadline').val(today);
+
+        }
 
     });
 })();
