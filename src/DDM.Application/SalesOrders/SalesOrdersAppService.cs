@@ -135,6 +135,12 @@ namespace DDM.SalesOrders
                 .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")") { IsSelected = output.SalesOrder.CustomerId == c.Id })
                 .ToList();
             
+            //ProductionStatus
+            output.ProductionStatuses = _lookup_productionStatusRepository
+                .GetAll()
+                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name ) { IsSelected = output.SalesOrder.ProductionStatusId == c.Id })
+                .ToList();
+
             //Default selected null on insert mode
             if (!input.Id.HasValue)
             {

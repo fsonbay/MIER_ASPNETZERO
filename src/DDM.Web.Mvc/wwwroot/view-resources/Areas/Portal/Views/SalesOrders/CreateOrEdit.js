@@ -199,62 +199,57 @@
         });
 
         _$1Btn.click(function () {
-
-            var deadlineString = _$deadline.val();
-            var deadlineParts = deadlineString.split("/");
-            var deadlineObject = new Date(+deadlineParts[2], deadlineParts[1] - 1, +deadlineParts[0]);
-
-            deadlineObject.setDate(deadlineObject.getDate() + 1);
-            _$deadline.val(deadlineObject);
+            var deadlineDt = FormatStringToDate(_$deadline.val());
+            deadlineDt.setDate(deadlineDt.getDate() + 1);
+            _$deadline.val(FormatDateToString(deadlineDt));
         });
 
         _$2Btn.click(function () {
-            var deadline = _$deadline.val();
-            var date = parseInt(deadline.substring(0, 2));
-            var date_2 = date + 2;
-            var updatedDate = deadline.replaceAt(0, date_2.toString());
-            _$deadline.val(updatedDate);
+            var deadlineDt = FormatStringToDate(_$deadline.val());
+            deadlineDt.setDate(deadlineDt.getDate() + 2);
+            _$deadline.val(FormatDateToString(deadlineDt));
         });
 
         _$3Btn.click(function () {
-            var deadline = _$deadline.val();
-            var date = parseInt(deadline.substring(0, 2));
-            var date_3 = date + 3;
-            var updatedDate = deadline.replaceAt(0, date_3.toString());
-            _$deadline.val(updatedDate);
+            var deadlineDt = FormatStringToDate(_$deadline.val());
+            deadlineDt.setDate(deadlineDt.getDate() + 3);
+            _$deadline.val(FormatDateToString(deadlineDt));
         });
 
         _$4Btn.click(function () {
-            var deadline = _$deadline.val();
-            var date = parseInt(deadline.substring(0, 2));
-            var date_4 = date + 4;
-            var updatedDate = deadline.replaceAt(0, date_4.toString());
-            _$deadline.val(updatedDate);
+            var deadlineDt = FormatStringToDate(_$deadline.val());
+            deadlineDt.setDate(deadlineDt.getDate() + 4);
+            _$deadline.val(FormatDateToString(deadlineDt));
         });
 
         _$5Btn.click(function () {
-            var deadline = _$deadline.val();
-            var date = parseInt(deadline.substring(0, 2));
-            var date_5 = date + 5;
-            var updatedDate = deadline.replaceAt(0, date_5.toString());
-            _$deadline.val(updatedDate);
+            var deadlineDt = FormatStringToDate(_$deadline.val());
+            deadlineDt.setDate(deadlineDt.getDate() + 5);
+            _$deadline.val(FormatDateToString(deadlineDt));
         });
 
-        String.prototype.replaceAt = function (index, replacement) {
-            return this.substr(0, index) + replacement + this.substr(index + replacement.length);
-        }
 
         function SetDefaultDate() {
-            var currentYear = (new Date).getFullYear();
-            var currentMonth = (new Date).getMonth() + 1;
-            var currentDate = (new Date).getDate();
-
-            var today = currentDate + '/' + currentMonth + '/' + currentYear;
-
+            var today = FormatDateToString(new Date())
             $('#SalesOrder_Date').val(today);
             $('#SalesOrder_Deadline').val(today);
-
         }
+
+        //Format date to string DD/MM/YYYY
+        function FormatDateToString(dt) {
+            var year = dt.getFullYear();
+            var month = (1 + dt.getMonth()).toString();
+            month = month.length > 1 ? month : '0' + month;
+            var day = dt.getDate().toString();
+            day = day.length > 1 ? day : '0' + day;
+            return day + '/' + month + '/' + year;
+        }
+        function FormatStringToDate(str) {
+            var parts = str.split("/");
+            var dt = new Date(+parts[2], parts[1] - 1, +parts[0]);
+            return dt;
+        }
+
 
     });
 })();

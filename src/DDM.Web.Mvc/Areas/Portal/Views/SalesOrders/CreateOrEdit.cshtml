@@ -4,10 +4,6 @@
 @using Abp.Application.Services.Dto
 @model CreateOrEditSalesOrderViewModel
 
-
-
-
-
 @{
     ViewBag.CurrentPageName = PortalPageNames.Common.SalesOrders;
 }
@@ -43,12 +39,12 @@
 
                     <!--begin::Wizard Nav-->
                     <div class="wizard-nav border-bottom">
-                        <div class="wizard-steps p-8 p-lg-10">
+                        <div class="wizard-steps">
                             <!--begin::Wizard Step 1 Nav-->
                             <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
                                 <div class="wizard-label">
                                     <i class="wizard-icon flaticon-bus-stop"></i>
-                                    <h3 class="wizard-title">1. Customer and Dates</h3>
+                                    <h3 class="wizard-title">Order Header</h3>
                                 </div>
                                 <span class="wizard-arrow">
                                     <i class="wizard-icon flaticon2-next"></i>
@@ -59,7 +55,7 @@
                             <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
                                 <div class="wizard-label">
                                     <i class="wizard-icon flaticon-list"></i>
-                                    <h3 class="wizard-title">2. Order Details</h3>
+                                    <h3 class="wizard-title">Order Details</h3>
                                 </div>
                                 <span class="wizard-arrow">
                                     <i class="wizard-icon flaticon2-next"></i>
@@ -70,7 +66,7 @@
                             <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
                                 <div class="wizard-label">
                                     <i class="wizard-icon flaticon-globe"></i>
-                                    <h3 class="wizard-title">3. Review and Submit</h3>
+                                    <h3 class="wizard-title">Review and Submit</h3>
                                 </div>
                                 <span class="svg-icon svg-icon-xl wizard-arrow last">
                                     <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Navigation/Arrow-right.svg-->
@@ -89,8 +85,8 @@
                     </div>
                     <!--end::Wizard Nav-->
                     <!--begin::Wizard Body-->
-                    <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
-                        <div class="col-xl-12 col-xxl-7">
+                    <div class="row justify-content-center my-5 px-8 ">
+                        <div class="col-12 d-flex justify-content-center">
                             <!--begin::Wizard Form-->
                             <form name="SalesOrderInformationsForm" id="SalesOrderInformationsForm" role="form" novalidate class="form-validation">
                                 @if (Model.IsEditMode)
@@ -100,13 +96,14 @@
 
                                 <!--begin::Wizard Step 1-->
                                 <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-                                    <h4 class="mb-10 font-weight-bold text-black-50">Select customer, date and deadline</h4>
+
                                     <!--begin::Input-->
                                     <div class="row">
                                         <div class="col-8">
                                             <div class="form-group">
                                                 <label for="CustomerId">@L("Customer")</label>
                                                 <div class="input-group">
+
                                                     @Html.DropDownList(
                                                           "CustomerId",
                                                           Model.Customers.Select(i => i.ToSelectListItem()),
@@ -117,6 +114,26 @@
                                                                   id = "CustomerId"
                                                               })
                                                     <button id="CreateNewCustomerButton" class="btn btn-text-info" title="Create New Customer"><i class="fa fa-plus"></i></button>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="ProductionStatusId">@L("Status")</label>
+                                                <div class="input-group">
+                                                    @Html.DropDownList(
+                                                          "ProductionStatusId",
+                                                          Model.ProductionStatuses.Select(i => i.ToSelectListItem()),
+                                                              new
+                                                              {
+                                                                  @class = "form-control selectpicker",
+                                                                  data_live_search = "true",
+                                                                  id = "ProductionStatusId"
+                                                              })
                                                 </div>
                                             </div>
                                         </div>
@@ -146,29 +163,83 @@
                                 </div>
                                 <!--end::Wizard Step 1-->
                                 <!--begin::Wizard Step 2-->
-                                <div class="pb-5" data-wizard-type="step-content">
-                                    <h4 class="mb-10 font-weight-bold text-black-50">Enter order details</h4>
+                                <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                       
+                                     
+                                        <div class="input-group mb-10">
+                                            <div class="form-group mx-10">
+
+                                                <button id="1Button" class="btn btn-text-info" title="Deadline +1 day"><i class="flaticon2-plus-1"></i></button>
+                                                <span class="form-text text-muted">Default</span>
+                                            </div>
+                                            <div class="form-group mx-10">
+                                                <button id="1Button" class="btn btn-text-info" title="Deadline +1 day"><i class="flaticon2-chart2"></i></button>
+                                                <span class="form-text text-muted">Laser Cutting</span>
+                                            </div>
+                                            <div class="form-group mx-10">
+                                                <button id="1Button" class="btn btn-text-info" title="Deadline +1 day"><i class="flaticon-squares-2"></i></button>
+                                                <span class="form-text text-muted">CNC Cutting</span>
+                                            </div>
+
+                                            <div class="form-group mx-10">
+                                                <button id="1Button" class="btn btn-text-info" title="Deadline +1 day"><i class="flaticon2-layers"></i></button>
+                                                <span class="form-text text-muted">Panel MDF</span>
+                                            </div>
+                                        </div>
+                        
+
+
+
                                     <!--begin::Input-->
-                                    <div class="form-group fv-plugins-icon-container">
-                                        <label>Customer</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="address1" placeholder="Address Line 1" value="Address Line 1">
-                                        <span class="form-text text-muted">Please select customer</span>
-                                        <div class="fv-plugins-message-container"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Order Date</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="address2" placeholder="Address Line 2" value="Address Line 2">
-                                        <span class="form-text text-muted">Please enter your Address.</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Deadline</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="address2" placeholder="Address Line 2" value="Address Line 2">
-                                        <span class="form-text text-muted">Please enter your Address.</span>
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label for="Date">@L("Name")</label>
+                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="Deadline">@L("Description")</label>
+
+                                                <textarea id="Customer_Address" name="address" rows="3" maxlength="256" class="form-control"></textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            <div class="form-group">
+                                                <label for="Date">@L("Material")</label>
+                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            <div class="form-group">
+                                                <label for="Date">@L("Machine")</label>
+                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            <div class="form-group">
+                                                <label for="Date">@L("Quantity")</label>
+                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label for="Date">@L("Price")</label>
+                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label for="Date">@L("Amount")</label>
+                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Wizard Step 2-->
-
                                 <!--begin::Wizard Step 5-->
                                 <div class="pb-5" data-wizard-type="step-content">
                                     <!--begin::Section-->
@@ -209,7 +280,7 @@
                                 </div>
                                 <!--end::Wizard Step 5-->
                                 <!--begin::Wizard Actions-->
-                                <div class="d-flex justify-content-between border-top mt-5 pt-10">
+                                <div class="d-flex justify-content-center border-top mt-5 pt-10">
                                     <div class="mr-2">
                                         <button type="button" class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-prev">Previous</button>
                                     </div>
