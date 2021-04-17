@@ -141,6 +141,10 @@ namespace DDM.SalesOrders
                 .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name ) { IsSelected = output.SalesOrder.ProductionStatusId == c.Id })
                 .ToList();
 
+            //Sales Order Lines
+            
+
+
             //Default selected null on insert mode
             if (!input.Id.HasValue)
             {
@@ -150,7 +154,6 @@ namespace DDM.SalesOrders
                     IsSelected = true,
                     Value = ""
                 };
-
                 output.Customers.Add(DefaultSelected);
             }
 
