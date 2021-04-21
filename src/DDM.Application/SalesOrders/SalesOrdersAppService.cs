@@ -101,42 +101,64 @@ namespace DDM.SalesOrders
         public async Task<SalesOrderOutput> GetSalesOrderForEdit(NullableIdDto input)
         {
             SalesOrder salesOrder = null;
+            SalesOrderLine salesOrderLine= null;
+
+            var salesOrderOutput = new SalesOrderOutput();
+            var salesOrderLineOutput = new SalesOrderLineOutput();
+            List<SalesOrderLineOutput> salesOrderLineOutputList = new List<SalesOrderLineOutput>();
 
             if (input.Id.HasValue)
             {
                 salesOrder = await _salesOrderRepository.FirstOrDefaultAsync((int)input.Id);
             }
 
-            var output = new SalesOrderOutput();
-            var outputLine = new Sale
+            
 
             //Sales Order
-            output.SalesOrder = salesOrder != null
+            salesOrderOutput.SalesOrder = salesOrder != null
                         ? ObjectMapper.Map<SalesOrderDto>(salesOrder)
                         : new SalesOrderDto();
 
 
+
+
+
+            //Sales Order Line
+            salesOrderOutput.SalesOrderLines = salesOrderLineOutputList;
+
+
+            //salesOrderLine.Id = 0;
+            //salesOrderLine.Name = "name line 1";
+            //salesOrderLine.Description = "desc line 1";
+
+            //var i = ObjectMapper.Map<SalesOrderLineDto>(salesOrderLine);
+
+            //salesOrderLineOutput.SalesOrderLine = i;
+            //salesOrderLineOutputList.Add(salesOrderLineOutput);
+            //salesOrderOutput.SalesOrderLines = salesOrderLineOutputList;
+
+
             //Customer
-            output.Customers = _lookup_customerRepository
+            salesOrderOutput.Customers = _lookup_customerRepository
                 .GetAll()
                 .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")")
                 { 
-                    IsSelected = output.SalesOrder.CustomerId == c.Id 
+                    IsSelected = salesOrderOutput.SalesOrder.CustomerId == c.Id 
                 })
                 .ToList();
 
 
             //ProductionStatus
-            output.ProductionStatuses = _lookup_productionStatusRepository
+            salesOrderOutput.ProductionStatuses = _lookup_productionStatusRepository
                 .GetAll()
                 .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name)
                 {
-                    IsSelected = output.SalesOrder.ProductionStatusId == c.Id
+                    IsSelected = salesOrderOutput.SalesOrder.ProductionStatusId == c.Id
                 })
                 .ToList();
 
 
-            return output;
+            return salesOrderOutput;
 
 
 

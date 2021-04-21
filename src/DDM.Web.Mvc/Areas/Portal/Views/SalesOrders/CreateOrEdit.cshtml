@@ -184,48 +184,49 @@
 
                                     <!--begin::Input-->
                                     <div class="row">
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <label for="Date">@L("Name")</label>
-                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label for="Deadline">@L("Description")</label>
-                                                <textarea id="Customer_Address" name="address" rows="3" maxlength="256" class="form-control"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-1">
-                                            <div class="form-group">
-                                                <label for="Date">@L("Material")</label>
-                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-                                            </div>
-                                        </div>
-                                        <div class="col-1">
-                                            <div class="form-group">
-                                                <label for="Date">@L("Machine")</label>
-                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-                                            </div>
-                                        </div>
-                                        <div class="col-1">
-                                            <div class="form-group">
-                                                <label for="Date">@L("Quantity")</label>
-                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-                                            </div>
-                                        </div>
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <label for="Date">@L("Price")</label>
-                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-                                            </div>
-                                        </div>
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <label for="Date">@L("Amount")</label>
-                                                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-                                            </div>
-                                        </div>
+                                        @await Html.PartialAsync("~/Areas/Portal/Views/Common/SalesOrder/_SalesOrderLine.cshtml", Model)
+                                        @*<div class="col-2">
+            <div class="form-group">
+                <label for="Date">@L("Name")</label>
+                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label for="Deadline">@L("Description")</label>
+                <textarea id="Customer_Address" name="address" rows="3" maxlength="256" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <label for="Date">@L("Material")</label>
+                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <label for="Date">@L("Machine")</label>
+                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <label for="Date">@L("Quantity")</label>
+                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="Date">@L("Price")</label>
+                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="Date">@L("Amount")</label>
+                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+            </div>
+        </div>*@
                                     </div>
                                     <!--end::Input-->
                                 </div>
