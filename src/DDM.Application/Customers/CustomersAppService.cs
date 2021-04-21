@@ -102,6 +102,8 @@ namespace DDM.Customers
 
             output = new GetCustomerForEditOutput { Customer = ObjectMapper.Map<CreateOrEditCustomerDto>(customer) };
 
+
+
             //Customer
             output.Customer = customer != null
                 ? ObjectMapper.Map<CreateOrEditCustomerDto>(customer)
