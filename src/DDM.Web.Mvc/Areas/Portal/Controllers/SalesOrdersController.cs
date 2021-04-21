@@ -44,9 +44,9 @@ namespace DDM.Web.Areas.Portal.Controllers
         [AbpMvcAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<ActionResult> CreateOrEdit(int? id)
         {
-            GetSalesOrderForEditOutput output;
+            SalesOrderOutput output;
             output = await _salesOrdersAppService.GetSalesOrderForEdit(new NullableIdDto { Id = id });
-            var viewModel = ObjectMapper.Map<CreateOrEditSalesOrderViewModel>(output);
+            var viewModel = ObjectMapper.Map<SalesOrderViewModel>(output);
             return View(viewModel);
 
             //GetCustomerForEditOutput output;
@@ -192,9 +192,7 @@ namespace DDM.Web.Areas.Portal.Controllers
 
             var model = new SalesOrderViewModel()
             {
-                SalesOrder = getSalesOrderForViewDto.SalesOrder,
-                CustomerName = getSalesOrderForViewDto.CustomerName
-
+                SalesOrder = getSalesOrderForViewDto.SalesOrder
             };
 
             return PartialView("_ViewSalesOrderModal", model);

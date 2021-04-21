@@ -5,7 +5,7 @@ using Abp.Application.Services.Dto;
 
 namespace DDM.SalesOrders.Dtos
 {
-    public class SalesOrderDto : EntityDto
+    public class SalesOrderDto : EntityDto<int?>
     {
         public string Number { get; set; }
 

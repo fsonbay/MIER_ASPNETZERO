@@ -75,11 +75,10 @@ namespace DDM
             configuration.CreateMap<CreateOrEditMaterialDto, Material>().ReverseMap();
             configuration.CreateMap<MaterialDto, Material>().ReverseMap();
 
-            configuration.CreateMap<CreateOrEditSalesOrderDto, SalesOrder>().ReverseMap();
-            configuration.CreateMap<CreateOrEditSalesOrderLineDto, SalesOrderLine>().ReverseMap();
 
 
-            configuration.CreateMap<SalesOrderDto, SalesOrder>().ReverseMap();
+
+            
             configuration.CreateMap<CreateOrEditVendorCategoryDto, VendorCategory>().ReverseMap();
             configuration.CreateMap<VendorCategoryDto, VendorCategory>().ReverseMap();
             configuration.CreateMap<CreateOrEditVendorDto, Vendor>().ReverseMap();
@@ -88,7 +87,21 @@ namespace DDM
             configuration.CreateMap<CustomerDto, Customer>().ReverseMap();
             configuration.CreateMap<CreateOrEditCustomerCategoryDto, CustomerCategory>().ReverseMap();
             configuration.CreateMap<CustomerCategoryDto, CustomerCategory>().ReverseMap();
-            
+
+
+
+            //Sales Order
+            configuration.CreateMap<SalesOrderDto, SalesOrder>().ReverseMap();
+
+
+
+
+
+
+
+
+
+
             //Inputs
             configuration.CreateMap<CheckboxInputType, FeatureInputTypeDto>();
             configuration.CreateMap<SingleLineStringInputType, FeatureInputTypeDto>();
@@ -103,6 +116,10 @@ namespace DDM
             configuration.CreateMap<LocalizableComboboxItem, LocalizableComboboxItemDto>();
             configuration.CreateMap<ILocalizableComboboxItem, LocalizableComboboxItemDto>()
                 .Include<LocalizableComboboxItem, LocalizableComboboxItemDto>();
+
+
+
+
 
             //Chat
             configuration.CreateMap<ChatMessage, ChatMessageDto>();

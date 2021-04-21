@@ -5,8 +5,8 @@ using Abp.AutoMapper;
 
 namespace DDM.Web.Areas.Portal.Models.SalesOrders
 {
-    [AutoMapFrom(typeof(GetSalesOrderForEditOutput))]
-    public class CreateOrEditSalesOrderViewModel : GetSalesOrderForEditOutput
+    [AutoMapFrom(typeof(_oldGetSalesOrderForEditOutput))]
+    public class CreateOrEditSalesOrderViewModel : _oldGetSalesOrderForEditOutput
     {
         public bool IsEditMode => SalesOrder.Id.HasValue;
     }

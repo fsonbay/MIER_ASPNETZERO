@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace DDM.SalesOrders.Dtos
 {
-    public class GetSalesOrderForEditOutput
+    public class _oldGetSalesOrderForEditOutput
     {
         public CreateOrEditSalesOrderDto SalesOrder { get; set; }
         public List<ComboboxItemDto> Customers { get; set; }
         public List<ComboboxItemDto> ProductionStatuses { get; set; }
         public List<GetSalesOrderLineForEditOutput> SalesOrderLines { get; set; }
-        public GetSalesOrderForEditOutput()
+        public _oldGetSalesOrderForEditOutput()
         {
             Customers = new List<ComboboxItemDto>();
             ProductionStatuses = new List<ComboboxItemDto>();

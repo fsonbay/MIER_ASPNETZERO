@@ -21,7 +21,6 @@
         });
 
 
-        
         SetDefaultDate();
 
         $('.date-picker').datetimepicker({
