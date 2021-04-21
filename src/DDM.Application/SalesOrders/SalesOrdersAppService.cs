@@ -108,8 +108,7 @@ namespace DDM.SalesOrders
             }
 
             var output = new SalesOrderOutput();
-
-
+            var outputLine = new Sale
 
             //Sales Order
             output.SalesOrder = salesOrder != null
@@ -125,6 +124,7 @@ namespace DDM.SalesOrders
                     IsSelected = output.SalesOrder.CustomerId == c.Id 
                 })
                 .ToList();
+
 
             //ProductionStatus
             output.ProductionStatuses = _lookup_productionStatusRepository
