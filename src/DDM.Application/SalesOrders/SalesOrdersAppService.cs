@@ -101,18 +101,50 @@ namespace DDM.SalesOrders
         public async Task<SalesOrderOutput> GetSalesOrderForEdit(NullableIdDto input)
         {
             SalesOrder salesOrder = null;
-            SalesOrderLine salesOrderLine= null;
+            var salesOrderLine = new SalesOrderLine();
+            //SalesOrderLine salesOrderLine= null;
 
             var salesOrderOutput = new SalesOrderOutput();
             var salesOrderLineOutput = new SalesOrderLineOutput();
+
             List<SalesOrderLineOutput> salesOrderLineOutputList = new List<SalesOrderLineOutput>();
 
             if (input.Id.HasValue)
             {
-                salesOrder = await _salesOrderRepository.FirstOrDefaultAsync((int)input.Id);
-            }
+                // salesOrder = await _salesOrderRepository.FirstOrDefaultAsync((int)input.Id);
 
-            
+                //_repository
+                //    .GetAll().Include(d => d.Child)
+                //    .ThenInclude(c => c.GrandChild)
+                //    .FirstOrDefault(x => x.Id.Equals(id));
+
+
+                salesOrder = await _salesOrderRepository
+                    .GetAllIncluding(
+                        s => s.SalesOrderLines
+                    ).FirstOrDefaultAsync(s => s.Id.Equals(input.Id));
+
+
+
+                foreach (var line in salesOrder.SalesOrderLines.ToList())
+                {
+                    var i = line.Name;
+
+
+                }
+
+                //            var children = await _childRepository
+                //.GetAllIncluding(
+                //    c => c.Parent,
+                //    c => c.AnotherRelationship)
+                //.ToListAsync();
+
+            }
+            else
+            {
+
+
+            }
 
             //Sales Order
             salesOrderOutput.SalesOrder = salesOrder != null
@@ -120,10 +152,26 @@ namespace DDM.SalesOrders
                         : new SalesOrderDto();
 
 
-
-
-
             //Sales Order Line
+            //salesOrderLine.Id = 0;
+            //salesOrderLine.Name = "";
+            //salesOrderLine.Description = "";
+
+            //salesOrderLineOutput.SalesOrderLine = new SalesOrderLineDto
+            //{
+            //    Name = "",
+            //    Description = ""
+            //};
+
+            salesOrderLineOutput.Machines = _lookup_machineRepository
+                .GetAll()
+                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name)
+                {
+                    IsSelected = salesOrderOutput.SalesOrder.CustomerId == c.Id
+                })
+                .ToList();
+
+            salesOrderLineOutputList.Add(salesOrderLineOutput);
             salesOrderOutput.SalesOrderLines = salesOrderLineOutputList;
 
 
@@ -142,8 +190,8 @@ namespace DDM.SalesOrders
             salesOrderOutput.Customers = _lookup_customerRepository
                 .GetAll()
                 .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")")
-                { 
-                    IsSelected = salesOrderOutput.SalesOrder.CustomerId == c.Id 
+                {
+                    IsSelected = salesOrderOutput.SalesOrder.CustomerId == c.Id
                 })
                 .ToList();
 

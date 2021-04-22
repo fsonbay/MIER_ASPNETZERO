@@ -99,7 +99,8 @@
                                     return _permissions.edit;
                                 },
                                 action: function (data) {
-                                    _createOrEditModal.open({ id: data.record.salesOrder.id });
+                                    document.location.href = abp.appPath + "Portal/SalesOrders/CreateOrEdit/" + data.record.salesOrder.id;
+                              /*      _createOrEditModal.open({ id: data.record.salesOrder.id });*/
                                 }
                             },
                             {
