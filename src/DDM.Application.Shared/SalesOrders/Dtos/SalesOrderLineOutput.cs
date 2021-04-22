@@ -14,6 +14,7 @@ namespace DDM.SalesOrders.Dtos
         {
             Machines = new List<ComboboxItemDto>();
             Materials = new List<ComboboxItemDto>();
+            SalesOrderLine = new SalesOrderLineDto();
         }
 
     }

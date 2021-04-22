@@ -100,91 +100,62 @@ namespace DDM.SalesOrders
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<SalesOrderOutput> GetSalesOrderForEdit(NullableIdDto input)
         {
-            SalesOrder salesOrder = null;
+
+            var salesOrder = new SalesOrder();
             var salesOrderLine = new SalesOrderLine();
-            //SalesOrderLine salesOrderLine= null;
-
+            var salesOrderLineDto = new SalesOrderLineDto();
             var salesOrderOutput = new SalesOrderOutput();
-            var salesOrderLineOutput = new SalesOrderLineOutput();
-
-            List<SalesOrderLineOutput> salesOrderLineOutputList = new List<SalesOrderLineOutput>();
+          //  var salesOrderLineOutput = new SalesOrderLineOutput();
+            List<SalesOrderLineDto> salesOrderLineDtoList = new List<SalesOrderLineDto>();
 
             if (input.Id.HasValue)
             {
-                // salesOrder = await _salesOrderRepository.FirstOrDefaultAsync((int)input.Id);
-
-                //_repository
-                //    .GetAll().Include(d => d.Child)
-                //    .ThenInclude(c => c.GrandChild)
-                //    .FirstOrDefault(x => x.Id.Equals(id));
-
-
                 salesOrder = await _salesOrderRepository
                     .GetAllIncluding(
                         s => s.SalesOrderLines
                     ).FirstOrDefaultAsync(s => s.Id.Equals(input.Id));
 
-
-
                 foreach (var line in salesOrder.SalesOrderLines.ToList())
                 {
-                    var i = line.Name;
+                    salesOrderLineDto = new SalesOrderLineDto
+                    {
+                        Id = line.Id,
+                        Name = line.Name,
+                        Description = line.Description,
+                        MachineId = line.MachineId,
+                        MaterialId = line.MaterialId
+                    };
+
+                    var i = salesOrderLineDto;
+                    salesOrderLineDtoList.Add(i);
+
+                    salesOrderLineDto.Machines = _lookup_machineRepository
+                        .GetAll()
+                        .Select(m => new ComboboxItemDto(m.Id.ToString(), m.Name)
+                        {
+                            IsSelected = salesOrderLineDto.MachineId == m.Id
+                        }).ToList();
+
+                    salesOrderLineDto.Materials = _lookup_materialRepository
+                        .GetAll()
+                        .Select(m => new ComboboxItemDto(m.Id.ToString(), m.Name)
+                        {
+                            IsSelected = salesOrderLine.MaterialId == m.Id
+                        }).ToList();
 
 
                 }
 
-                //            var children = await _childRepository
-                //.GetAllIncluding(
-                //    c => c.Parent,
-                //    c => c.AnotherRelationship)
-                //.ToListAsync();
-
+                salesOrderOutput.SalesOrderLines = salesOrderLineDtoList;
             }
             else
             {
-
-
             }
 
             //Sales Order
             salesOrderOutput.SalesOrder = salesOrder != null
                         ? ObjectMapper.Map<SalesOrderDto>(salesOrder)
                         : new SalesOrderDto();
-
-
-            //Sales Order Line
-            //salesOrderLine.Id = 0;
-            //salesOrderLine.Name = "";
-            //salesOrderLine.Description = "";
-
-            //salesOrderLineOutput.SalesOrderLine = new SalesOrderLineDto
-            //{
-            //    Name = "",
-            //    Description = ""
-            //};
-
-            salesOrderLineOutput.Machines = _lookup_machineRepository
-                .GetAll()
-                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name)
-                {
-                    IsSelected = salesOrderOutput.SalesOrder.CustomerId == c.Id
-                })
-                .ToList();
-
-            salesOrderLineOutputList.Add(salesOrderLineOutput);
-            salesOrderOutput.SalesOrderLines = salesOrderLineOutputList;
-
-
-            //salesOrderLine.Id = 0;
-            //salesOrderLine.Name = "name line 1";
-            //salesOrderLine.Description = "desc line 1";
-
-            //var i = ObjectMapper.Map<SalesOrderLineDto>(salesOrderLine);
-
-            //salesOrderLineOutput.SalesOrderLine = i;
-            //salesOrderLineOutputList.Add(salesOrderLineOutput);
-            //salesOrderOutput.SalesOrderLines = salesOrderLineOutputList;
-
 
             //Customer
             salesOrderOutput.Customers = _lookup_customerRepository
@@ -194,7 +165,6 @@ namespace DDM.SalesOrders
                     IsSelected = salesOrderOutput.SalesOrder.CustomerId == c.Id
                 })
                 .ToList();
-
 
             //ProductionStatus
             salesOrderOutput.ProductionStatuses = _lookup_productionStatusRepository
@@ -207,182 +177,6 @@ namespace DDM.SalesOrders
 
 
             return salesOrderOutput;
-
-
-
-
-            //SalesOrderLine
-            //  output.SalesOrderLines = outputLineList;
-
-
-
-
-
-            //SalesOrderLine
-            //var salesOrderLine = new SalesOrderLine();
-
-            //salesOrderLine.Id = 0;
-            //salesOrderLine.Name = "test name";
-            //salesOrderLine.Description = "test desc";
-
-
-            //var lineDto = salesOrderLine != null
-            //         ? ObjectMapper.Map<CreateOrEditSalesOrderLineDto>(salesOrderLine)
-            //         : new CreateOrEditSalesOrderLineDto();
-
-            //var outputLine = new GetSalesOrderLineForEditOutput();
-
-
-
-            //Sales Order
-            //output.SalesOrderLines = salesOrder != null
-            //            ? ObjectMapper.Map<CreateOrEditSalesOrderDto>(salesOrder)
-            //            : new CreateOrEditSalesOrderDto();
-
-
-            //if (input.Id.HasValue)
-            //{
-            //    salesOrderLine = _salesOrderLineRepository.GetSalesOrderLines((int)input.Id);
-            //}
-
-
-            //var outputLine = new GetSalesOrderLineForEditOutput();
-            //var outputLineList = new List<GetSalesOrderLineForEditOutput>();
-
-            //outputLine.SalesOrderLine.Id = 0;
-            //outputLine.SalesOrderLine.Name = "test name";
-            //outputLine.SalesOrderLine.Name = "test desc";
-
-            //outputLineList.Add(outputLine);
-
-
-
-
-
-            ////Empty model default value
-            //orderLine.SalesOrderLineID = 0;
-            //orderLine.Name = "";
-            //orderLine.Description = "";
-            //orderLine.MarkForDelete = false;
-            //orderLineList.Add(orderLine);
-
-
-
-
-
-
-
-
-
-
-            //EDIT MODE
-            //if (input.Id.HasValue)
-            //{
-
-
-            //    var filteredSalesOrderLines = _salesOrderLineRepository.GetSalesOrderLines((int)input.Id);
-
-            //    var s = from o in filteredSalesOrderLines
-            //            select new GetSalesOrderLineForEditOutput()
-            //            {
-            //                SalesOrderLine = new CreateOrEditSalesOrderLineDto
-            //                {
-            //                    Id = o.Id,
-            //                    Name = o.Name,
-            //                    Description = o.Description,
-            //                    SalesOrderId = o.SalesOrderId,
-            //                }
-
-            //};
-
-            //    salesOrderlines = s.ToList();
-            //}
-
-            //INSERT MODE 
-            //else
-            //{
-            //    //CUSTOMER NULL DEFAULT
-            //    ComboboxItemDto DefaultSelected = new ComboboxItemDto
-            //    {
-            //        DisplayText = "Please select...",
-            //        IsSelected = true,
-            //        Value = ""
-            //    };
-
-            //    output.Customers.Add(DefaultSelected);
-
-            //    //SALES ORDER LINES 
-            //  //  var x = new CreateOrEditSalesOrderLineDto();
-
-            //    var SalesOrderLineDefaultValue = new GetSalesOrderLineForEditOutput()
-            //    {
-            //        SalesOrderLine = new CreateOrEditSalesOrderLineDto
-            //        {
-            //            Id = 0,
-            //            Name = "",
-            //            Description = "",
-            //            SalesOrderId = 0,
-            //        }
-            //    };
-
-            //    salesOrderlines.Add(SalesOrderLineDefaultValue);
-            //}
-
-
-
-
-
-
-            //  var salesOrder = _salesOrderRepository.GetIncludes(input.Id);
-
-            //var createOrEditSalesOrderDto = new CreateOrEditSalesOrderDto
-            //{
-            //    Id = salesOrder.Id,
-            //    Number = salesOrder.Number,
-            //    ProcessedBySurabaya = salesOrder.ProcessedBySurabaya,
-            //    Date = salesOrder.Date,
-            //    Deadline = salesOrder.Deadline,
-            //    Amount = salesOrder.Amount.ToString("N0", new CultureInfo("id")),
-            //    CustomerId = salesOrder.CustomerId,
-            //    ProductionStatusId = salesOrder.ProductionStatusId,
-            //    Notes = salesOrder.Notes
-            //};
-
-            //var createOrEditSalesOrderLineDtoList = new List<CreateOrEditSalesOrderLineDto>();
-
-            //foreach(var salesOrderLine in salesOrder.SalesOrderLines.ToList())
-            //{
-            //    var createOrEditSalesOrderLineDto = new CreateOrEditSalesOrderLineDto
-            //    {
-            //        Id = salesOrderLine.Id,
-            //        Name = salesOrderLine.Name,
-            //        Description = salesOrderLine.Description,
-            //        MaterialId = salesOrderLine.MaterialId,
-            //        MachineId = salesOrderLine.MachineId,
-            //        Quantity = salesOrderLine.Quantity.ToString("N0", new CultureInfo("id")),
-            //        UnitPrice = salesOrderLine.UnitPrice.ToString("N0", new CultureInfo("id")),
-            //        LineAmount = salesOrderLine.LineAmount.ToString("N0", new CultureInfo("id")),
-            //        MarkForDelete = false
-            //    };
-
-            //    //Add createOrEditSalesOrderLineDto to list
-            //    createOrEditSalesOrderLineDtoList.Add(createOrEditSalesOrderLineDto);
-            //};
-
-            ////Assign line list to nested SalesOrderLines 
-            //createOrEditSalesOrderDto.SalesOrderLines = createOrEditSalesOrderLineDtoList;
-
-            //var output = new GetSalesOrderForEditOutput { SalesOrder = createOrEditSalesOrderDto };
-
-
-            //if (output.SalesOrder.CustomerId != null)
-            //{
-            //    var _lookupCustomer = await _lookup_customerRepository.FirstOrDefaultAsync((int)output.SalesOrder.CustomerId);
-            //    output.CustomerName = _lookupCustomer?.Name?.ToString();
-            //}
-
-            //return output;
-
         }
 
 

@@ -10,7 +10,7 @@ namespace DDM.SalesOrders.Dtos
         public SalesOrderDto SalesOrder { get; set; }
         public List<ComboboxItemDto> Customers { get; set; }
         public List<ComboboxItemDto> ProductionStatuses { get; set; }
-        public List<SalesOrderLineOutput> SalesOrderLines { get; set; }
+        public List<SalesOrderLineDto> SalesOrderLines { get; set; }
         public SalesOrderOutput()
         {
             Customers = new List<ComboboxItemDto>();

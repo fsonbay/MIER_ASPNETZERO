@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Abp.Application.Services.Dto;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DDM.SalesOrders.Dtos
 {
-    public class SalesOrderLineDto
+    public class SalesOrderLineDto : EntityDto
     {
         public string Name { get; set; }
 
@@ -22,6 +23,9 @@ namespace DDM.SalesOrders.Dtos
         public int MachineId { get; set; }
 
         public int MaterialId { get; set; }
+
+        public List<ComboboxItemDto> Machines { get; set; }
+        public List<ComboboxItemDto> Materials { get; set; }
 
     }
 }

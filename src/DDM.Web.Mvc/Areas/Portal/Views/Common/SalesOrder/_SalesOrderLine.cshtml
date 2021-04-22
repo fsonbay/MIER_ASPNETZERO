@@ -5,13 +5,36 @@
 
 
 @foreach (var item in Model.SalesOrderLines)
-{
+{<div class="row">
+
     <div class="col-2">
         <div class="form-group">
             <label for="Date">@L("Name")</label>
-            <input id="Name" name="Name" type="text" value="@Model.SalesOrderLines.Count" class="form-control m-input" />
+            <input id="Name" name="Name" type="text" value="@item.Name" class="form-control m-input" />
         </div>
     </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label for="Deadline">@L("Description")</label>
+            <textarea id="Customer_Address" name="address" rows="3" maxlength="256" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="col-1">
+        <div class="form-group">
+            <label for="Date">@L("Material")</label>
+            @Html.DropDownList(
+                "MaterialId",
+                item.Machines.Select(i => i.ToSelectListItem()),
+                    new
+                    {
+                        @class = "form-control selectpicker",
+                        data_live_search = "true",
+                        id = "MaterialId"
+                    })
+        </div>
+    </div>
+</div>
 }
 
 @*@if (Model.IsEditMode)
