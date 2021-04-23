@@ -85,7 +85,7 @@
                     </div>
                     <!--end::Wizard Nav-->
                     <!--begin::Wizard Body-->
-                    <div class="row justify-content-center my-5 px-8 ">
+                    <div class="row justify-content-center my-8 px-5 ">
                         <div class="col-12 d-flex justify-content-center">
                             <!--begin::Wizard Form-->
                             <form name="SalesOrderInformationsForm" id="SalesOrderInformationsForm" role="form" novalidate class="form-validation">
@@ -165,74 +165,21 @@
                                 <!--end::Wizard Step 1-->
                                 <!--begin::Wizard Step 2-->
                                 <div data-wizard-type="step-content" data-wizard-state="current">
-                                    <div class="input-group mb-5">
+                                    <div class="input-group">
                                         <div class="form-group">
-                                            <button id="AddButton" class="btn btn-success" title="deadline +1 day">Add item</button>
-                                        </div>
-                                        <div class="form-group">
-                                            <button id="LaserCuttingButton" class="btn btn-text-success" title="Template laser cutting">+ Laser cutting</button>               
-                                        </div>
-                                        <div class="form-group">
-                                            <button id="LaserEngraveButton" class="btn btn-text-success" title="Template laser engrave">+ Laser engrave</button>
-                                        </div>
-                                        <div class="form-group">
-                                            <button id="CNCCuttingButton" class="btn btn-text-success" title="Template cnc cutting">+ CNC cutting</button>
-                                        </div>
-                                        <div class="form-group">
-                                            <button id="CNCEngraveButton" class="btn btn-text-success" title="Template cnc engrave">+ CNC engrave</button>
+                                            <button id="AddLineButton" class="btn btn-outline-success btn-sm" title="Add Line"><i class="fa fa-bars"></i> Add </button>
                                         </div>
                                     </div>
 
                                     <!--begin::Input-->
-                                  
+                                    <div class="subcat-sets">
+
                                         @await Html.PartialAsync("~/Areas/Portal/Views/Common/SalesOrder/_SalesOrderLine.cshtml", Model)
-                                        @*<div class="col-2">
-            <div class="form-group">
-                <label for="Date">@L("Name")</label>
-                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group">
-                <label for="Deadline">@L("Description")</label>
-                <textarea id="Customer_Address" name="address" rows="3" maxlength="256" class="form-control"></textarea>
-            </div>
-        </div>
-        <div class="col-1">
-            <div class="form-group">
-                <label for="Date">@L("Material")</label>
-                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-            </div>
-        </div>
-        <div class="col-1">
-            <div class="form-group">
-                <label for="Date">@L("Machine")</label>
-                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-            </div>
-        </div>
-        <div class="col-1">
-            <div class="form-group">
-                <label for="Date">@L("Quantity")</label>
-                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-            </div>
-        </div>
-        <div class="col-2">
-            <div class="form-group">
-                <label for="Date">@L("Price")</label>
-                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-            </div>
-        </div>
-        <div class="col-2">
-            <div class="form-group">
-                <label for="Date">@L("Amount")</label>
-                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-            </div>
-        </div>*@
-                                   
+                                    </div>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Wizard Step 2-->
-                                <!--begin::Wizard Step 5-->
+                                <!--begin::Wizard Step 3-->
                                 <div class="pb-5" data-wizard-type="step-content">
                                     <!--begin::Section-->
                                     <h4 class="mb-10 font-weight-bold text-dark">Review your Details and Submit</h4>
@@ -270,7 +217,7 @@
                                     </div>
                                     <!--end::Section-->
                                 </div>
-                                <!--end::Wizard Step 5-->
+                                <!--end::Wizard Step 3-->
                                 <!--begin::Wizard Actions-->
                                 <div class="d-flex justify-content-center border-top mt-5 pt-10">
                                     <div class="mr-2">

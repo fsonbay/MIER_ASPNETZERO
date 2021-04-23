@@ -6,6 +6,7 @@
 
         var _salesOrdersService = abp.services.app.salesOrders;
         var _$newCustBtn = $('#CreateNewCustomerButton');
+
         var _$1Btn = $('#1Button');
         var _$2Btn = $('#2Button');
         var _$3Btn = $('#3Button');
@@ -13,13 +14,13 @@
         var _$5Btn = $('#5Button');
         var _$deadline = $('#SalesOrder_Deadline');
 
+        var _$addLineBtn = $('#AddLineButton');
 
         var _createCustomerModal = new app.ModalManager({
             viewUrl: abp.appPath + 'Portal/Customers/CreateOrEditModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/Portal/Views/SalesOrders/_CreateCustomerModal.js',
             modalClass: 'CreateCustomerModal'
         });
-
 
         SetDefaultDate();
 
@@ -29,7 +30,6 @@
             
         });
       
-
         var KTWizard1 = function () {
             // Base elements
             var wizardEl;
@@ -227,6 +227,51 @@
             _$deadline.val(FormatDateToString(deadlineDt));
         });
 
+        //Wrappper
+        var wrapper = $('.subcat-sets');
+
+        _$addLineBtn.click(function (e) {
+
+            //Cancel default postback
+            e.preventDefault();
+
+            //Create new item and show (to override case style display none)
+            var newItem = $(".subcat-set:last-child").clone(true);
+            newItem.show();
+
+            //Input Values
+            newItem.find(':input').each(function () {
+
+                //Texbox
+                $(this).val('');
+
+                //mark-for-delete
+                if ($(this).hasClass("mark-for-delete")) {
+                    $(this).val('False');
+                }
+
+                //ID
+                if ($(this).hasClass("ID")) {
+                    $(this).val('0');
+                }
+            });
+
+            //Add clone
+            wrapper.append(newItem);
+
+            //Focus
+            $('.subcat-set:last-child :input:enabled:visible:first').focus();
+
+            ////Reorder index
+            //reorderIndex();
+
+            ////Button
+            //ButtonVisibility();
+
+            ////Reset validator
+            //resetValidator();
+
+        });
 
         function SetDefaultDate() {
             var today = FormatDateToString(new Date())
@@ -248,6 +293,7 @@
             var dt = new Date(+parts[2], parts[1] - 1, +parts[0]);
             return dt;
         }
+
 
 
     });

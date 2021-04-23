@@ -5,97 +5,46 @@
 
 
 @foreach (var item in Model.SalesOrderLines)
-{<div class="row">
-
-    <div class="col-2">
-        <div class="form-group">
-            <label for="Date">@L("Name")</label>
-            <input id="Name" name="Name" type="text" value="@item.Name" class="form-control m-input" />
-        </div>
-    </div>
-    <div class="col-3">
-        <div class="form-group">
-            <label for="Deadline">@L("Description")</label>
-            <textarea id="Customer_Address" name="address" rows="3" maxlength="256" class="form-control"></textarea>
-        </div>
-    </div>
-
-    <div class="col-1">
-        <div class="form-group">
-            <label for="Date">@L("Material")</label>
-            @Html.DropDownList(
-                "MaterialId",
-                item.Machines.Select(i => i.ToSelectListItem()),
-                    new
-                    {
-                        @class = "form-control selectpicker",
-                        data_live_search = "true",
-                        id = "MaterialId"
-                    })
-        </div>
-    </div>
-</div>
-}
-
-@*@if (Model.IsEditMode)
-    {
-        <p>Edit Mode</p>
-    }
-
-    else
-    {
-        <p>Insert Mode</p>
-
-        <div class="col-2">
+{
+    <div class="row col-12 subcat-set">
+        <div class="col-3">
             <div class="form-group">
                 <label for="Date">@L("Name")</label>
-                <input id="Name" name="Name" type="text" class="form-control m-input" />
+                <input id="Name" name="Name" type="text" value="@item.Name" class="form-control m-input" />
+                <span class="form-text text-muted">Nama barang</span>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group">
                 <label for="Deadline">@L("Description")</label>
-                <textarea id="Customer_Address" name="address" rows="3" maxlength="256" class="form-control"></textarea>
+                <textarea id="Customer_Address" name="address" rows="2" maxlength="256" class="form-control"></textarea>
+                <span class="form-text text-muted">Bahan, ketebalan, dimensi, finishing</span>
             </div>
         </div>
         <div class="col-1">
             <div class="form-group">
-                <label for="Date">@L("Material")</label>
-                @Html.DropDownList(
-                    "MaterialId",
-                    Model.Customers.Select(i => i.ToSelectListItem()),
-                        new
-                        {
-                            @class = "form-control selectpicker",
-                            data_live_search = "true",
-                            id = "MaterialId"
-                        })
-            </div>
-        </div>
-        <div class="col-1">
-            <div class="form-group">
-                <label for="Date">@L("Machine")</label>
-                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
-            </div>
-        </div>
-        <div class="col-1">
-            <div class="form-group">
-                <label for="Date">@L("Quantity")</label>
-                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+                <label for="Quantity">@L("Quantity")</label>
+                <input id="Quantity" name="Quantity" value="@item.Quantity" type="text" class="form-control m-input" />
             </div>
         </div>
         <div class="col-2">
             <div class="form-group">
-                <label for="Date">@L("Price")</label>
-                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+                <label for="Price">@L("Price")</label>
+                <input id="Price" name="Price" value="@item.UnitPrice" type="text" class="form-control m-input" />
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-3">
             <div class="form-group">
-                <label for="Date">@L("Amount")</label>
-                <input id="Name" name="Name" value="@Model.SalesOrder.Date" type="text" class="form-control m-input" />
+                <label for="Amount">@L("Amount")</label>
+
+                <div class="input-group">
+                    <input id="Amount" name="Amount" value="@item.LineAmount" type="text" class="form-control m-input" />
+                    &nbsp;&nbsp;
+                    <button id="DeleteLineButton" class="btn btn-text-danger btn-sm" title="Delete Line"><i class="fa fa-trash-alt"></i></button>
+                </div>
             </div>
         </div>
 
-    }*@
 
+    </div>
+}
