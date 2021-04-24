@@ -14,6 +14,8 @@
         var _$5Btn = $('#5Button');
         var _$deadline = $('#SalesOrder_Deadline');
 
+        var _$currencyFormat = $('.currency-format');
+
         var _$addLineBtn = $('#AddLineButton');
 
         var _createCustomerModal = new app.ModalManager({
@@ -23,6 +25,37 @@
         });
 
         SetDefaultDate();
+
+        _$currencyFormat.each(function () {
+
+            var num = this.value.replace(/\./g, '');
+            //alert(num);
+            //var num = _$currencyFormat.val();
+            //alert(num);
+            num = num.toString().replace(/\,/g, '.');
+           // num = addSeparatorsNF(num, ',', '.', '.');
+        
+           // alert(num);
+            $(this).val(num);
+
+        });
+
+        //FormatCurrency();
+
+
+
+        function addPeriod(nStr) {
+            nStr += '';
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + '.' + '$2');
+            }
+            return x1 + x2;
+        }
+
 
         $('.date-picker').datetimepicker({
             locale: abp.localization.currentLanguage.name,
@@ -191,6 +224,7 @@
         }();
         jQuery(document).ready(function () {
             KTWizard1.init();
+
         });
 
         _$newCustBtn.click(function () {
@@ -277,6 +311,43 @@
             var today = FormatDateToString(new Date())
             $('#SalesOrder_Date').val(today);
             $('#SalesOrder_Deadline').val(today);
+        }
+        function FormatCurrency() {
+
+           // alert(_$currencyFormat.val());
+        }
+
+
+        $('.currency-format').keyup(function (event) {
+
+            // skip for arrow keys
+            if (event.which >= 37 && event.which <= 40) {
+                event.preventDefault();
+            }
+
+            $(this).val(function (index, value) {
+
+                //clean previously added dot
+                value = value.replace(/\./g, '');
+
+                //reformat
+                return addSeparatorsNF(value, '.', ',', '.');
+            });
+        });
+
+        function addSeparatorsNF(nStr, inD, outD, sep) {
+            nStr += '';
+            var dpos = nStr.indexOf(inD);
+            var nStrEnd = '';
+            if (dpos !== -1) {
+                nStrEnd = outD + nStr.substring(dpos + 1, nStr.length);
+                nStr = nStr.substring(0, dpos);
+            }
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(nStr)) {
+                nStr = nStr.replace(rgx, '$1' + sep + '$2');
+            }
+            return nStr + nStrEnd;
         }
 
         //Format date to string DD/MM/YYYY

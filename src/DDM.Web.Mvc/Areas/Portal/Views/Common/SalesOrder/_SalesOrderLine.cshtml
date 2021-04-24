@@ -27,23 +27,23 @@
     <div class="col-1">
         <div class="form-group">
             <label for="Quantity">@L("Quantity")</label>
-            <input id="Quantity" name="Quantity" value="@item.Quantity" type="text" class="form-control m-input" />
+            <input id="Quantity" name="Quantity" value="@item.Quantity.ToString("N0")" type="text" class="form-control m-input currency-format" />
         </div>
     </div>
     <div class="col-2">
         <div class="form-group">
             <label for="Price">@L("Price")</label>
-            <input id="Price" name="Price" value="@item.UnitPrice" type="text" class="form-control m-input" />
-
+            <input id="Price" name="Price" value="@item.UnitPrice.ToString("N0")" type="text" class="form-control m-input currency-format" />
+       
         </div>
     </div>
     <div class="col-2">
         <div class="form-group">
             <label for="Amount">@L("Amount")</label>
             <div class="input-group">
-                <input id="Amount" name="Amount" value="@item.LineAmount" type="text" class="form-control m-input" />
-                @*&nbsp;&nbsp;
-                <button id="DeleteLineButton" class="btn btn-text-danger btn-sm" title="Delete Line"><i class="fa fa-trash-alt"></i></button>*@
+                <input id="Amount" name="Amount" value="@item.LineAmount.ToString("N0")" type="text" class="form-control m-input currency-format" />
+                &nbsp;&nbsp;
+                <button id="DeleteLineButton" class="btn btn-text-danger btn-sm" title="Delete Line"><i class="fa fa-trash-alt"></i></button>
             </div>
         </div>
     </div>

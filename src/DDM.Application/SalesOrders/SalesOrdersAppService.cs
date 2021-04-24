@@ -122,28 +122,13 @@ namespace DDM.SalesOrders
                         Id = line.Id,
                         Name = line.Name,
                         Description = line.Description,
-                        MachineId = line.MachineId,
-                        MaterialId = line.MaterialId
+                        Quantity = line.Quantity,
+                        UnitPrice = line.UnitPrice,
+                        LineAmount = line.LineAmount
                     };
 
                     var i = salesOrderLineDto;
                     salesOrderLineDtoList.Add(i);
-
-                    salesOrderLineDto.Machines = _lookup_machineRepository
-                        .GetAll()
-                        .Select(m => new ComboboxItemDto(m.Id.ToString(), m.Name)
-                        {
-                            IsSelected = salesOrderLineDto.MachineId == m.Id
-                        }).ToList();
-
-                    salesOrderLineDto.Materials = _lookup_materialRepository
-                        .GetAll()
-                        .Select(m => new ComboboxItemDto(m.Id.ToString(), m.Name)
-                        {
-                            IsSelected = salesOrderLine.MaterialId == m.Id
-                        }).ToList();
-
-
                 }
 
                 salesOrderOutput.SalesOrderLines = salesOrderLineDtoList;
