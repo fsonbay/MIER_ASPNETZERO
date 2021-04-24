@@ -17,6 +17,7 @@ namespace DDM.SalesOrders.Dtos
         public decimal UnitPrice { get; set; }
 
         public decimal LineAmount { get; set; }
+        public bool MarkForDelete { get; set; }
 
         public int SalesOrderId { get; set; }
 

@@ -85,154 +85,157 @@
                     </div>
                     <!--end::Wizard Nav-->
                     <!--begin::Wizard Body-->
-                    <div class="row justify-content-center my-8 px-5 ">
-                        <div class="col-12 d-flex justify-content-center">
-                            <!--begin::Wizard Form-->
-                            <form name="SalesOrderInformationsForm" id="SalesOrderInformationsForm" role="form" novalidate class="form-validation">
-                                @if (Model.IsEditMode)
-                                {
-                                    <input type="hidden" name="Id" id="Id" value="@Model.SalesOrder.Id" />
-                                }
+                    @*<div class="row justify-content-center my-2">*@
+                <div class="my-5 d-flex justify-content-center">
+            
+                    <!--begin::Wizard Form-->
+                    <form name="SalesOrderInformationsForm" id="SalesOrderInformationsForm"
+                          role="form"
+                          novalidate
+                          class="form-validation">
+                        @if (Model.IsEditMode)
+                        {
+                            <input type="hidden" name="Id" id="Id" value="@Model.SalesOrder.Id" />
+                        }
 
-                                <!--begin::Wizard Step 1-->
-                                <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                        <!--begin::Wizard Step 1-->
+                        <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
 
-                                    <!--begin::Input-->
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <div class="form-group">
-                                                <label for="CustomerId">@L("Customer")</label>
-                                                <div class="input-group">
+                            <!--begin::Input-->
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <label for="CustomerId">@L("Customer")</label>
+                                        <div class="input-group">
 
-                                                    @Html.DropDownList(
-                                                          "CustomerId",
-                                                          Model.Customers.Select(i => i.ToSelectListItem()),
-                                                              new
-                                                              {
-                                                                  @class = "form-control selectpicker",
-                                                                  data_live_search = "true",
-                                                                  id = "CustomerId"
-                                                              })
+                                            @Html.DropDownList(
+                                                  "CustomerId",
+                                                  Model.Customers.Select(i => i.ToSelectListItem()),
+                                                      new
+                                                      {
+                                                          @class = "form-control selectpicker",
+                                                          data_live_search = "true",
+                                                          id = "CustomerId"
+                                                      })
 
-                                                    <button id="CreateNewCustomerButton" class="btn btn-text-info" title="Create New Customer"><i class="fa fa-plus"></i></button>
+                                            <button id="CreateNewCustomerButton" class="btn btn-text-info" title="Create New Customer"><i class="fa fa-plus"></i></button>
 
 
-                                                </div>
-                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <label for="ProductionStatusId">@L("Status")</label>
-                                                <div class="input-group">
-                                                    @Html.DropDownList(
-                                                          "ProductionStatusId",
-                                                          Model.ProductionStatuses.Select(i => i.ToSelectListItem()),
-                                                              new
-                                                              {
-                                                                  @class = "form-control selectpicker",
-                                                                  data_live_search = "true",
-                                                                  id = "ProductionStatusId"
-                                                              })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <label for="Date">@L("Date")</label>
-                                                <input id="SalesOrder_Date" name="Date" value="@Model.SalesOrder.Date" type="text" class="form-control m-input date-picker" />
-                                            </div>
-                                        </div>
-                                        <div class="col-7">
-                                            <div class="form-group">
-                                                <label for="Deadline">@L("Deadline")</label>
-                                                <div class="input-group">
-                                                    <input id="SalesOrder_Deadline" name="Deadline" value="@Model.SalesOrder.Deadline" type="text" class="form-control m-input date-picker" required />
-                                                    <button id="1Button" class="btn btn-text-success" title="Deadline +1 day">+ 1 </button>
-                                                    <button id="2Button" class="btn btn-text-success" title="Deadline +2 days">+ 2 </button>
-                                                    <button id="3Button" class="btn btn-text-success" title="Deadline +3 days">+ 3 </button>
-                                                    <button id="4Button" class="btn btn-text-success" title="Deadline +4 days">+ 4 </button>
-                                                    <button id="5Button" class="btn btn-text-success" title="Deadline +5 days">+ 5 </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Wizard Step 1-->
-                                <!--begin::Wizard Step 2-->
-                                <div data-wizard-type="step-content" data-wizard-state="current">
-                                    <div class="input-group">
-                                        <div class="form-group">
-                                            <button id="AddLineButton" class="btn btn-outline-success btn-sm" title="Add Line"><i class="fa fa-bars"></i> Add </button>
-                                        </div>
-                                    </div>
-
-                                    <!--begin::Input-->
-                                    <div class="subcat-sets">
-
-                                        @await Html.PartialAsync("~/Areas/Portal/Views/Common/SalesOrder/_SalesOrderLine.cshtml", Model)
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Wizard Step 2-->
-                                <!--begin::Wizard Step 3-->
-                                <div class="pb-5" data-wizard-type="step-content">
-                                    <!--begin::Section-->
-                                    <h4 class="mb-10 font-weight-bold text-dark">Review your Details and Submit</h4>
-                                    <h6 class="font-weight-bolder mb-3">Current Address:</h6>
-                                    <div class="text-dark-50 line-height-lg">
-                                        <div>Address Line 1</div>
-                                        <div>Address Line 2</div>
-                                        <div>Melbourne 3000, VIC, Australia</div>
-                                    </div>
-                                    <div class="separator separator-dashed my-5"></div>
-                                    <!--end::Section-->
-                                    <!--begin::Section-->
-                                    <h6 class="font-weight-bolder mb-3">Delivery Details:</h6>
-                                    <div class="text-dark-50 line-height-lg">
-                                        <div>Package: Complete Workstation (Monitor, Computer, Keyboard &amp; Mouse)</div>
-                                        <div>Weight: 25kg</div>
-                                        <div>Dimensions: 110cm (w) x 90cm (h) x 150cm (L)</div>
-                                    </div>
-                                    <div class="separator separator-dashed my-5"></div>
-                                    <!--end::Section-->
-                                    <!--begin::Section-->
-                                    <h6 class="font-weight-bolder mb-3">Delivery Service Type:</h6>
-                                    <div class="text-dark-50 line-height-lg">
-                                        <div>Overnight Delivery with Regular Packaging</div>
-                                        <div>Preferred Morning (8:00AM - 11:00AM) Delivery</div>
-                                    </div>
-                                    <div class="separator separator-dashed my-5"></div>
-                                    <!--end::Section-->
-                                    <!--begin::Section-->
-                                    <h6 class="font-weight-bolder mb-3">Delivery Address:</h6>
-                                    <div class="text-dark-50 line-height-lg">
-                                        <div>Address Line 1</div>
-                                        <div>Address Line 2</div>
-                                        <div>Preston 3072, VIC, Australia</div>
-                                    </div>
-                                    <!--end::Section-->
-                                </div>
-                                <!--end::Wizard Step 3-->
-                                <!--begin::Wizard Actions-->
-                                <div class="d-flex justify-content-center border-top mt-5 pt-10">
-                                    <div class="mr-2">
-                                        <button type="button" class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-prev">Previous</button>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-submit">Submit</button>
-                                        <button type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">Next</button>
                                     </div>
                                 </div>
-                                <!--end::Wizard Actions-->
-                            </form>
-                            <!--end::Wizard Form-->
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="ProductionStatusId">@L("Status")</label>
+                                        <div class="input-group">
+                                            @Html.DropDownList(
+                                                  "ProductionStatusId",
+                                                  Model.ProductionStatuses.Select(i => i.ToSelectListItem()),
+                                                      new
+                                                      {
+                                                          @class = "form-control selectpicker",
+                                                          data_live_search = "true",
+                                                          id = "ProductionStatusId"
+                                                      })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="Date">@L("Date")</label>
+                                        <input id="SalesOrder_Date" name="Date" value="@Model.SalesOrder.Date" type="text" class="form-control m-input date-picker" />
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div class="form-group">
+                                        <label for="Deadline">@L("Deadline")</label>
+                                        <div class="input-group">
+                                            <input id="SalesOrder_Deadline" name="Deadline" value="@Model.SalesOrder.Deadline" type="text" class="form-control m-input date-picker" required />
+                                            <button id="1Button" class="btn btn-text-success" title="Deadline +1 day">+ 1 </button>
+                                            <button id="2Button" class="btn btn-text-success" title="Deadline +2 days">+ 2 </button>
+                                            <button id="3Button" class="btn btn-text-success" title="Deadline +3 days">+ 3 </button>
+                                            <button id="4Button" class="btn btn-text-success" title="Deadline +4 days">+ 4 </button>
+                                            <button id="5Button" class="btn btn-text-success" title="Deadline +5 days">+ 5 </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Input-->
                         </div>
-                    </div>
+                        <!--end::Wizard Step 1-->
+                        <!--begin::Wizard Step 2-->
+                        <div class="col-12" data-wizard-type="step-content" data-wizard-state="current">
+                            <div class="input-group">
+                                <div class="form-group">
+                                    <button id="AddLineButton" class="btn btn-outline-success btn-sm" title="Add Line"><i class="fa fa-bars"></i> Add </button>
+                                </div>
+                            </div>
+
+                            <!--begin::Input-->
+                            <div class="subcat-sets">
+                                @await Html.PartialAsync("~/Areas/Portal/Views/Common/SalesOrder/_SalesOrderLine.cshtml", Model)
+                            </div>
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Wizard Step 2-->
+                        <!--begin::Wizard Step 3-->
+                        <div class="pb-5" data-wizard-type="step-content">
+                            <!--begin::Section-->
+                            <h4 class="mb-10 font-weight-bold text-dark">Review your Details and Submit</h4>
+                            <h6 class="font-weight-bolder mb-3">Current Address:</h6>
+                            <div class="text-dark-50 line-height-lg">
+                                <div>Address Line 1</div>
+                                <div>Address Line 2</div>
+                                <div>Melbourne 3000, VIC, Australia</div>
+                            </div>
+                            <div class="separator separator-dashed my-5"></div>
+                            <!--end::Section-->
+                            <!--begin::Section-->
+                            <h6 class="font-weight-bolder mb-3">Delivery Details:</h6>
+                            <div class="text-dark-50 line-height-lg">
+                                <div>Package: Complete Workstation (Monitor, Computer, Keyboard &amp; Mouse)</div>
+                                <div>Weight: 25kg</div>
+                                <div>Dimensions: 110cm (w) x 90cm (h) x 150cm (L)</div>
+                            </div>
+                            <div class="separator separator-dashed my-5"></div>
+                            <!--end::Section-->
+                            <!--begin::Section-->
+                            <h6 class="font-weight-bolder mb-3">Delivery Service Type:</h6>
+                            <div class="text-dark-50 line-height-lg">
+                                <div>Overnight Delivery with Regular Packaging</div>
+                                <div>Preferred Morning (8:00AM - 11:00AM) Delivery</div>
+                            </div>
+                            <div class="separator separator-dashed my-5"></div>
+                            <!--end::Section-->
+                            <!--begin::Section-->
+                            <h6 class="font-weight-bolder mb-3">Delivery Address:</h6>
+                            <div class="text-dark-50 line-height-lg">
+                                <div>Address Line 1</div>
+                                <div>Address Line 2</div>
+                                <div>Preston 3072, VIC, Australia</div>
+                            </div>
+                            <!--end::Section-->
+                        </div>
+                        <!--end::Wizard Step 3-->
+                        <!--begin::Wizard Actions-->
+                        <div class="d-flex justify-content-center border-top mt-5 pt-10">
+                            <div class="mr-2">
+                                <button type="button" class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-prev">Previous</button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-submit">Submit</button>
+                                <button type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">Next</button>
+                            </div>
+                        </div>
+                        <!--end::Wizard Actions-->
+                    </form>
+                    <!--end::Wizard Form-->
+                </div>
+                    @*</div>*@
                 </div>
             </div>
         </div>
