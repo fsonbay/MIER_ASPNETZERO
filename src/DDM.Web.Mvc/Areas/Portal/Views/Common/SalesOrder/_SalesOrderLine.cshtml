@@ -6,46 +6,47 @@
 
 @foreach (var item in Model.SalesOrderLines)
 {
+    <div class="row subcat-set">
+        <input type="hidden" id="Id" name="Id" value="@item.Id" class="line-id" />
+        <input type="hidden" id="MarkForDelete" name="MarkForDelete" value="@item.MarkForDelete" class="mark-for-delete" />
+        <div class="col-3">
+            <div class="form-group">
+                <label for="Date">@L("Name")</label>
+                <input id="Name" name="Name" type="text" value="@item.Name" class="form-control m-input" />
+                <span class="form-text text-muted">Nama barang</span>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="Deadline">@L("Description")</label>
+                <textarea id="Customer_Address" name="address" rows="2" maxlength="256" class="form-control"></textarea>
+                <span class="form-text text-muted">Bahan, ketebalan, dimensi, finishing</span>
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <label for="Quantity">@L("Quantity")</label>
+                <input id="Quantity" name="Quantity" value="@item.Quantity.ToString("N0")" type="text" class="form-control m-input currency-format calc" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="Price">@L("Price")</label>
+                <input id="Price" name="Price" value="@item.UnitPrice.ToString("N0")" type="text" class="form-control m-input currency-format" />
 
-<div class="row subcat-set" >
-    @*<input type="hidden" name="Id" value="@item.Id" class="line-id" />
-    <input type="hidden" name="MarkForDelete" value="@item.MarkForDelete" class="mark-for-delete" />*@
-    <div class="col-3">
-        <div class="form-group">
-            <label for="Date">@L("Name")</label>
-            <input id="Name" name="Name" type="text" value="@item.Name" class="form-control m-input" />
-            <span class="form-text text-muted">Nama barang</span>
+            </div>
         </div>
-    </div>
-    <div class="col-4">
-        <div class="form-group">
-            <label for="Deadline">@L("Description")</label>
-            <textarea id="Customer_Address" name="address" rows="2" maxlength="256" class="form-control"></textarea>
-            <span class="form-text text-muted">Bahan, ketebalan, dimensi, finishing</span>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="form-group">
-            <label for="Quantity">@L("Quantity")</label>
-            <input id="Quantity" name="Quantity" value="@item.Quantity.ToString("N0")" type="text" class="form-control m-input currency-format" />
-        </div>
-    </div>
-    <div class="col-2">
-        <div class="form-group">
-            <label for="Price">@L("Price")</label>
-            <input id="Price" name="Price" value="@item.UnitPrice.ToString("N0")" type="text" class="form-control m-input currency-format" />
-       
-        </div>
-    </div>
-    <div class="col-2">
-        <div class="form-group">
-            <label for="Amount">@L("Amount")</label>
-            <div class="input-group">
-                <input id="Amount" name="Amount" value="@item.LineAmount.ToString("N0")" type="text" class="form-control m-input currency-format" />
-                &nbsp;&nbsp;
-                <button id="DeleteLineButton" class="btn btn-text-danger btn-sm" title="Delete Line"><i class="fa fa-trash-alt"></i></button>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="Amount">@L("Amount")</label>
+                <div class="input-group">
+                    <input id="Amount" name="Amount" value="@item.LineAmount.ToString("N0")" type="text" class="form-control m-input bg-light-primary currency-format line-amount" readonly/>
+                    &nbsp;&nbsp;
+                    <button id="DeleteLineButton" class="btn btn-text-danger btn-sm" title="Delete Line"><i class="fa fa-trash-alt"></i></button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
 }
+

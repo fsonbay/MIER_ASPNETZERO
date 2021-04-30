@@ -14,6 +14,7 @@ namespace DDM.SalesOrders.Dtos
 
         public decimal Quantity { get; set; }
 
+
         public decimal UnitPrice { get; set; }
 
         public decimal LineAmount { get; set; }

@@ -100,12 +100,11 @@ namespace DDM.SalesOrders
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<SalesOrderOutput> GetSalesOrderForEdit(NullableIdDto input)
         {
-
             var salesOrder = new SalesOrder();
             var salesOrderLine = new SalesOrderLine();
             var salesOrderLineDto = new SalesOrderLineDto();
             var salesOrderOutput = new SalesOrderOutput();
-          //  var salesOrderLineOutput = new SalesOrderLineOutput();
+
             List<SalesOrderLineDto> salesOrderLineDtoList = new List<SalesOrderLineDto>();
 
             if (input.Id.HasValue)

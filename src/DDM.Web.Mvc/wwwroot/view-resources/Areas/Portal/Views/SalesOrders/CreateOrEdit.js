@@ -6,17 +6,18 @@
 
         var _salesOrdersService = abp.services.app.salesOrders;
         var _$newCustBtn = $('#CreateNewCustomerButton');
-
         var _$1Btn = $('#1Button');
         var _$2Btn = $('#2Button');
         var _$3Btn = $('#3Button');
         var _$4Btn = $('#4Button');
         var _$5Btn = $('#5Button');
         var _$deadline = $('#SalesOrder_Deadline');
-
         var _$currencyFormat = $('.currency-format');
-
         var _$addLineBtn = $('#AddLineButton');
+        var _$total = $('#Total');
+        var $datePicker = $('.date-picker');
+        var $subcatSets = $('.subcat-sets');
+        var $lineAmount = $(".line-amount");
 
         var _createCustomerModal = new app.ModalManager({
             viewUrl: abp.appPath + 'Portal/Customers/CreateOrEditModal',
@@ -25,44 +26,19 @@
         });
 
         SetDefaultDate();
-
+        ReorderIndex();
         _$currencyFormat.each(function () {
 
-            var num = this.value.replace(/\./g, '');
-            //alert(num);
-            //var num = _$currencyFormat.val();
-            //alert(num);
-            num = num.toString().replace(/\,/g, '.');
-           // num = addSeparatorsNF(num, ',', '.', '.');
-        
-           // alert(num);
+            var num = this.value.replace(/,/g, '.');
             $(this).val(num);
 
         });
-
-        //FormatCurrency();
-
-
-
-        function addPeriod(nStr) {
-            nStr += '';
-            x = nStr.split('.');
-            x1 = x[0];
-            x2 = x.length > 1 ? '.' + x[1] : '';
-            var rgx = /(\d+)(\d{3})/;
-            while (rgx.test(x1)) {
-                x1 = x1.replace(rgx, '$1' + '.' + '$2');
-            }
-            return x1 + x2;
-        }
-
-
-        $('.date-picker').datetimepicker({
+        $datePicker.datetimepicker({
             locale: abp.localization.currentLanguage.name,
             format: 'DD/MM/YYYY'
-            
+
         });
-      
+
         var KTWizard1 = function () {
             // Base elements
             var wizardEl;
@@ -80,7 +56,7 @@
                 // Validation before going to next page
                 wizard.on('beforeNext', function (wizardObj) {
                     if (validator.form() !== true) {
-                      
+
                         wizardObj.stop();  // don't go to the next step
                     }
                 });
@@ -262,7 +238,7 @@
         });
 
         //Wrappper
-        var wrapper = $('.subcat-sets');
+        var wrapper = $subcatSets;
 
         _$addLineBtn.click(function (e) {
 
@@ -312,30 +288,99 @@
             $('#SalesOrder_Date').val(today);
             $('#SalesOrder_Deadline').val(today);
         }
-        function FormatCurrency() {
 
-           // alert(_$currencyFormat.val());
-        }
+        _$currencyFormat.keyup(function (event) {
 
+            var i = $(this).attr('name');
+            var start_pos = i.indexOf('[') + 1;
+            var end_pos = i.indexOf(']', start_pos);
+            var index = i.substring(start_pos, end_pos);
 
-        $('.currency-format').keyup(function (event) {
+            //alert(index);
 
-            // skip for arrow keys
-            if (event.which >= 37 && event.which <= 40) {
-                event.preventDefault();
-            }
+            var quantityName = 'input[name="Quantity[' + index + ']"]';
+            var priceName = 'input[name="Price[' + index + ']"]';
+            var amountName = 'input[name="Amount[' + index + ']"]';
+
+            var quantity = $(quantityName).val().replace(/\./g, '');
+            var price = $(priceName).val().replace(/\./g, '');
+
+            var amount = quantity * price;
+            $(amountName).val(FormatCurrency(amount.toString(), '.', ',', '.'));
 
             $(this).val(function (index, value) {
-
-                //clean previously added dot
-                value = value.replace(/\./g, '');
-
                 //reformat
-                return addSeparatorsNF(value, '.', ',', '.');
+                return FormatCurrency(value, '.', ',', '.');
             });
+
+            CalculateTotalAmount();
+
         });
 
-        function addSeparatorsNF(nStr, inD, outD, sep) {
+        function ReorderIndex() {
+            $(".subcat-set").each(function () {
+
+                //Current index
+                var index = $(this).index();
+
+                //Rename inputs
+                $(":input", this).each(function () {
+                    var inputName = this.name + '[' + index + ']';
+                    var inputId = this.id + '_' + index;
+
+                   // alert(inputName + ' - '+  inputId);
+
+                    this.name = inputName;
+                    this.id = inputId;
+                    });
+
+                ////Rename spans
+                //$(this).find('.field-validation-valid, .field-validation-error').each(function () {
+                //    var oldName = $(this).attr('data-valmsg-for');
+                //    var newName = $(this).attr('data-valmsg-for').replace(/[0-9]+/, index);
+                //    $(this).attr("data-valmsg-for", newName);
+
+                //});
+
+            });
+        }
+
+        function CalculateTotalAmount() {
+
+            var sum = 0;
+
+            //iterate through each textboxes and add the values
+            $lineAmount.each(function () {
+
+                var lineAmount = this.value.replace(/\./g, '');
+
+                //add only if the value is number and visible
+                if (!isNaN(lineAmount) && lineAmount.length !== 0) {
+                    var parent = $(this).parents('.subcat-set');
+                    if (parent.is(':visible')) {
+                        sum += parseFloat(lineAmount);
+                        $(this).addClass("bg-light-primary");
+
+                      //  $(this).css("background-color", "#FEFFB0");
+                    }
+                }
+                else if (lineAmount.length !== 0) {
+                    $(this).css("background-color", "red");
+                }
+            });
+
+          
+            _$total.val(FormatCurrency(sum.toString(), '.', ',', '.'));
+
+          //  var totalAmount = addSeparatorsNF(sum.toFixed(0), '.', ',', '.');
+            //  $(".totalAmount").val(totalAmount);
+        }
+        function FormatCurrency(value, inD, outD, sep) {
+
+            //clean previously added dot
+            value = value.replace(/\./g, '');
+
+            var nStr = value.replace(/\./g, '');
             nStr += '';
             var dpos = nStr.indexOf(inD);
             var nStrEnd = '';
@@ -364,8 +409,6 @@
             var dt = new Date(+parts[2], parts[1] - 1, +parts[0]);
             return dt;
         }
-
-
 
     });
 })();
