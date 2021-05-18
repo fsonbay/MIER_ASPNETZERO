@@ -100,13 +100,54 @@ namespace DDM.SalesOrders
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<SalesOrderOutput> GetSalesOrderForEdit(NullableIdDto input)
         {
-            var salesOrder = new SalesOrder();
+            // var salesOrder = new SalesOrder();
+
+            SalesOrder salesOrder = null;
             var salesOrderLine = new SalesOrderLine();
             var salesOrderLineDto = new SalesOrderLineDto();
             var salesOrderOutput = new SalesOrderOutput();
 
             List<SalesOrderLineDto> salesOrderLineDtoList = new List<SalesOrderLineDto>();
 
+            //Sales Order
+            salesOrderOutput.SalesOrder = salesOrder != null
+                        ? ObjectMapper.Map<SalesOrderDto>(salesOrder)
+                        : new SalesOrderDto();
+
+            //Customer
+
+
+            //salesOrderOutput.Customers
+
+            var customers = _lookup_customerRepository
+            .GetAll()
+            .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")")
+            {
+                IsSelected = salesOrderOutput.SalesOrder.CustomerId == c.Id
+            })
+            .ToList();
+
+            if (!input.Id.HasValue)
+            {
+                var def = new ComboboxItemDto("", "Please select ...")
+                {
+                    IsSelected = true
+                };
+
+                customers.Add(def);
+            }
+            salesOrderOutput.Customers = customers;
+
+            //ProductionStatus
+            salesOrderOutput.ProductionStatuses = _lookup_productionStatusRepository
+                .GetAll()
+                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name)
+                {
+                    IsSelected = salesOrderOutput.SalesOrder.ProductionStatusId == c.Id
+                })
+                .ToList();
+
+            //Sales Order Lines
             if (input.Id.HasValue)
             {
                 salesOrder = await _salesOrderRepository
@@ -126,38 +167,26 @@ namespace DDM.SalesOrders
                         LineAmount = line.LineAmount
                     };
 
-                    var i = salesOrderLineDto;
-                    salesOrderLineDtoList.Add(i);
+                    salesOrderLineDtoList.Add(salesOrderLineDto);
                 }
 
                 salesOrderOutput.SalesOrderLines = salesOrderLineDtoList;
             }
             else
             {
+                salesOrderLineDto = new SalesOrderLineDto
+                {
+                    Id = 0,
+                    Name = "",
+                    Description = "",
+                    Quantity = 0,
+                    UnitPrice = 0,
+                    LineAmount = 0
+                };
+
+                salesOrderLineDtoList.Add(salesOrderLineDto);
+                salesOrderOutput.SalesOrderLines = salesOrderLineDtoList;
             }
-
-            //Sales Order
-            salesOrderOutput.SalesOrder = salesOrder != null
-                        ? ObjectMapper.Map<SalesOrderDto>(salesOrder)
-                        : new SalesOrderDto();
-
-            //Customer
-            salesOrderOutput.Customers = _lookup_customerRepository
-                .GetAll()
-                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")")
-                {
-                    IsSelected = salesOrderOutput.SalesOrder.CustomerId == c.Id
-                })
-                .ToList();
-
-            //ProductionStatus
-            salesOrderOutput.ProductionStatuses = _lookup_productionStatusRepository
-                .GetAll()
-                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name)
-                {
-                    IsSelected = salesOrderOutput.SalesOrder.ProductionStatusId == c.Id
-                })
-                .ToList();
 
 
             return salesOrderOutput;

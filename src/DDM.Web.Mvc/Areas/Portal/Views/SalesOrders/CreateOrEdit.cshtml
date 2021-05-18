@@ -126,7 +126,10 @@
                                                           {
                                                               @class = "form-control selectpicker",
                                                               data_live_search = "true",
-                                                              id = "CustomerId"
+                                                              id = "CustomerId",
+                                                              required = "Select Plan Type"
+
+
                                                           })
 
                                                 <button id="CreateNewCustomerButton" class="btn btn-text-info" title="Create New Customer"><i class="fa fa-plus"></i></button>
@@ -187,14 +190,14 @@
                                 </div>
 
                                 <!--begin::Input-->
-                                <div class="subcat-sets">
+                                <div class="line-sets">
                                     @await Html.PartialAsync("~/Areas/Portal/Views/Common/SalesOrder/_SalesOrderLine.cshtml", Model)
                                 </div>
-                                                     
+
                                 <div class="row justify-content-end">
                                     <div class="col-2">
                                         <label for="Total">@L("Total")</label>
-                                        <input id="Total" name="Total" type="text" value="@Model.SalesOrder.Amount.ToString("N0")" class="form-control m-input bg-light-primary currency-format" readonly/>
+                                        <input id="Total" name="Total" type="text" value="@Model.SalesOrder.Amount.ToString("N0")" class="form-control m-input bg-light-primary currency-format" readonly />
                                     </div>
                                 </div>
                                 <!--end::Input-->

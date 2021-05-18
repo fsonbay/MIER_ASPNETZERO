@@ -14,10 +14,14 @@
         var _$deadline = $('#SalesOrder_Deadline');
         var _$currencyFormat = $('.currency-format');
         var _$addLineBtn = $('#AddLineButton');
+        var _$delLineBtn = $('.delete-line');
+
         var _$total = $('#Total');
         var $datePicker = $('.date-picker');
-        var $subcatSets = $('.subcat-sets');
+        var $lineSets = $('.line-sets');
         var $lineAmount = $(".line-amount");
+
+
 
         var _createCustomerModal = new app.ModalManager({
             viewUrl: abp.appPath + 'Portal/Customers/CreateOrEditModal',
@@ -27,6 +31,9 @@
 
         SetDefaultDate();
         ReorderIndex();
+        ButtonVisibility();
+
+
         _$currencyFormat.each(function () {
 
             var num = this.value.replace(/,/g, '.');
@@ -237,8 +244,9 @@
             _$deadline.val(FormatDateToString(deadlineDt));
         });
 
+
         //Wrappper
-        var wrapper = $subcatSets;
+        var wrapper = $lineSets;
 
         _$addLineBtn.click(function (e) {
 
@@ -246,8 +254,8 @@
             e.preventDefault();
 
             //Create new item and show (to override case style display none)
-            var newItem = $(".subcat-set:last-child").clone(true);
-            newItem.show();
+            var newItem = $(".line-set:last").clone(true);
+           // newItem.show();
 
             //Input Values
             newItem.find(':input').each(function () {
@@ -261,7 +269,7 @@
                 }
 
                 //ID
-                if ($(this).hasClass("ID")) {
+                if ($(this).hasClass("line-id")) {
                     $(this).val('0');
                 }
             });
@@ -270,19 +278,45 @@
             wrapper.append(newItem);
 
             //Focus
-            $('.subcat-set:last-child :input:enabled:visible:first').focus();
+            $('.line-set:last-child :input:enabled:visible:first').focus();
 
-            ////Reorder index
-            //reorderIndex();
+            //Reorder index
+            ReorderIndex();
 
-            ////Button
-            //ButtonVisibility();
+            //Button
+            ButtonVisibility();
 
             ////Reset validator
             //resetValidator();
 
         });
+        _$delLineBtn.click(function (e) {
 
+            //Cancel default postback
+            e.preventDefault();
+
+            //Set hidden value
+            $(this).parents('.line-set').find('.mark-for-delete').val("true");
+
+            //Check Id, if ID = 0 ==> new set, remove. else hide.
+            var id = $(this).parents('.line-set').find('.line-id').val();
+
+            if (id === '0') {
+                $(this).parents('.line-set').remove();
+            }
+            else {
+                $(this).parents('.line-set').hide();
+            }
+
+            ReorderIndex();
+            ButtonVisibility();
+
+            ////Buttons
+            //ButtonVisibility();
+
+            ////Calculation
+            //calculateTotalAmount();
+        });
         function SetDefaultDate() {
             var today = FormatDateToString(new Date())
             $('#SalesOrder_Date').val(today);
@@ -291,12 +325,13 @@
 
         _$currencyFormat.keyup(function (event) {
 
+    
             var i = $(this).attr('name');
             var start_pos = i.indexOf('[') + 1;
             var end_pos = i.indexOf(']', start_pos);
             var index = i.substring(start_pos, end_pos);
 
-            //alert(index);
+           // alert(i);
 
             var quantityName = 'input[name="Quantity[' + index + ']"]';
             var priceName = 'input[name="Price[' + index + ']"]';
@@ -318,20 +353,15 @@
         });
 
         function ReorderIndex() {
-            $(".subcat-set").each(function () {
+            $(".line-set").each(function () {
 
                 //Current index
                 var index = $(this).index();
 
                 //Rename inputs
                 $(":input", this).each(function () {
-                    var inputName = this.name + '[' + index + ']';
-                    var inputId = this.id + '_' + index;
-
-                   // alert(inputName + ' - '+  inputId);
-
-                    this.name = inputName;
-                    this.id = inputId;
+                    this.name = this.name.replace(/[0-9]+/, index);
+                    this.id = this.id.replace(/[0-9]+/, index);
                     });
 
                 ////Rename spans
@@ -356,7 +386,7 @@
 
                 //add only if the value is number and visible
                 if (!isNaN(lineAmount) && lineAmount.length !== 0) {
-                    var parent = $(this).parents('.subcat-set');
+                    var parent = $(this).parents('.line-set');
                     if (parent.is(':visible')) {
                         sum += parseFloat(lineAmount);
                         $(this).addClass("bg-light-primary");
@@ -394,6 +424,22 @@
             }
             return nStr + nStrEnd;
         }
+
+        function ButtonVisibility() {
+
+            var counter = $(".line-set").length;
+           alert(counter);
+
+            //var counter = $(".subcat-set:visible").size();
+
+            if (counter === 1) {
+                $('.line-set .delete-line').hide();
+            }
+            else {
+                $('.line-set .delete-line').show();
+            }
+        }
+
 
         //Format date to string DD/MM/YYYY
         function FormatDateToString(dt) {
