@@ -41,6 +41,31 @@ namespace DDM.Web.Areas.Portal.Controllers
             return View(model);
         }
 
+        [AbpMvcAuthorize(AppPermissions.Pages_SalesOrders_Create)]
+        public async Task<ActionResult> Create(int? customerId)
+        {
+            SalesOrderOutput output;
+            output = await _salesOrdersAppService.GetSalesOrderForCreate();
+            var viewModel = ObjectMapper.Map<SalesOrderViewModel>(output);
+
+            //HANDLE ORDER CREATION FROM CUSTOMER PAGE
+            if (customerId != null)
+            {
+                viewModel.CustomerId = (int)customerId;
+
+            }
+
+            viewModel.SalesOrder.Id = 0;
+
+            return View(viewModel);
+        }
+
+
+
+
+
+
+
         [AbpMvcAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<ActionResult> CreateOrEdit(int? id)
         {

@@ -12,6 +12,11 @@ namespace DDM.SalesOrders
     {
         Task<PagedResultDto<GetSalesOrderForViewDto>> GetAll(GetAllSalesOrdersInput input);
 
+        Task<SalesOrderOutput> GetSalesOrderForCreate();
+
+
+
+
         Task<GetSalesOrderForViewDto> GetSalesOrderForView(int id);
 
         Task<SalesOrderOutput> GetSalesOrderForEdit(NullableIdDto input);

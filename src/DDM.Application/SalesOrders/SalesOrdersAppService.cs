@@ -97,6 +97,65 @@ namespace DDM.SalesOrders
             );
         }
 
+        [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create)]
+        public async Task<SalesOrderOutput> GetSalesOrderForCreate()
+        {
+            //VARIABLES
+            var output = new SalesOrderOutput();
+
+            var dto = new SalesOrderDto();
+            var lineDto = new SalesOrderLineDto();
+            var lineDtoList = new List<SalesOrderLineDto>();
+
+
+            //EMPTY DTO
+            dto.Id = null;
+            dto.Number = "";
+            dto.Date = DateTime.Now;
+            dto.Deadline = DateTime.Now;
+
+            output.SalesOrder = dto;
+
+            //EMPTY LINE DEFAULT VALUES
+            lineDto.Id = 0;
+            lineDto.Name = "";
+            lineDto.Description = "";
+            lineDto.MarkForDelete = false;
+
+            lineDtoList.Add(lineDto);
+            output.SalesOrderLines = lineDtoList;
+
+            //CUSTOMER LOOKUP
+            var customers = _lookup_customerRepository
+                .GetAll()
+                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")"))
+                .ToList();
+
+            var defaultSelected= new ComboboxItemDto("", "Please select ...")
+                {
+                    IsSelected = true
+                };
+
+            customers.Add(defaultSelected);
+
+
+            //PRODUCTION STATUS LOOKUP
+            var productionStatuses = _lookup_productionStatusRepository
+                .GetAll()
+                .Select(s => new ComboboxItemDto(s.Id.ToString(), s.Name))
+                .ToList();
+
+
+            //ASSIGN VALUES
+            output.Customers = customers;
+            output.ProductionStatuses = productionStatuses;
+
+            //RETURN
+            return output;
+        }
+
+
+
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<SalesOrderOutput> GetSalesOrderForEdit(NullableIdDto input)
         {
@@ -175,6 +234,7 @@ namespace DDM.SalesOrders
 
                 customers.Add(def);
             }
+
             salesOrderOutput.Customers = customers;
 
             //ProductionStatus

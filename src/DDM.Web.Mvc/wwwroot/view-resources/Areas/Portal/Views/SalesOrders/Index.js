@@ -257,7 +257,7 @@
 
         $('#CreateNewSalesOrderButton').click(function () {
 
-            document.location.href = abp.appPath + "Portal/SalesOrders/CreateOrEdit";
+            document.location.href = abp.appPath + "Portal/SalesOrders/Create";
           
             //_createOrEditModal.open();
         });
