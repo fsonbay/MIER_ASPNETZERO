@@ -97,13 +97,18 @@
                     <!--end::Wizard Nav-->
                     <!--begin::Wizard Body-->
                     @*<div class="row justify-content-center my-2">*@
-                    <div class="my-5 d-flex justify-content-center">
+                <div class="my-5 d-flex justify-content-center">
 
-                        <!--begin::Wizard Form-->
-                        <form name="SalesOrderInformationsForm" id="SalesOrderInformationsForm"
+                    <!--begin::Wizard Form-->
+
+                    @*<form class="kt-form form-validation" id="kt_form" name="CreateOrEditForm" role="form" novalidate>*@
+
+                        <form name="SalesOrderInformationsForm"
+                              id="SalesOrderInformationsForm"
                               role="form"
                               novalidate
-                              class="form-validation">
+                              class="kt-form form-validation">
+
                             @if (Model.IsEditMode)
                             {
                                 <input type="hidden" name="Id" id="Id" value="@Model.SalesOrder.Id" />
@@ -126,15 +131,11 @@
                                                           {
                                                               @class = "form-control selectpicker",
                                                               data_live_search = "true",
-                                                              id = "CustomerId",
-                                                              required = "Select Plan Type"
-
+                                                              id = "CustomerId"
 
                                                           })
 
                                                 <button id="CreateNewCustomerButton" class="btn btn-text-info" title="Create New Customer"><i class="fa fa-plus"></i></button>
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -191,7 +192,20 @@
 
                                 <!--begin::Input-->
                                 <div class="line-sets">
+
+                                    @*@foreach (var item in Model.SalesOrderLines)
+        {
+            @Html.EditorFor(m => m.SalesOrderLines, "SalesOrderLines")
+        }*@
+
+                                    @*@Html.EditorFor(model => model.SalesOrderLines, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                                    @*@Html.EditorFor(model => model.SalesOrderLines, "SalesOrderLines")*@
+
+                                    @*@Html.EditorFor(model => model.SalesOrderLines, new { htmlAttributes = new { @class = "form-control" } })*@
+
                                     @await Html.PartialAsync("~/Areas/Portal/Views/Common/SalesOrder/_SalesOrderLine.cshtml", Model)
+                               
                                 </div>
 
                                 <div class="row justify-content-end">
@@ -212,21 +226,21 @@
                                 </div>
 
                                 <!--begin::Input-->
-                                <div class="subcat-sets">
+                                @*<div class="subcat-sets">
                                     Additional Costs
-                                </div>
+                                </div>*@
 
                                 <!--end::Input-->
-                                <div class="input-group">
+                                @*<div class="input-group">
                                     <div class="form-group">
                                         <button id="AddLineButton" class="btn btn-outline-success btn-sm" title="Add Line"><i class="fa fa-bars"></i> Add </button>
                                     </div>
-                                </div>
+                                </div>*@
 
                                 <!--begin::Input-->
-                                <div class="subcat-sets">
+                                @*<div class="subcat-sets">
                                     Payments
-                                </div>
+                                </div>*@
                                 <!--end::Input-->
 
 
@@ -278,14 +292,14 @@
                                     <button type="button" class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-prev">Previous</button>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-submit">Submit</button>
+                                    <button type="button" id="test" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-submit">Submit</button>
                                     <button type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">Next</button>
                                 </div>
                             </div>
                             <!--end::Wizard Actions-->
                         </form>
                         <!--end::Wizard Form-->
-                    </div>
+                </div>
                     @*</div>*@
                 </div>
             </div>

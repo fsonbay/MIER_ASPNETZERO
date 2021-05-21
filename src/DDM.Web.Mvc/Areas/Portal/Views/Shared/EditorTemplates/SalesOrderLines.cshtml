@@ -1,0 +1,14 @@
+﻿@using DDM.Web.Areas.Portal.Models.SalesOrders
+@using DDM.SalesOrders.Dtos
+@model SalesOrderLineDto
+
+
+<div class="form-group col-md-12 line-set">
+    <div class="col-md-3 col-md-offset-1">
+        
+        @Html.LabelFor(m => m.Description)
+        @Html.EditorFor(m => m.Name)
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text text-danger" })
+    </div>
+</div>
+

@@ -100,21 +100,60 @@ namespace DDM.SalesOrders
         [AbpAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]
         public async Task<SalesOrderOutput> GetSalesOrderForEdit(NullableIdDto input)
         {
-            // var salesOrder = new SalesOrder();
-
             SalesOrder salesOrder = null;
             var salesOrderLine = new SalesOrderLine();
             var salesOrderLineDto = new SalesOrderLineDto();
             var salesOrderOutput = new SalesOrderOutput();
-
             List<SalesOrderLineDto> salesOrderLineDtoList = new List<SalesOrderLineDto>();
+
+
+            //Sales Order
+            if (input.Id.HasValue)
+            {
+                salesOrder = await _salesOrderRepository
+                    .GetAllIncluding(
+                        s => s.SalesOrderLines
+                    ).FirstOrDefaultAsync(s => s.Id.Equals(input.Id));
+
+                foreach (var line in salesOrder.SalesOrderLines.ToList())
+                {
+                    salesOrderLineDto = new SalesOrderLineDto
+                    {
+                        Id = line.Id,
+                        Name = line.Name,
+                        Description = line.Description,
+                        Quantity = line.Quantity,
+                        UnitPrice = line.UnitPrice,
+                        LineAmount = line.LineAmount
+                    };
+
+                    salesOrderLineDtoList.Add(salesOrderLineDto);
+                }
+                salesOrderOutput.SalesOrder = ObjectMapper.Map<SalesOrderDto>(salesOrder);
+                salesOrderOutput.SalesOrderLines = salesOrderLineDtoList;
+            }
+            else
+            {
+                salesOrderLineDto = new SalesOrderLineDto
+                {
+                    Id = 0,
+                    Name = "",
+                    Description = "",
+                    Quantity = 0,
+                    UnitPrice = 0,
+                    LineAmount = 0
+                };
+
+                salesOrderLineDtoList.Add(salesOrderLineDto);
+                salesOrderOutput.SalesOrderLines = salesOrderLineDtoList;
+            }
+
 
             //Sales Order
             salesOrderOutput.SalesOrder = salesOrder != null
                         ? ObjectMapper.Map<SalesOrderDto>(salesOrder)
                         : new SalesOrderDto();
 
-            //Customer
 
 
             //salesOrderOutput.Customers
@@ -147,46 +186,7 @@ namespace DDM.SalesOrders
                 })
                 .ToList();
 
-            //Sales Order Lines
-            if (input.Id.HasValue)
-            {
-                salesOrder = await _salesOrderRepository
-                    .GetAllIncluding(
-                        s => s.SalesOrderLines
-                    ).FirstOrDefaultAsync(s => s.Id.Equals(input.Id));
 
-                foreach (var line in salesOrder.SalesOrderLines.ToList())
-                {
-                    salesOrderLineDto = new SalesOrderLineDto
-                    {
-                        Id = line.Id,
-                        Name = line.Name,
-                        Description = line.Description,
-                        Quantity = line.Quantity,
-                        UnitPrice = line.UnitPrice,
-                        LineAmount = line.LineAmount
-                    };
-
-                    salesOrderLineDtoList.Add(salesOrderLineDto);
-                }
-
-                salesOrderOutput.SalesOrderLines = salesOrderLineDtoList;
-            }
-            else
-            {
-                salesOrderLineDto = new SalesOrderLineDto
-                {
-                    Id = 0,
-                    Name = "",
-                    Description = "",
-                    Quantity = 0,
-                    UnitPrice = 0,
-                    LineAmount = 0
-                };
-
-                salesOrderLineDtoList.Add(salesOrderLineDto);
-                salesOrderOutput.SalesOrderLines = salesOrderLineDtoList;
-            }
 
 
             return salesOrderOutput;

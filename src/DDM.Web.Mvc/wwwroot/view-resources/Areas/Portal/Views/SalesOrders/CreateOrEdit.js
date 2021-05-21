@@ -5,20 +5,26 @@
     $(function () {
 
         var _salesOrdersService = abp.services.app.salesOrders;
+        var _$form = $('form[name = SalesOrderInformationsForm]');
+
         var _$newCustBtn = $('#CreateNewCustomerButton');
         var _$1Btn = $('#1Button');
         var _$2Btn = $('#2Button');
         var _$3Btn = $('#3Button');
         var _$4Btn = $('#4Button');
         var _$5Btn = $('#5Button');
+
         var _$deadline = $('#SalesOrder_Deadline');
         var _$currencyFormat = $('.currency-format');
         var _$addLineBtn = $('#AddLineButton');
         var _$delLineBtn = $('.delete-line');
 
+
         var _$total = $('#Total');
         var $datePicker = $('.date-picker');
-        var $lineSets = $('.line-sets');
+        var $sets = $('.line-sets');
+        var $set = $('.line-set');
+
         var $lineAmount = $(".line-amount");
 
 
@@ -99,52 +105,7 @@
                         },
                         Deadline: {
                             required: true
-                        },
-
-                        //= Step 2
-                        package: {
-                            required: true
-                        },
-                        weight: {
-                            required: true
-                        },
-                        width: {
-                            required: true
-                        },
-                        height: {
-                            required: true
-                        },
-                        length: {
-                            required: true
-                        },
-
-                        //= Step 3
-                        delivery: {
-                            required: true
-                        },
-                        packaging: {
-                            required: true
-                        },
-                        preferreddelivery: {
-                            required: true
-                        },
-
-                        //= Step 4
-                        locaddress1: {
-                            required: true
-                        },
-                        locpostcode: {
-                            required: true
-                        },
-                        loccity: {
-                            required: true
-                        },
-                        locstate: {
-                            required: true
-                        },
-                        loccountry: {
-                            required: true
-                        },
+                        }
                     },
 
                     // Display error  
@@ -166,36 +127,109 @@
                 });
             }
             var initSubmit = function () {
-                var btn = formEl.find('[data-ktwizard-type="action-submit"]');
+
+                var btn = formEl.find('[data-wizard-type="action-submit"]');
 
                 btn.on('click', function (e) {
-                    e.preventDefault();
+                  //  alert(0);
 
-                    if (validator.form()) {
-                        // See: src\js\framework\base\app.js
-                        KTApp.progress(btn);
-                        //KTApp.block(formEl);
+                    var data = _$form.serializeFormToObject();
+                    var j = JSON.stringify(data);
 
-                        // See: http://malsup.com/jquery/form/#ajaxSubmit
-                        formEl.ajaxSubmit({
-                            success: function () {
-                                KTApp.unprogress(btn);
-                                //KTApp.unblock(formEl);
+                    alert(j);
+                    //    KTApp.progress(btn);
 
-                                //swal.fire({
-                                //	"title": "",
-                                //	"text": "The application has been successfully submitted!",
-                                //	"type": "success",
-                                //	"confirmButtonClass": "btn btn-secondary"
-                                //});
-                            }
+                    _salesOrdersService.createOrEdit(
+                            data
+                        ).done(function () {
+                            abp.notify.info(app.localize('SavedSuccessfully'));
                         });
-                    }
-                });
+
+                   // e.preventDefault();
+                  
+                    //if (validator.form()) {
+
+                    //    alert(1);
+                    //    var data = _$form.serializeFormToObject();
+                    //    KTApp.progress(btn);
+
+                    //    _service.createOrEdit(
+                    //        data
+                    //    ).done(function () {
+                    //        abp.notify.info(app.localize('SavedSuccessfully'));
+                    //    });
+
+
+                        //if (validator.form()) {
+                        //    // See: src\js\framework\base\app.js
+                        //    KTApp.progress(btn);
+                        //    //KTApp.block(formEl);
+
+                        //    // See: http://malsup.com/jquery/form/#ajaxSubmit
+                        //    formEl.ajaxSubmit({
+                        //        success: function () {
+                        //            KTApp.unprogress(btn);
+
+
+                        //            //KTApp.unblock(formEl);
+
+                        //            //swal.fire({
+                        //            //	"title": "",
+                        //            //	"text": "The application has been successfully submitted!",
+                        //            //	"type": "success",
+                        //            //	"confirmButtonClass": "btn btn-secondary"
+                        //            //});
+                        //        }
+                        //    });
+                        //}
+                    });
             }
+
+            //SAMPLE INIT SUBMIT
+            //var initSubmit = function () {
+            //    var btn = formEl.find('[data-ktwizard-type="action-submit"]');
+
+            //    btn.on('click', function (e) {
+            //        e.preventDefault();
+
+            //        if (validator.form()) {
+            //            var data = _$form.serializeFormToObject();
+            //            KTApp.progress(btn);
+
+            //            _service.createOrEdit(
+            //                data
+            //            ).done(function () {
+            //                abp.notify.info(app.localize('SavedSuccessfully'));
+            //            });
+
+
+
+            //            formEl.ajaxSubmit({
+            //                success: function () {
+            //                    KTApp.unprogress(btn);
+            //                    // document.location.href = abp.appPath + "Portal/SourceConnection";
+
+            //                    //KTApp.unblock(formEl);
+
+
+            //                    //swal.fire({
+            //                    //	"title": "",
+            //                    //	"text": "The application has been successfully submitted!",
+            //                    //	"type": "success",
+            //                    //	"confirmButtonClass": "btn btn-secondary"
+            //                    //});
+            //                }
+            //            });
+            //        }
+            //    });
+            //}
+
+
+
             return {
                 // public functions
                 init: function () {
+
                     wizardEl = KTUtil.getById('kt_wizard');
                     formEl = $('#SalesOrderInformationsForm');
 
@@ -205,6 +239,7 @@
                 }
             };
         }();
+
         jQuery(document).ready(function () {
             KTWizard1.init();
 
@@ -246,7 +281,7 @@
 
 
         //Wrappper
-        var wrapper = $lineSets;
+        var wrapper = $sets;
 
         _$addLineBtn.click(function (e) {
 
@@ -255,7 +290,7 @@
 
             //Create new item and show (to override case style display none)
             var newItem = $(".line-set:last").clone(true);
-           // newItem.show();
+            // newItem.show();
 
             //Input Values
             newItem.find(':input').each(function () {
@@ -325,13 +360,13 @@
 
         _$currencyFormat.keyup(function (event) {
 
-    
+
             var i = $(this).attr('name');
             var start_pos = i.indexOf('[') + 1;
             var end_pos = i.indexOf(']', start_pos);
             var index = i.substring(start_pos, end_pos);
 
-           // alert(i);
+            // alert(i);
 
             var quantityName = 'input[name="Quantity[' + index + ']"]';
             var priceName = 'input[name="Price[' + index + ']"]';
@@ -362,7 +397,7 @@
                 $(":input", this).each(function () {
                     this.name = this.name.replace(/[0-9]+/, index);
                     this.id = this.id.replace(/[0-9]+/, index);
-                    });
+                });
 
                 ////Rename spans
                 //$(this).find('.field-validation-valid, .field-validation-error').each(function () {
@@ -391,7 +426,7 @@
                         sum += parseFloat(lineAmount);
                         $(this).addClass("bg-light-primary");
 
-                      //  $(this).css("background-color", "#FEFFB0");
+                        //  $(this).css("background-color", "#FEFFB0");
                     }
                 }
                 else if (lineAmount.length !== 0) {
@@ -399,10 +434,10 @@
                 }
             });
 
-          
+
             _$total.val(FormatCurrency(sum.toString(), '.', ',', '.'));
 
-          //  var totalAmount = addSeparatorsNF(sum.toFixed(0), '.', ',', '.');
+            //  var totalAmount = addSeparatorsNF(sum.toFixed(0), '.', ',', '.');
             //  $(".totalAmount").val(totalAmount);
         }
         function FormatCurrency(value, inD, outD, sep) {
@@ -428,9 +463,6 @@
         function ButtonVisibility() {
 
             var counter = $(".line-set").length;
-           alert(counter);
-
-            //var counter = $(".subcat-set:visible").size();
 
             if (counter === 1) {
                 $('.line-set .delete-line').hide();
