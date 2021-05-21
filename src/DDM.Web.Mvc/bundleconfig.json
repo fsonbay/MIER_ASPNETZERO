@@ -58,5 +58,11 @@
     "inputFiles": [
       "wwwroot/view-resources/Areas/Portal/Views/SalesOrders/_CreateCustomerModal.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Areas/Portal/Views/SalesOrders/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Areas/Portal/Views/SalesOrders/Create.js"
+    ]
   }
 ]

@@ -136,7 +136,7 @@
                     var data = _$form.serializeFormToObject();
                     var j = JSON.stringify(data);
 
-                    alert(j);
+                    //alert(j);
                     //    KTApp.progress(btn);
 
                     _salesOrdersService.createOrEdit(

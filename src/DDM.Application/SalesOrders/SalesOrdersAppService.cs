@@ -107,7 +107,6 @@ namespace DDM.SalesOrders
             var lineDto = new SalesOrderLineDto();
             var lineDtoList = new List<SalesOrderLineDto>();
 
-
             //EMPTY DTO
             dto.Id = null;
             dto.Number = "";

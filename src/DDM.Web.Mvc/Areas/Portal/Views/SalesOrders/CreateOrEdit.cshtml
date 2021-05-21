@@ -21,7 +21,7 @@
 
 <div class="content d-flex flex-column flex-column-fluid">
 
-    @if (Model.IsEditMode)
+    @*@if (Model.IsEditMode)
     {
         <abp-page-subheader title="@L("EditSalesOrders")" description="@Model.SalesOrder.Number">
         </abp-page-subheader>
@@ -30,7 +30,7 @@
     {
         <abp-page-subheader title="@L("CreateSalesOrders")" description="@L("CreateSalesOrdersInfo")">
         </abp-page-subheader>
-    }
+    }*@
 
     <div class="@(await GetContainerClass())">
         <div class="card card-custom gutter-b">
@@ -109,10 +109,10 @@
                               novalidate
                               class="kt-form form-validation">
 
-                            @if (Model.IsEditMode)
+                            @*@if (Model.IsEditMode)
                             {
                                 <input type="hidden" name="Id" id="Id" value="@Model.SalesOrder.Id" />
-                            }
+                            }*@
 
                             <!--begin::Wizard Step 1-->
                             <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
@@ -193,6 +193,8 @@
                                 <!--begin::Input-->
                                 <div class="line-sets">
 
+                                    @Html.EditorFor(model => model.SalesOrderLines)
+
                                     @*@foreach (var item in Model.SalesOrderLines)
         {
             @Html.EditorFor(m => m.SalesOrderLines, "SalesOrderLines")
@@ -204,8 +206,8 @@
 
                                     @*@Html.EditorFor(model => model.SalesOrderLines, new { htmlAttributes = new { @class = "form-control" } })*@
 
-                                    @await Html.PartialAsync("~/Areas/Portal/Views/Common/SalesOrder/_SalesOrderLine.cshtml", Model)
-                               
+                                    @*@await Html.PartialAsync("~/Areas/Portal/Views/Common/SalesOrder/_SalesOrderLine.cshtml", Model)*@
+
                                 </div>
 
                                 <div class="row justify-content-end">

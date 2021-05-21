@@ -7,7 +7,7 @@ namespace DDM.Web.Areas.Portal.Models.SalesOrders
     public class SalesOrderViewModel : SalesOrderOutput
     {
         public int CustomerId { get; set; }
-        public bool IsEditMode => SalesOrder.Id.HasValue;
+        //public bool IsEditMode => SalesOrder.Id.HasValue;
 
 
 

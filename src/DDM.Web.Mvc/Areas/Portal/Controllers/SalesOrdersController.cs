@@ -14,6 +14,8 @@ using DDM.SalesOrderLines;
 using DDM.Customers;
 using DDM.Customers.Dtos;
 using DDM.Web.Areas.Portal.Models.Customers;
+using Abp.Notifications;
+
 
 namespace DDM.Web.Areas.Portal.Controllers
 {
@@ -23,6 +25,7 @@ namespace DDM.Web.Areas.Portal.Controllers
     {
         private readonly ISalesOrdersAppService _salesOrdersAppService;
         private readonly ICustomersAppService _customersAppService;
+
 
         public SalesOrdersController(ISalesOrdersAppService salesOrdersAppService,
             ICustomersAppService customersAppService)
@@ -60,8 +63,15 @@ namespace DDM.Web.Areas.Portal.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Create(SalesOrderViewModel viewModel, string submit)
+        {
 
+            return null;
 
+        }
+
+       
 
 
 

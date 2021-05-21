@@ -1,5 +1,139 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using DDM.Authorization
+@using DDM.Web.Areas.Portal.Models.SalesOrders
+@using DDM.Web.Areas.Portal.Startup
+@using Abp.Application.Services.Dto
+@model SalesOrderViewModel
+
 @{
+    ViewBag.CurrentPageName = PortalPageNames.Common.SalesOrders;
 }
+
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/Portal/Views/SalesOrders/Create.js" asp-append-version="true"></script>
+}
+
+<div class="@(await GetContainerClass())">
+    <div class="card card-custom gutter-b">
+        <div class="card-body">
+            <form asp-controller="SalesOrders" asp-action="Create" method="post" id="FormSalesOrder" role="form">
+
+                <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                    <!--begin::Input-->
+
+                    <div class="row">
+                        <div class="col-8">
+
+                            <div class="form-group">
+                                <label for="SalesOrder.Number">@L("Number")</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SalesOrder.Number, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="form-group">
+                                <label for="CustomerId">@L("Customer")</label>
+                                <div class="input-group">
+
+                                    @Html.DropDownList(
+                                          "SalesOrder.CustomerId",
+                                          Model.Customers.Select(i => i.ToSelectListItem()),
+                                              new
+                                              {
+                                                  @class = "form-control selectpicker",
+                                                  data_live_search = "true",
+                                                  id = "CustomerId"
+
+                                              })
+
+                                    <button id="CreateNewCustomerButton" class="btn btn-text-info" title="Create New Customer"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="ProductionStatusId">@L("Status")</label>
+                                <div class="input-group">
+                                    @Html.DropDownList(
+                                          "SalesOrder.ProductionStatusId",
+                                          Model.ProductionStatuses.Select(i => i.ToSelectListItem()),
+                                              new
+                                              {
+                                                  @class = "form-control selectpicker",
+                                                  data_live_search = "true",
+                                                  id = "ProductionStatusId"
+                                              })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="Date">@L("Date")</label>
+                                <input id="SalesOrder_Date" name="SalesOrder.Date" value="@Model.SalesOrder.Date" type="text" class="form-control m-input date-picker" />
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="form-group">
+                                <label for="Deadline">@L("Deadline")</label>
+                                <div class="input-group">
+                                    <input id="SalesOrder_Deadline" name="SalesOrder.Deadline" value="@Model.SalesOrder.Deadline" type="text" class="form-control m-input date-picker" required />
+                                    <button id="1Button" class="btn btn-text-success" title="Deadline +1 day">+ 1 </button>
+                                    <button id="2Button" class="btn btn-text-success" title="Deadline +2 days">+ 2 </button>
+                                    <button id="3Button" class="btn btn-text-success" title="Deadline +3 days">+ 3 </button>
+                                    <button id="4Button" class="btn btn-text-success" title="Deadline +4 days">+ 4 </button>
+                                    <button id="5Button" class="btn btn-text-success" title="Deadline +5 days">+ 5 </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <div class="form-group">
+                                <button id="AddLineButton" class="btn btn-outline-success btn-sm" title="Add Line"><i class="fa fa-bars"></i> Add </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label col-md-1"></label>
+                            <div class="form-horizontal col-md-12 subcat-sets">
+                                
+    
+                                @*http://codebuckets.com/2016/09/07/asp-net-mvc-and-binding-complex-objects-magic/*@
+                                @*https://stackoverflow.com/questions/25164869/editortemplate-not-rendering-as-expected*@
+
+                                @*  - EDITOR TEMPLATE WILL AUTOMCATICALLY RENDER LIST. 
+                                    - TEMPLATE NAME MUST BE THE SAME AS DATA TYPE' IN THIS CASE SalesOrderLineDto 
+                                    - TEMPLATEs LOCATION Portal/Views/Shared/EditorTemplates*@
+
+                                @Html.EditorFor(model => model.SalesOrderLines)
+                            </div>
+                        </div>
+                    </div>
+
+                        <!--end::Input-->
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-12">
+                            <input type="submit" id="Submit" name="Submit" value="Submit" class="btn btn-primary btn-sm" />
+                            <input type="submit" id="SubmitInvoice" name="Submit" value="Submit & Invoice" class="btn btn-info btn-sm" />
+                            <input type="submit" id="SubmitDefault" name="Submit" value="Submit & Create New" class="btn btn-success btn-sm" />
+                        </div>
+                    </div>
+</form>
+        </div>
+    </div>
+</div>
+
+
+
