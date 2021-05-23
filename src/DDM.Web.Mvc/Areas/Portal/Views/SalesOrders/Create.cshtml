@@ -17,7 +17,7 @@
 <div class="@(await GetContainerClass())">
     <div class="card card-custom gutter-b">
         <div class="card-body">
-            <form asp-controller="SalesOrders" asp-action="Create" method="post" id="FormSalesOrder" role="form">
+            <form asp-controller="SalesOrders" asp-action="Create" method="post" id="SalesOrderForm" role="form">
 
                 <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
                     <!--begin::Input-->
@@ -47,7 +47,6 @@
                                                   @class = "form-control selectpicker",
                                                   data_live_search = "true",
                                                   id = "CustomerId"
-
                                               })
 
                                     <button id="CreateNewCustomerButton" class="btn btn-text-info" title="Create New Customer"><i class="fa fa-plus"></i></button>

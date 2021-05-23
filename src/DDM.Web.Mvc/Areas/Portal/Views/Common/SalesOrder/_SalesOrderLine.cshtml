@@ -11,14 +11,7 @@
         <input type="hidden" id="MarkForDelete_0" name="MarkForDelete[0]" value="@item.MarkForDelete" class="mark-for-delete" />
         <div class="col-3">
             <div class="form-group">
-
-                @*@Html.LabelFor(m => item.Name)
-        @Html.EditorFor(m => item.Name)
-        @Html.ValidationMessageFor(m => item.Name, "", new { @class = "text text-danger" })*@
-
-
                 <label for="Name">@L("Name")</label>
-                @*@Html.EditorFor(m => item.Name)*@
                 <input id="Name_0" name="SalesOrderLine[0].Name" type="text" value="@item.Name" class="form-control m-input" />
                 <span class="form-text text-muted">Nama barang</span>
 
@@ -46,12 +39,12 @@
         </div>
         <div class="col-2">
             <div class="form-group">
-                @*<label for="Amount">@L("Amount")</label>
+                <label for="Amount">@L("Amount")</label>
                 <div class="input-group">
                     <input id="Amount_0" name="Amount[0]" value="@(item.LineAmount == 0 ? "" : @item.LineAmount.ToString("N0"))" type="text" class="form-control m-input bg-light-primary currency-format line-amount" readonly />
                     &nbsp;&nbsp;
                     <button id="DeleteLineButton" class="btn btn-text-danger btn-sm delete-line" title="Delete Line"><i class="fa fa-trash-alt"></i></button>
-                </div>*@
+                </div>
             </div>
         </div>
     </div>
