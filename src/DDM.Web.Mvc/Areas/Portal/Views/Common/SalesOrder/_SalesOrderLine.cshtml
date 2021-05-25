@@ -27,13 +27,13 @@
         <div class="col-1">
             <div class="form-group">
                 <label for="Quantity">@L("Quantity")</label>
-                <input id="Quantity_0" name="Quantity[0]" value="@(item.Quantity == 0 ? "" : @item.Quantity.ToString("N0"))" type="text" class="form-control m-input currency-format calc" />
+                @*<input id="Quantity_0" name="Quantity[0]" value="@(item.Quantity == 0 ? "" : @item.Quantity.ToString("N0"))" type="text" class="form-control m-input currency-format calc" />*@
             </div>
         </div>
         <div class="col-2">
             <div class="form-group">
                 <label for="Price">@L("Price")</label>
-                <input id="Price_0" name="Price[0]" value="@(item.UnitPrice == 0 ? "" : @item.UnitPrice.ToString("N0"))" type="text" class="form-control m-input currency-format" />
+                @*<input id="Price_0" name="Price[0]" value="@(item.UnitPrice == 0 ? "" : @item.UnitPrice.ToString("N0"))" type="text" class="form-control m-input currency-format" />*@
 
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="form-group">
                 <label for="Amount">@L("Amount")</label>
                 <div class="input-group">
-                    <input id="Amount_0" name="Amount[0]" value="@(item.LineAmount == 0 ? "" : @item.LineAmount.ToString("N0"))" type="text" class="form-control m-input bg-light-primary currency-format line-amount" readonly />
+                    @*<input id="Amount_0" name="Amount[0]" value="@(item.LineAmount == 0 ? "" : @item.LineAmount.ToString("N0"))" type="text" class="form-control m-input bg-light-primary currency-format line-amount" readonly />*@
                     &nbsp;&nbsp;
                     <button id="DeleteLineButton" class="btn btn-text-danger btn-sm delete-line" title="Delete Line"><i class="fa fa-trash-alt"></i></button>
                 </div>

@@ -130,7 +130,7 @@ namespace DDM.SalesOrders
                 .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")"))
                 .ToList();
 
-            var defaultSelected= new ComboboxItemDto("", "Please select ...")
+            var defaultSelected= new ComboboxItemDto("0", "Please select ...")
                 {
                     IsSelected = true
                 };

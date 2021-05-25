@@ -55,7 +55,6 @@ namespace DDM.Web.Areas.Portal.Controllers
             if (customerId != null)
             {
                 viewModel.CustomerId = (int)customerId;
-
             }
 
             viewModel.SalesOrder.Id = 0;
@@ -72,8 +71,6 @@ namespace DDM.Web.Areas.Portal.Controllers
         }
 
        
-
-
 
 
         [AbpMvcAuthorize(AppPermissions.Pages_SalesOrders_Create, AppPermissions.Pages_SalesOrders_Edit)]

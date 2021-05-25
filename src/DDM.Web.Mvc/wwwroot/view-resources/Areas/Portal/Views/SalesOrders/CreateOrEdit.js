@@ -352,6 +352,9 @@
             ////Calculation
             //calculateTotalAmount();
         });
+
+
+
         function SetDefaultDate() {
             var today = FormatDateToString(new Date())
             $('#SalesOrder_Date').val(today);
