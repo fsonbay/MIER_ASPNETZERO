@@ -1,4 +1,7 @@
-﻿using DDM.SalesInvoices;
+﻿using DDM.SalesInvoiceAdditionalCosts;
+using DDM.SalesInvoicePayments;
+using DDM.PaymentMethods;
+using DDM.SalesInvoices;
 using DDM.ProductionStatuses;
 using DDM.SalesOrderLines;
 using DDM.Machines;
@@ -27,6 +30,12 @@ namespace DDM.EntityFrameworkCore
 {
     public class DDMDbContext : AbpZeroDbContext<Tenant, Role, User, DDMDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<SalesInvoiceAdditionalCost> SalesInvoiceAdditionalCosts { get; set; }
+
+        public virtual DbSet<SalesInvoicePayment> SalesInvoicePayments { get; set; }
+
+        public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
+
         public virtual DbSet<SalesInvoice> SalesInvoices { get; set; }
 
         public virtual DbSet<ProductionStatus> ProductionStatuses { get; set; }
@@ -47,8 +56,6 @@ namespace DDM.EntityFrameworkCore
 
         public virtual DbSet<CustomerCategory> CustomerCategories { get; set; }
 
-        
-        
         /* Define an IDbSet for each entity of the application */
 
         public virtual DbSet<BinaryObject> BinaryObjects { get; set; }

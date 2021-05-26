@@ -1,6 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>
+  <texts>    <text name="SalesInvoiceAdditionalCosts">Sales invoice additional costs</text>
+    <text name="SalesInvoiceAdditionalCost">Sales invoice additional cost</text>
+    <text name="CreateNewSalesInvoiceAdditionalCost">Create new sales invoice additional cost</text>
+    <text name="EditSalesInvoiceAdditionalCost">Edit sales invoice additional cost</text>
+    <text name="DeleteSalesInvoiceAdditionalCost">Delete sales invoice additional cost</text>
+    <text name="SalesInvoicePayments">Sales invoice payments</text>
+    <text name="SalesInvoicePayment">Sales invoice payment</text>
+    <text name="CreateNewSalesInvoicePayment">Create new sales invoice payment</text>
+    <text name="EditSalesInvoicePayment">Edit sales invoice payment</text>
+    <text name="DeleteSalesInvoicePayment">Delete sales invoice payment</text>
+    <text name="PaymentMethods">Payment methods</text>
+    <text name="PaymentMethod">Payment method</text>
+    <text name="CreateNewPaymentMethod">Create new payment method</text>
+    <text name="EditPaymentMethod">Edit payment method</text>
+    <text name="DeletePaymentMethod">Delete payment method</text>
+
     <text name="SalesInvoices">Sales invoices</text>
     <text name="SalesInvoice">Sales invoice</text>
     <text name="DDM.SalesInvoices.SalesInvoice">SalesInvoice</text>

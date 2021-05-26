@@ -30,6 +30,21 @@ namespace DDM.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var salesInvoiceAdditionalCosts = pages.CreateChildPermission(AppPermissions.Pages_SalesInvoiceAdditionalCosts, L("SalesInvoiceAdditionalCosts"));
+            salesInvoiceAdditionalCosts.CreateChildPermission(AppPermissions.Pages_SalesInvoiceAdditionalCosts_Create, L("CreateNewSalesInvoiceAdditionalCost"));
+            salesInvoiceAdditionalCosts.CreateChildPermission(AppPermissions.Pages_SalesInvoiceAdditionalCosts_Edit, L("EditSalesInvoiceAdditionalCost"));
+            salesInvoiceAdditionalCosts.CreateChildPermission(AppPermissions.Pages_SalesInvoiceAdditionalCosts_Delete, L("DeleteSalesInvoiceAdditionalCost"));
+
+            var salesInvoicePayments = pages.CreateChildPermission(AppPermissions.Pages_SalesInvoicePayments, L("SalesInvoicePayments"));
+            salesInvoicePayments.CreateChildPermission(AppPermissions.Pages_SalesInvoicePayments_Create, L("CreateNewSalesInvoicePayment"));
+            salesInvoicePayments.CreateChildPermission(AppPermissions.Pages_SalesInvoicePayments_Edit, L("EditSalesInvoicePayment"));
+            salesInvoicePayments.CreateChildPermission(AppPermissions.Pages_SalesInvoicePayments_Delete, L("DeleteSalesInvoicePayment"));
+
+            var paymentMethods = pages.CreateChildPermission(AppPermissions.Pages_PaymentMethods, L("PaymentMethods"));
+            paymentMethods.CreateChildPermission(AppPermissions.Pages_PaymentMethods_Create, L("CreateNewPaymentMethod"));
+            paymentMethods.CreateChildPermission(AppPermissions.Pages_PaymentMethods_Edit, L("EditPaymentMethod"));
+            paymentMethods.CreateChildPermission(AppPermissions.Pages_PaymentMethods_Delete, L("DeletePaymentMethod"));
+
             var salesInvoices = pages.CreateChildPermission(AppPermissions.Pages_SalesInvoices, L("SalesInvoices"));
             salesInvoices.CreateChildPermission(AppPermissions.Pages_SalesInvoices_Create, L("CreateNewSalesInvoice"));
             salesInvoices.CreateChildPermission(AppPermissions.Pages_SalesInvoices_Edit, L("EditSalesInvoice"));

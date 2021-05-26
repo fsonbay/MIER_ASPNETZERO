@@ -1,4 +1,11 @@
-﻿using DDM.SalesInvoices.Dtos;
+﻿using DDM.SalesOrderLines.Dtos;
+using DDM.SalesInvoiceAdditionalCosts.Dtos;
+using DDM.SalesInvoiceAdditionalCosts;
+using DDM.SalesInvoicePayments.Dtos;
+using DDM.SalesInvoicePayments;
+using DDM.PaymentMethods.Dtos;
+using DDM.PaymentMethods;
+using DDM.SalesInvoices.Dtos;
 using DDM.SalesInvoices;
 using DDM.ProductionStatuses.Dtos;
 using DDM.ProductionStatuses;
@@ -66,6 +73,13 @@ namespace DDM
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<SalesOrderLineDto, SalesOrderLine>().ReverseMap();
+            configuration.CreateMap<CreateOrEditSalesInvoiceAdditionalCostDto, SalesInvoiceAdditionalCost>().ReverseMap();
+            configuration.CreateMap<SalesInvoiceAdditionalCostDto, SalesInvoiceAdditionalCost>().ReverseMap();
+            configuration.CreateMap<CreateOrEditSalesInvoicePaymentDto, SalesInvoicePayment>().ReverseMap();
+            configuration.CreateMap<SalesInvoicePaymentDto, SalesInvoicePayment>().ReverseMap();
+            configuration.CreateMap<CreateOrEditPaymentMethodDto, PaymentMethod>().ReverseMap();
+            configuration.CreateMap<PaymentMethodDto, PaymentMethod>().ReverseMap();
             configuration.CreateMap<CreateOrEditSalesInvoiceDto, SalesInvoice>().ReverseMap();
             configuration.CreateMap<SalesInvoiceDto, SalesInvoice>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductionStatusDto, ProductionStatus>().ReverseMap();
@@ -75,10 +89,6 @@ namespace DDM
             configuration.CreateMap<CreateOrEditMaterialDto, Material>().ReverseMap();
             configuration.CreateMap<MaterialDto, Material>().ReverseMap();
 
-
-
-
-            
             configuration.CreateMap<CreateOrEditVendorCategoryDto, VendorCategory>().ReverseMap();
             configuration.CreateMap<VendorCategoryDto, VendorCategory>().ReverseMap();
             configuration.CreateMap<CreateOrEditVendorDto, Vendor>().ReverseMap();
@@ -88,19 +98,8 @@ namespace DDM
             configuration.CreateMap<CreateOrEditCustomerCategoryDto, CustomerCategory>().ReverseMap();
             configuration.CreateMap<CustomerCategoryDto, CustomerCategory>().ReverseMap();
 
-
-
             //Sales Order
             configuration.CreateMap<SalesOrderDto, SalesOrder>().ReverseMap();
-
-
-
-
-
-
-
-
-
 
             //Inputs
             configuration.CreateMap<CheckboxInputType, FeatureInputTypeDto>();
@@ -116,10 +115,6 @@ namespace DDM
             configuration.CreateMap<LocalizableComboboxItem, LocalizableComboboxItemDto>();
             configuration.CreateMap<ILocalizableComboboxItem, LocalizableComboboxItemDto>()
                 .Include<LocalizableComboboxItem, LocalizableComboboxItemDto>();
-
-
-
-
 
             //Chat
             configuration.CreateMap<ChatMessage, ChatMessageDto>();

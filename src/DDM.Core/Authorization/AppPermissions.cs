@@ -6,6 +6,21 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_SalesInvoiceAdditionalCosts = "Pages.SalesInvoiceAdditionalCosts";
+        public const string Pages_SalesInvoiceAdditionalCosts_Create = "Pages.SalesInvoiceAdditionalCosts.Create";
+        public const string Pages_SalesInvoiceAdditionalCosts_Edit = "Pages.SalesInvoiceAdditionalCosts.Edit";
+        public const string Pages_SalesInvoiceAdditionalCosts_Delete = "Pages.SalesInvoiceAdditionalCosts.Delete";
+
+        public const string Pages_SalesInvoicePayments = "Pages.SalesInvoicePayments";
+        public const string Pages_SalesInvoicePayments_Create = "Pages.SalesInvoicePayments.Create";
+        public const string Pages_SalesInvoicePayments_Edit = "Pages.SalesInvoicePayments.Edit";
+        public const string Pages_SalesInvoicePayments_Delete = "Pages.SalesInvoicePayments.Delete";
+
+        public const string Pages_PaymentMethods = "Pages.PaymentMethods";
+        public const string Pages_PaymentMethods_Create = "Pages.PaymentMethods.Create";
+        public const string Pages_PaymentMethods_Edit = "Pages.PaymentMethods.Edit";
+        public const string Pages_PaymentMethods_Delete = "Pages.PaymentMethods.Delete";
+
         public const string Pages_SalesInvoices = "Pages.SalesInvoices";
         public const string Pages_SalesInvoices_Create = "Pages.SalesInvoices.Create";
         public const string Pages_SalesInvoices_Edit = "Pages.SalesInvoices.Edit";

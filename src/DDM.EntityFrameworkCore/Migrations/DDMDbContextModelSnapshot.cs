@@ -2059,6 +2059,25 @@ namespace DDM.Migrations
                     b.ToTable("AbpTenants");
                 });
 
+            modelBuilder.Entity("DDM.PaymentMethods.PaymentMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentMethod");
+                });
+
             modelBuilder.Entity("DDM.ProductionStatuses.ProductionStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -2077,6 +2096,71 @@ namespace DDM.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductionStatus");
+                });
+
+            modelBuilder.Entity("DDM.SalesInvoiceAdditionalCosts.SalesInvoiceAdditionalCost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SalesInvoiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SalesInvoiceId");
+
+                    b.ToTable("SalesInvoiceAdditionalCosts");
+                });
+
+            modelBuilder.Entity("DDM.SalesInvoicePayments.SalesInvoicePayment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentMethodId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SalesInvoiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SalesOrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentMethodId");
+
+                    b.HasIndex("SalesInvoiceId");
+
+                    b.HasIndex("SalesOrderId");
+
+                    b.ToTable("SalesInvoicePayment");
                 });
 
             modelBuilder.Entity("DDM.SalesInvoices.SalesInvoice", b =>
@@ -2128,21 +2212,18 @@ namespace DDM.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("LineAmount")
+                    b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("MachineId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaterialId")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
@@ -2150,14 +2231,7 @@ namespace DDM.Migrations
                     b.Property<int>("SalesOrderId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("MachineId");
-
-                    b.HasIndex("MaterialId");
 
                     b.HasIndex("SalesOrderId");
 
@@ -2591,6 +2665,36 @@ namespace DDM.Migrations
                         .HasForeignKey("LastModifierUserId");
                 });
 
+            modelBuilder.Entity("DDM.SalesInvoiceAdditionalCosts.SalesInvoiceAdditionalCost", b =>
+                {
+                    b.HasOne("DDM.SalesInvoices.SalesInvoice", "SalesInvoiceFk")
+                        .WithMany()
+                        .HasForeignKey("SalesInvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DDM.SalesInvoicePayments.SalesInvoicePayment", b =>
+                {
+                    b.HasOne("DDM.PaymentMethods.PaymentMethod", "PaymentMethodFk")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDM.SalesInvoices.SalesInvoice", "SalesInvoiceFk")
+                        .WithMany()
+                        .HasForeignKey("SalesInvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDM.SalesOrders.SalesOrder", "SalesOrderFk")
+                        .WithMany()
+                        .HasForeignKey("SalesOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DDM.SalesInvoices.SalesInvoice", b =>
                 {
                     b.HasOne("DDM.SalesOrders.SalesOrder", "SalesOrderFk")
@@ -2602,18 +2706,6 @@ namespace DDM.Migrations
 
             modelBuilder.Entity("DDM.SalesOrderLines.SalesOrderLine", b =>
                 {
-                    b.HasOne("DDM.Machines.Machine", "MachineFk")
-                        .WithMany()
-                        .HasForeignKey("MachineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DDM.Materials.Material", "MaterialFk")
-                        .WithMany()
-                        .HasForeignKey("MaterialId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DDM.SalesOrders.SalesOrder", "SalesOrderFk")
                         .WithMany("SalesOrderLines")
                         .HasForeignKey("SalesOrderId")

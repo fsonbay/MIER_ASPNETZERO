@@ -11,7 +11,7 @@
   "AutoMigration": true,
   "UpdateDatabase": true,
   "CreateUserInterface": false,
-  "CreateViewOnly": true,
+  "CreateViewOnly": false,
   "CreateExcelExport": false,
   "IsNonModalCRUDPage": false,
   "IsMasterDetailPage": false,
@@ -78,7 +78,7 @@
       }
     },
     {
-      "Name": "UnitPrice",
+      "Name": "Price",
       "Type": "decimal",
       "MaxLength": -1,
       "MinLength": -1,
@@ -91,13 +91,13 @@
       "Nullable": false,
       "Regex": "",
       "UserInterface": {
-        "AdvancedFilter": true,
-        "List": true,
-        "CreateOrUpdate": true
+        "AdvancedFilter": false,
+        "List": false,
+        "CreateOrUpdate": false
       }
     },
     {
-      "Name": "LineAmount",
+      "Name": "Amount",
       "Type": "decimal",
       "MaxLength": -1,
       "MinLength": -1,
@@ -110,9 +110,9 @@
       "Nullable": false,
       "Regex": "",
       "UserInterface": {
-        "AdvancedFilter": true,
-        "List": true,
-        "CreateOrUpdate": true
+        "AdvancedFilter": false,
+        "List": false,
+        "CreateOrUpdate": false
       }
     }
   ],

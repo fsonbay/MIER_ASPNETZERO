@@ -1,6 +1,6 @@
 {
-  "IsRegenerate": true,
-  "MenuPosition": "",
+  "IsRegenerate": false,
+  "MenuPosition": null,
   "RelativeNamespace": "PaymentMethods",
   "EntityName": "PaymentMethod",
   "EntityNamePlural": "PaymentMethods",

@@ -21,6 +21,7 @@ using DDM.SalesOrderLines;
 using DDM.SalesInvoices;
 using System.Globalization;
 using DDM.ProductionStatuses;
+using DDM.SalesOrderLines.Dtos;
 
 namespace DDM.SalesOrders
 {
@@ -181,8 +182,8 @@ namespace DDM.SalesOrders
                         Name = line.Name,
                         Description = line.Description,
                         Quantity = line.Quantity,
-                        UnitPrice = line.UnitPrice,
-                        LineAmount = line.LineAmount
+                        UnitPrice = line.Price,
+                        LineAmount = line.Amount
                     };
 
                     salesOrderLineDtoList.Add(salesOrderLineDto);
@@ -354,10 +355,8 @@ namespace DDM.SalesOrders
                         Name = item.Name,
                         Description = item.Description,
                         Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
-                        UnitPrice = decimal.Parse(item.UnitPrice.Replace(".", "")),
-                        LineAmount = decimal.Parse(item.LineAmount.Replace(".", "")),
-                        MaterialId = item.MaterialId,
-                        MachineId = item.MachineId
+                        Price = decimal.Parse(item.UnitPrice.Replace(".", "")),
+                        Amount = decimal.Parse(item.LineAmount.Replace(".", ""))
                     };
 
                     //Add item to collection
@@ -427,11 +426,9 @@ namespace DDM.SalesOrders
                         Name = item.Name,
                         Description = item.Description,
                         Quantity = decimal.Parse(item.Quantity.Replace(".", "")),
-                        UnitPrice = decimal.Parse(item.UnitPrice.Replace(".", "")),
-                        LineAmount = decimal.Parse(item.LineAmount.Replace(".", "")),
-                        SalesOrderId = salesOrder.Id,
-                        MaterialId = item.MaterialId,
-                        MachineId = item.MachineId
+                        Price = decimal.Parse(item.UnitPrice.Replace(".", "")),
+                        Amount = decimal.Parse(item.LineAmount.Replace(".", "")),
+                        SalesOrderId = salesOrder.Id
                     };
 
                     //ADD SUB TO COLLECTION
