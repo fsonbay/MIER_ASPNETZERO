@@ -19,6 +19,9 @@ namespace DDM.SalesOrders.Dtos
             Customers = new List<ComboboxItemDto>();
             ProductionStatuses = new List<ComboboxItemDto>();
             SalesOrderLines = new List<SalesOrderLineDto>();
+            
+
+
         }
 
     }

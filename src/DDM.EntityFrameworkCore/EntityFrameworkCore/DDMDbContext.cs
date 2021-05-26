@@ -47,6 +47,8 @@ namespace DDM.EntityFrameworkCore
 
         public virtual DbSet<CustomerCategory> CustomerCategories { get; set; }
 
+        
+        
         /* Define an IDbSet for each entity of the application */
 
         public virtual DbSet<BinaryObject> BinaryObjects { get; set; }

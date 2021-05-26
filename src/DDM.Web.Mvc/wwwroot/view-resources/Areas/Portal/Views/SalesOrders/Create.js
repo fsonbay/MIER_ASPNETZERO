@@ -23,6 +23,199 @@
     //START
     ButtonVisibility();
 
+    //WIZARD
+    var KTWizard1 = function () {
+        // Base elements
+        var wizardEl;
+        var formEl;
+        var validator;
+        var wizard;
+
+        // Private functions
+        var initWizard = function () {
+            // Initialize form wizard
+            wizard = new KTWizard('kt_wizard', {
+                startStep: 1
+            });
+
+            // Validation before going to next page
+            wizard.on('beforeNext', function (wizardObj) {
+                if (validator.form() !== true) {
+
+                    wizardObj.stop();  // don't go to the next step
+                }
+            });
+
+            wizard.on('beforePrev', function (wizardObj) {
+                if (validator.form() !== true) {
+                    wizardObj.stop();  // don't go to the next step
+                }
+            });
+
+            // Change event
+            wizard.on('change', function (wizard) {
+                setTimeout(function () {
+                    KTUtil.scrollTop();
+                }, 500);
+            });
+        }
+
+        var initValidation = function () {
+            validator = formEl.validate({
+                // Validate only visible fields
+                ignore: ":hidden",
+
+                // Validation rules
+                rules: {
+
+                    //= Step 1
+                    CustomerId: {
+                        required: true
+                    },
+                    Date: {
+                        required: true
+                    },
+                    Deadline: {
+                        required: true
+                    }
+                },
+
+                // Display error  
+                invalidHandler: function (event, validator) {
+                    KTUtil.scrollTop();
+
+                    //swal.fire({
+                    //	"title": "",
+                    //	"text": "There are some errors in your submission. Please correct them.",
+                    //	"type": "error",
+                    //	"confirmButtonClass": "btn btn-secondary"
+                    //});
+                },
+
+                // Submit valid form
+                submitHandler: function (form) {
+
+                }
+            });
+        }
+        var initSubmit = function () {
+
+            var btn = formEl.find('[data-wizard-type="action-submit"]');
+
+            btn.on('click', function (e) {
+                //  alert(0);
+
+                var data = _$form.serializeFormToObject();
+                var j = JSON.stringify(data);
+
+                //alert(j);
+                //    KTApp.progress(btn);
+
+                _salesOrdersService.createOrEdit(
+                    data
+                ).done(function () {
+                    abp.notify.info(app.localize('SavedSuccessfully'));
+                });
+
+                // e.preventDefault();
+
+                //if (validator.form()) {
+
+                //    alert(1);
+                //    var data = _$form.serializeFormToObject();
+                //    KTApp.progress(btn);
+
+                //    _service.createOrEdit(
+                //        data
+                //    ).done(function () {
+                //        abp.notify.info(app.localize('SavedSuccessfully'));
+                //    });
+
+
+                //if (validator.form()) {
+                //    // See: src\js\framework\base\app.js
+                //    KTApp.progress(btn);
+                //    //KTApp.block(formEl);
+
+                //    // See: http://malsup.com/jquery/form/#ajaxSubmit
+                //    formEl.ajaxSubmit({
+                //        success: function () {
+                //            KTApp.unprogress(btn);
+
+
+                //            //KTApp.unblock(formEl);
+
+                //            //swal.fire({
+                //            //	"title": "",
+                //            //	"text": "The application has been successfully submitted!",
+                //            //	"type": "success",
+                //            //	"confirmButtonClass": "btn btn-secondary"
+                //            //});
+                //        }
+                //    });
+                //}
+            });
+        }
+
+        //SAMPLE INIT SUBMIT
+        //var initSubmit = function () {
+        //    var btn = formEl.find('[data-ktwizard-type="action-submit"]');
+
+        //    btn.on('click', function (e) {
+        //        e.preventDefault();
+
+        //        if (validator.form()) {
+        //            var data = _$form.serializeFormToObject();
+        //            KTApp.progress(btn);
+
+        //            _service.createOrEdit(
+        //                data
+        //            ).done(function () {
+        //                abp.notify.info(app.localize('SavedSuccessfully'));
+        //            });
+
+
+
+        //            formEl.ajaxSubmit({
+        //                success: function () {
+        //                    KTApp.unprogress(btn);
+        //                    // document.location.href = abp.appPath + "Portal/SourceConnection";
+
+        //                    //KTApp.unblock(formEl);
+
+
+        //                    //swal.fire({
+        //                    //	"title": "",
+        //                    //	"text": "The application has been successfully submitted!",
+        //                    //	"type": "success",
+        //                    //	"confirmButtonClass": "btn btn-secondary"
+        //                    //});
+        //                }
+        //            });
+        //        }
+        //    });
+        //}
+
+
+
+        return {
+            // public functions
+            init: function () {
+
+                wizardEl = KTUtil.getById('kt_wizard');
+                formEl = $('#SalesOrderForm');
+
+                initWizard();
+                initValidation();
+                initSubmit();
+            }
+        };
+    }();
+
+    jQuery(document).ready(function () {
+        KTWizard1.init();
+
+    });
 
     //MODAL POPUP
     var _createCustomerModal = new app.ModalManager({
@@ -87,7 +280,7 @@
     //SALES ORDER LINES
     var wrapper = $sets;
     _$addLineBtn.click(function (e) {
-        alert(1);
+       
         //Cancel default postback
         e.preventDefault();
 

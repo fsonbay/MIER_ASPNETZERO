@@ -1,6 +1,6 @@
 {
-  "IsRegenerate": false,
-  "MenuPosition": null,
+  "IsRegenerate": true,
+  "MenuPosition": "",
   "RelativeNamespace": "SalesOrderLines",
   "EntityName": "SalesOrderLine",
   "EntityNamePlural": "SalesOrderLines",
@@ -61,8 +61,8 @@
     {
       "Name": "Quantity",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -80,8 +80,8 @@
     {
       "Name": "UnitPrice",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -99,8 +99,8 @@
     {
       "Name": "LineAmount",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -127,28 +127,6 @@
       "DuplicationNumber": 0,
       "RelationType": "single",
       "ViewType": "LookupTable"
-    },
-    {
-      "Namespace": "DDM.Machines",
-      "ForeignEntityName": "Machine",
-      "IdType": "int",
-      "IsNullable": false,
-      "PropertyName": "MachineId",
-      "DisplayPropertyName": "Name",
-      "DuplicationNumber": 0,
-      "RelationType": "single",
-      "ViewType": "Dropdown"
-    },
-    {
-      "Namespace": "DDM.Materials",
-      "ForeignEntityName": "Material",
-      "IdType": "int",
-      "IsNullable": false,
-      "PropertyName": "MaterialId",
-      "DisplayPropertyName": "Name",
-      "DuplicationNumber": 0,
-      "RelationType": "single",
-      "ViewType": "Dropdown"
     }
   ],
   "NavigationPropertyOneToManyTables": [],
