@@ -193,7 +193,7 @@
                 - TEMPLATE NAME MUST BE THE SAME AS DATA TYPE' IN THIS CASE SalesOrderLineDto
                 - TEMPLATEs LOCATION Portal/Views/Shared/EditorTemplates*@
 
-                                    @Html.EditorFor(model => model.SalesOrderLines)
+                                    @Html.EditorFor(model => model.SalesOrderLines, Model.ProductionStatuses)
                                 </div>
                                 <!--END:Input-->
                                 <div class="row justify-content-end">

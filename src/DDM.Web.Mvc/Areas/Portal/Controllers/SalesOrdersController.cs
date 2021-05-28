@@ -59,6 +59,10 @@ namespace DDM.Web.Areas.Portal.Controllers
 
             viewModel.SalesOrder.Id = 0;
 
+            //TODO : ViewData for combobox
+
+           // ViewData["PaymentMethod"] = new ComboboxItemDto
+
             return View(viewModel);
         }
 

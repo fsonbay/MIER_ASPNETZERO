@@ -24,6 +24,8 @@ using DDM.ProductionStatuses;
 using DDM.SalesOrderLines.Dtos;
 using DDM.SalesInvoices.Dtos;
 using DDM.SalesInvoiceAdditionalCosts.Dtos;
+using DDM.SalesInvoicePayments.Dtos;
+using DDM.PaymentMethods;
 
 namespace DDM.SalesOrders
 {
@@ -39,6 +41,7 @@ namespace DDM.SalesOrders
         private readonly IRepository<Machine, int> _lookup_machineRepository;
         private readonly IRepository<Material, int> _lookup_materialRepository;
         private readonly IRepository<ProductionStatus, int> _lookup_productionStatusRepository;
+        private readonly IRepository<PaymentMethod, int> _lookup_paymentMethodRepository;
 
         public SalesOrdersAppService(SalesOrderRepository salesOrderRepository,
             SalesInvoiceRepository salesInvoiceRepository,
@@ -46,7 +49,8 @@ namespace DDM.SalesOrders
             IRepository<Customer, int> lookup_customerRepository,
             IRepository<Machine, int> lookup_machineRepository,
             IRepository<Material, int> lookup_materialRepository,
-            IRepository<ProductionStatus, int> lookup_productionStatusRepository
+            IRepository<ProductionStatus, int> lookup_productionStatusRepository,
+            IRepository<PaymentMethod, int> lookup_paymentMethodRepository
             )
         {
             _salesOrderRepository = salesOrderRepository;
@@ -56,6 +60,7 @@ namespace DDM.SalesOrders
             _lookup_machineRepository = lookup_machineRepository;
             _lookup_materialRepository = lookup_materialRepository;
             _lookup_productionStatusRepository = lookup_productionStatusRepository;
+            _lookup_paymentMethodRepository = lookup_paymentMethodRepository;
         }
 
         public async Task<PagedResultDto<GetSalesOrderForViewDto>> GetAll(GetAllSalesOrdersInput input)
@@ -115,6 +120,14 @@ namespace DDM.SalesOrders
             var salesInvoiceAdditionalCostDto = new SalesInvoiceAdditionalCostDto();
             var salesInvoiceAdditionalCostDtoList = new List<SalesInvoiceAdditionalCostDto>();
 
+            var salesInvoicePaymentDto = new SalesInvoicePaymentDto();
+            var salesInvoicePaymentDtoList = new List<SalesInvoicePaymentDto>();
+
+            //DEFAULT SELECTED COMBOBOX
+            var defaultSelectedCombobox = new ComboboxItemDto("0", "Please select ...")
+            {
+                IsSelected = true
+            };
 
 
             //CUSTOMER LOOKUP
@@ -122,13 +135,7 @@ namespace DDM.SalesOrders
                 .GetAll()
                 .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")"))
                 .ToList();
-
-            var defaultSelected = new ComboboxItemDto("0", "Please select ...")
-            {
-                IsSelected = true
-            };
-
-            customers.Add(defaultSelected);
+            customers.Add(defaultSelectedCombobox);
             output.Customers = customers;
 
             //PRODUCTION STATUS LOOKUP
@@ -158,7 +165,32 @@ namespace DDM.SalesOrders
 
             //EMPTY SALES INVOICE ADDTIONAL COST
             salesInvoiceAdditionalCostDto.Id = 0;
+            salesInvoiceAdditionalCostDto.Name = "";
+            salesInvoiceAdditionalCostDto.Description = "";
+            salesInvoiceAdditionalCostDto.MarkForDelete = false;
 
+            salesInvoiceAdditionalCostDtoList.Add(salesInvoiceAdditionalCostDto);
+            output.SalesInvoiceAdditionalCosts = salesInvoiceAdditionalCostDtoList;
+
+            //EMPTY SALES INVOICE PAYMENT
+            salesInvoicePaymentDto.Id = 0;
+            salesInvoicePaymentDto.PaymentMethodId = 2;
+            salesInvoicePaymentDto.Date = DateTime.Now;
+
+            //PAYMENT METHOD LOOKUP
+            var paymentMethod = _lookup_paymentMethodRepository
+                .GetAll()
+                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name ))
+                .ToList();
+
+            paymentMethod.Add(defaultSelectedCombobox);
+            
+           // ViewData["PaymentMethod"] = paymentMethod;
+
+
+
+            //var paymentMethod = _paymentMethodRepo.GetAll().OrderBy(p => p.Name);
+            //ViewData["PaymentMethod"] = new SelectList(paymentMethod, "ID", "Name");
 
 
             //RETURN
