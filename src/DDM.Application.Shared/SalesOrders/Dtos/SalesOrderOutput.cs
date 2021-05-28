@@ -1,4 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
+using DDM.SalesInvoiceAdditionalCosts.Dtos;
+using DDM.SalesInvoicePayments.Dtos;
 using DDM.SalesInvoices.Dtos;
 using DDM.SalesOrderLines.Dtos;
 using System;
@@ -16,13 +18,16 @@ namespace DDM.SalesOrders.Dtos
         public List<ComboboxItemDto> ProductionStatuses { get; set; }
 
         public List<SalesOrderLineDto> SalesOrderLines { get; set; }
+        public List<SalesInvoicePaymentDto> SalesInvoicePayments { get; set; }
+        public List<SalesInvoiceAdditionalCostDto> SalesInvoiceAdditionalCosts { get; set; }
 
         public SalesOrderOutput()
         {
             Customers = new List<ComboboxItemDto>();
             ProductionStatuses = new List<ComboboxItemDto>();
             SalesOrderLines = new List<SalesOrderLineDto>();
-            
+            SalesInvoicePayments = new List<SalesInvoicePaymentDto>();
+            SalesInvoiceAdditionalCosts = new List<SalesInvoiceAdditionalCostDto>();
         }
 
     }

@@ -22,6 +22,8 @@ using DDM.SalesInvoices;
 using System.Globalization;
 using DDM.ProductionStatuses;
 using DDM.SalesOrderLines.Dtos;
+using DDM.SalesInvoices.Dtos;
+using DDM.SalesInvoiceAdditionalCosts.Dtos;
 
 namespace DDM.SalesOrders
 {
@@ -104,26 +106,16 @@ namespace DDM.SalesOrders
             //VARIABLES
             var output = new SalesOrderOutput();
 
-            var dto = new SalesOrderDto();
-            var lineDto = new SalesOrderLineDto();
-            var lineDtoList = new List<SalesOrderLineDto>();
+            var salesOrderDto = new SalesOrderDto();
+            var salesInvoiceDto = new SalesInvoiceDto();
 
-            //EMPTY DTO
-            dto.Id = null;
-            dto.Number = "";
-            dto.Date = DateTime.Now;
-            dto.Deadline = DateTime.Now;
+            var salesOrderLineDto = new SalesOrderLineDto();
+            var salesOrderLineDtoList = new List<SalesOrderLineDto>();
+            
+            var salesInvoiceAdditionalCostDto = new SalesInvoiceAdditionalCostDto();
+            var salesInvoiceAdditionalCostDtoList = new List<SalesInvoiceAdditionalCostDto>();
 
-            output.SalesOrder = dto;
 
-            //EMPTY LINE DEFAULT VALUES
-            lineDto.Id = 0;
-            lineDto.Name = "";
-            lineDto.Description = "";
-            lineDto.MarkForDelete = false;
-
-            lineDtoList.Add(lineDto);
-            output.SalesOrderLines = lineDtoList;
 
             //CUSTOMER LOOKUP
             var customers = _lookup_customerRepository
@@ -131,13 +123,13 @@ namespace DDM.SalesOrders
                 .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")"))
                 .ToList();
 
-            var defaultSelected= new ComboboxItemDto("0", "Please select ...")
-                {
-                    IsSelected = true
-                };
+            var defaultSelected = new ComboboxItemDto("0", "Please select ...")
+            {
+                IsSelected = true
+            };
 
             customers.Add(defaultSelected);
-
+            output.Customers = customers;
 
             //PRODUCTION STATUS LOOKUP
             var productionStatuses = _lookup_productionStatusRepository
@@ -145,10 +137,29 @@ namespace DDM.SalesOrders
                 .Select(s => new ComboboxItemDto(s.Id.ToString(), s.Name))
                 .ToList();
 
-
-            //ASSIGN VALUES
-            output.Customers = customers;
             output.ProductionStatuses = productionStatuses;
+
+            //EMPTY SALES ORDER
+            salesOrderDto.Id = null;
+            salesOrderDto.Number = "";
+            salesOrderDto.Date = DateTime.Now;
+            salesOrderDto.Deadline = DateTime.Now;
+
+            output.SalesOrder = salesOrderDto;
+
+            //EMPTY SALES ORDER LINE
+            salesOrderLineDto.Id = 0;
+            salesOrderLineDto.Name = "";
+            salesOrderLineDto.Description = "";
+            salesOrderLineDto.MarkForDelete = false;
+
+            salesOrderLineDtoList.Add(salesOrderLineDto);
+            output.SalesOrderLines = salesOrderLineDtoList;
+
+            //EMPTY SALES INVOICE ADDTIONAL COST
+            salesInvoiceAdditionalCostDto.Id = 0;
+
+
 
             //RETURN
             return output;
