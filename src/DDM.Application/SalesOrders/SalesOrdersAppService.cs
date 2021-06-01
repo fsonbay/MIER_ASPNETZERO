@@ -172,6 +172,7 @@ namespace DDM.SalesOrders
             salesInvoiceAdditionalCostDtoList.Add(salesInvoiceAdditionalCostDto);
             output.SalesInvoiceAdditionalCosts = salesInvoiceAdditionalCostDtoList;
 
+
             //EMPTY SALES INVOICE PAYMENT
             salesInvoicePaymentDto.Id = 0;
             salesInvoicePaymentDto.PaymentMethodId = 2;
