@@ -56,7 +56,7 @@
                             <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
                                 <div class="wizard-label">
                                     <i class="wizard-icon flaticon-list"></i>
-                                    <h3 class="wizard-title">Additional Cost</h3>
+                                    <h3 class="wizard-title">Additional Cost / Discount</h3>
                                 </div>
                                 <span class="wizard-arrow">
                                     <i class="wizard-icon flaticon2-next"></i>
@@ -105,12 +105,9 @@
 
                         <!--BEGIN::Wizard Body-->
                         <form asp-controller="SalesOrders" asp-action="Create" method="post" id="SalesOrderForm" role="form" class="kt-form">
-
                             <!--BEGIN:Wizard Step 1-->
                             <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
                                 <!--BEGIN:Input-->
-
-
                                 <div class="row">
                                     <div class="col-8">
 
@@ -183,11 +180,6 @@
                                     </div>
                                 </div>
                                 <!--END:Input-->
-
-
-
-
-
                             </div>
                             <!--END:Wizard Step 1-->
                             <!--BEGIN:Wizard Step 2-->
@@ -197,7 +189,6 @@
                                         <button id="AddLineButton" class="btn btn-outline-success btn-sm" title="Add Line"><i class="fa fa-bars"></i> Add Line</button>
                                     </div>
                                 </div>
-
                                 <!--BEGIN:Input-->
                                 <div class="form-horizontal col-md-12 line-sets">
 
@@ -205,8 +196,8 @@
                                     @*https://stackoverflow.com/questions/25164869/editortemplate-not-rendering-as-expected*@
 
                                     @*  - EDITOR TEMPLATE WILL AUTOMCATICALLY RENDER LIST.
-                                        - TEMPLATE NAME MUST BE THE SAME AS DATA TYPE' IN THIS CASE SalesOrderLineDto
-                                        - TEMPLATES LOCATION Portal/Views/Shared/EditorTemplates*@
+                - TEMPLATE NAME MUST BE THE SAME AS DATA TYPE' IN THIS CASE SalesOrderLineDto
+                - TEMPLATES LOCATION Portal/Views/Shared/EditorTemplates*@
 
                                     @Html.EditorFor(model => model.SalesOrderLines)
                                 </div>
@@ -219,15 +210,13 @@
                                 </div>
                             </div>
                             <!--END:Wizard Step 2-->
-
                             <!--BEGIN:Wizard Step 3-->
                             <div class="col-12" data-wizard-type="step-content" data-wizard-state="current">
                                 <div class="input-group">
                                     <div class="form-group">
-                                        <button id="AddCostButton" class="btn btn-outline-success btn-sm" title="Add Cost"><i class="fa fa-bars"></i> Add Cost</button>
+                                        <button id="AddCostButton" class="btn btn-outline-success btn-sm" title="Add Cost"><i class="fa fa-bars"></i> Add Cost / Discount</button>
                                     </div>
                                 </div>
-
                                 <!--BEGIN:Input-->
                                 <div class="form-horizontal col-md-12 cost-sets">
                                     @Html.EditorFor(model => model.SalesInvoiceAdditionalCosts)
@@ -241,8 +230,26 @@
                                 </div>
                             </div>
                             <!--END:Wizard Step 3-->
-
-
+                            <!--BEGIN:Wizard Step 4-->
+                            <div class="col-12" data-wizard-type="step-content" data-wizard-state="current">
+                                <div class="input-group">
+                                    <div class="form-group">
+                                        <button id="AddPaymentButton" class="btn btn-outline-success btn-sm" title="Add Cost"><i class="fa fa-bars"></i> Add Payment</button>
+                                    </div>
+                                </div>
+                                <!--BEGIN:Input-->
+                                <div class="form-horizontal col-md-12 cost-sets">
+                                    @Html.EditorFor(model => model.SalesInvoicePayments)
+                                </div>
+                                <!--END:Input-->
+                                <div class="row justify-content-end">
+                                    <div class="col-2">
+                                        <label for="Total">@L("Total")</label>
+                                        <input id="Total" name="Total" type="text" value="@Model.SalesOrder.Amount.ToString("N0")" class="form-control m-input bg-light-primary currency-format" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <!--END:Wizard Step 4-->
 
 
                             @*<div class="form-group">

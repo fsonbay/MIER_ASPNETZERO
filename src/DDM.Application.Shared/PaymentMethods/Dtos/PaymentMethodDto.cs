@@ -5,6 +5,6 @@ namespace DDM.PaymentMethods.Dtos
 {
     public class PaymentMethodDto : EntityDto
     {
-
+        public string Name { get; set; }
     }
 }

@@ -16,6 +16,7 @@ using DDM.Customers.Dtos;
 using DDM.Web.Areas.Portal.Models.Customers;
 using Abp.Notifications;
 using DDM.PaymentMethods;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DDM.Web.Areas.Portal.Controllers
 {
@@ -63,10 +64,10 @@ namespace DDM.Web.Areas.Portal.Controllers
             viewModel.SalesOrder.Id = 0;
 
             //TODO : ViewData for combobox
-            ViewData["PaymentMethod"] = _paymentMethodAppService.GetForCombobox(0);
+            ViewData["PaymentMethod"] = new SelectList(_paymentMethodAppService.GetAll(), "Id", "Name");
 
-
-           // ViewData["PaymentMethod"] = new ComboboxItemDto
+            //ViewData["Customer"] = new SelectList(customer, "ID", "Name");
+            // ViewData["PaymentMethod"] = new ComboboxItemDto
 
             return View(viewModel);
         }

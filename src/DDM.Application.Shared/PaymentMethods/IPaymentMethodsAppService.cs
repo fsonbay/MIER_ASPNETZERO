@@ -11,7 +11,7 @@ namespace DDM.PaymentMethods
     public interface IPaymentMethodsAppService : IApplicationService
     {
 
-        List<ComboboxItemDto> GetForCombobox(int? id);
+        List<PaymentMethodDto> GetAll();
 
         Task<PagedResultDto<GetPaymentMethodForViewDto>> GetAll(GetAllPaymentMethodsInput input);
 

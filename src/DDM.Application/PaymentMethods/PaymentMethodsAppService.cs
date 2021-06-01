@@ -29,37 +29,25 @@ namespace DDM.PaymentMethods
         }
 
 
-        public List<ComboboxItemDto> GetForCombobox(int? id)
+        public List<PaymentMethodDto> GetAll()
         {
-            var paymentMethods = _paymentMethodRepository
-                .GetAll()
-                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name)
-                {
-                    IsSelected = id == c.Id
-                })
-                .ToList();
+            var paymentMethods = _paymentMethodRepository.GetAll();
+            var results = new List<PaymentMethodDto>();
 
-            return paymentMethods;
+            foreach (var o in paymentMethods)
+            {
+                var res = new PaymentMethodDto()
+                {
+                    Id = o.Id,
+                    Name = o.Name
+                };
+
+                results.Add(res);
+            }
+
+            return results;
 
         }
-
-        //        var customers = _lookup_customerRepository
-        //.GetAll()
-        //.Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")")
-        //{
-        //    IsSelected = salesOrderOutput.SalesOrder.CustomerId == c.Id
-        //})
-        //.ToList();
-
-
-
-        //PAYMENT METHOD LOOKUP
-        //var paymentMethod = _lookup_paymentMethodRepository
-        //    .GetAll()
-        //    .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name))
-        //    .ToList();
-
-
         public async Task<PagedResultDto<GetPaymentMethodForViewDto>> GetAll(GetAllPaymentMethodsInput input)
         {
 
@@ -73,7 +61,6 @@ namespace DDM.PaymentMethods
             var paymentMethods = from o in pagedAndFilteredPaymentMethods
                                  select new
                                  {
-
                                      Id = o.Id
                                  };
 

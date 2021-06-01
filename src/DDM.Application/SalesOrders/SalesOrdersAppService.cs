@@ -175,18 +175,23 @@ namespace DDM.SalesOrders
 
             //EMPTY SALES INVOICE PAYMENT
             salesInvoicePaymentDto.Id = 0;
-            salesInvoicePaymentDto.PaymentMethodId = 2;
             salesInvoicePaymentDto.Date = DateTime.Now;
+            salesInvoicePaymentDto.MarkForDelete = false;
+
+            salesInvoicePaymentDtoList.Add(salesInvoicePaymentDto);
+            output.SalesInvoicePayments = salesInvoicePaymentDtoList;
+
+
 
             //PAYMENT METHOD LOOKUP
-            var paymentMethod = _lookup_paymentMethodRepository
-                .GetAll()
-                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name ))
-                .ToList();
+            //var paymentMethod = _lookup_paymentMethodRepository
+            //    .GetAll()
+            //    .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name ))
+            //    .ToList();
 
-            paymentMethod.Add(defaultSelectedCombobox);
-            
-           // ViewData["PaymentMethod"] = paymentMethod;
+            //paymentMethod.Add(defaultSelectedCombobox);
+
+            // ViewData["PaymentMethod"] = paymentMethod;
 
 
 

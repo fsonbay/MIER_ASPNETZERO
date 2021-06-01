@@ -318,6 +318,7 @@
         ButtonVisibility();
 
     });
+
     _$delLineBtn.click(function (e) {
 
         //Cancel default postback

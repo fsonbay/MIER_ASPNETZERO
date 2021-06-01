@@ -7,8 +7,15 @@
 
     <div class="col-3">
         <div class="form-group">
-            <label for="m.Name">@L("Name")</label>
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control m-input" })
+            <label for="m.Date">@L("Date")</label>
+            @Html.TextBoxFor(m => m.Date, new { @class = "form-control m-input date-picker" })
+            <span class="form-text text-muted">Nama barang</span>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label for="m.Date">@L("Date")</label>
+            @Html.DropDownListFor(m => m.PaymentMethodId, (SelectList)ViewData["PaymentMethod"], "Please select...", new { @class = "form-control m-input selectpicker" })
             <span class="form-text text-muted">Nama barang</span>
         </div>
     </div>
