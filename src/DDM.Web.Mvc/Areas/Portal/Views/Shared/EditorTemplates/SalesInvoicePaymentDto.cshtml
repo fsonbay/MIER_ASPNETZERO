@@ -1,0 +1,18 @@
+﻿@model DDM.SalesInvoicePayments.Dtos.SalesInvoicePaymentDto
+
+
+<div class="row payment-set">
+    @Html.HiddenFor(m => m.Id, new { @class = "payment-id" })
+    @Html.HiddenFor(m => m.MarkForDelete, new { @class = "mark-for-delete" })
+
+    <div class="col-3">
+        <div class="form-group">
+            <label for="m.Name">@L("Name")</label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control m-input" })
+            <span class="form-text text-muted">Nama barang</span>
+        </div>
+    </div>
+
+
+
+</div>

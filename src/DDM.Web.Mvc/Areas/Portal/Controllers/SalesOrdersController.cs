@@ -15,7 +15,7 @@ using DDM.Customers;
 using DDM.Customers.Dtos;
 using DDM.Web.Areas.Portal.Models.Customers;
 using Abp.Notifications;
-
+using DDM.PaymentMethods;
 
 namespace DDM.Web.Areas.Portal.Controllers
 {
@@ -25,13 +25,16 @@ namespace DDM.Web.Areas.Portal.Controllers
     {
         private readonly ISalesOrdersAppService _salesOrdersAppService;
         private readonly ICustomersAppService _customersAppService;
+        private readonly IPaymentMethodsAppService _paymentMethodAppService;
 
 
         public SalesOrdersController(ISalesOrdersAppService salesOrdersAppService,
-            ICustomersAppService customersAppService)
+            ICustomersAppService customersAppService,
+            IPaymentMethodsAppService paymentMethodsAppService)
         {
             _salesOrdersAppService = salesOrdersAppService;
             _customersAppService = customersAppService;
+            _paymentMethodAppService = paymentMethodsAppService;
         }
 
         public ActionResult Index()
@@ -60,6 +63,8 @@ namespace DDM.Web.Areas.Portal.Controllers
             viewModel.SalesOrder.Id = 0;
 
             //TODO : ViewData for combobox
+            ViewData["PaymentMethod"] = _paymentMethodAppService.GetForCombobox(0);
+
 
            // ViewData["PaymentMethod"] = new ComboboxItemDto
 

@@ -11,5 +11,6 @@ namespace DDM.SalesInvoicePayments.Dtos
         public int PaymentMethodId { get; set; }
         public DateTime Date { get; set; }
         public decimal? Amount { get; set; }
+        public bool MarkForDelete { get; set; }
     }
 }

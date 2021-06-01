@@ -28,6 +28,38 @@ namespace DDM.PaymentMethods
 
         }
 
+
+        public List<ComboboxItemDto> GetForCombobox(int? id)
+        {
+            var paymentMethods = _paymentMethodRepository
+                .GetAll()
+                .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name)
+                {
+                    IsSelected = id == c.Id
+                })
+                .ToList();
+
+            return paymentMethods;
+
+        }
+
+        //        var customers = _lookup_customerRepository
+        //.GetAll()
+        //.Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name + " (" + c.Company + ")")
+        //{
+        //    IsSelected = salesOrderOutput.SalesOrder.CustomerId == c.Id
+        //})
+        //.ToList();
+
+
+
+        //PAYMENT METHOD LOOKUP
+        //var paymentMethod = _lookup_paymentMethodRepository
+        //    .GetAll()
+        //    .Select(c => new ComboboxItemDto(c.Id.ToString(), c.Name))
+        //    .ToList();
+
+
         public async Task<PagedResultDto<GetPaymentMethodForViewDto>> GetAll(GetAllPaymentMethodsInput input)
         {
 
