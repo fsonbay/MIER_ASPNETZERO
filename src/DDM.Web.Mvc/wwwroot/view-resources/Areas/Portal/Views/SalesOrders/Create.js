@@ -14,11 +14,16 @@
     var _$deadline = $('#SalesOrder_Deadline');
     var _$newCustBtn = $('#CreateNewCustomerButton');
 
-    var _$addLineBtn = $('#AddLineButton');
-    var _$delLineBtn = $('.delete-line');
-
+    //SALES ORDER LINE
     var $sets = $('.line-sets');
     var $set = $('.line-set');
+    var _$addLineBtn = $('#AddLineButton');
+    var _$delLineBtn = $('.delete-line');
+    var $lineAmount = $(".line-amount");
+    var _$lineCalc = $('.line-calculation');
+
+    //TOTAL AMOUNT
+    var _$total = $('#Total');
 
     //START
     ButtonVisibility();
@@ -318,7 +323,6 @@
         ButtonVisibility();
 
     });
-
     _$delLineBtn.click(function (e) {
 
         //Cancel default postback
@@ -340,7 +344,52 @@
         ReorderIndex();
         ButtonVisibility();
     });
+    _$lineCalc.keyup(function (event) {
 
+        var i = $(this).attr('name');
+        var start_pos = i.indexOf('[') + 1;
+        var end_pos = i.indexOf(']', start_pos);
+        var index = i.substring(start_pos, end_pos);
+
+
+        var quantityName = 'input[name="SalesOrderLines[' + index + '].Quantity"]';
+        var priceName = 'input[name="SalesOrderLines[' + index + '].Price"]';
+        var amountName = 'input[name="SalesOrderLines[' + index + '].Amount"]';
+
+        var quantity = $(quantityName).val().replace(/\./g, '');
+        var price = $(priceName).val().replace(/\./g, '');
+
+        var amount = quantity * price;
+        $(amountName).val(FormatCurrency(amount.toString(), '.', ',', '.'));
+
+        $(this).val(function (index, value) {
+            //reformat
+            return FormatCurrency(value, '.', ',', '.');
+        });
+
+        CalculateTotalAmount();
+
+    });
+
+    function FormatCurrency(value, inD, outD, sep) {
+
+        //clean previously added dot
+        value = value.replace(/\./g, '');
+
+        var nStr = value.replace(/\./g, '');
+        nStr += '';
+        var dpos = nStr.indexOf(inD);
+        var nStrEnd = '';
+        if (dpos !== -1) {
+            nStrEnd = outD + nStr.substring(dpos + 1, nStr.length);
+            nStr = nStr.substring(0, dpos);
+        }
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(nStr)) {
+            nStr = nStr.replace(rgx, '$1' + sep + '$2');
+        }
+        return nStr + nStrEnd;
+    }
     function ReorderIndex() {
         $(".line-set").each(function () {
 
@@ -374,7 +423,32 @@
             $('.line-set .delete-line').show();
         }
     }
+    function CalculateTotalAmount() {
+        var sum = 0;
 
+        //iterate through each textboxes and add the values
+        $(".line-amount").each(function () {
+
+            var lineAmount = this.value.replace(/\./g, '');
+
+            //add only if the value is number and visible
+            if (!isNaN(lineAmount) && lineAmount.length !== 0) {
+                var parent = $(this).parents('.line-set');
+                if (parent.is(':visible')) {
+                    sum += parseFloat(lineAmount);
+                    $(this).css("background-color", "#FEFFB0");
+                }
+            }
+            else if (lineAmount.length !== 0) {
+                $(this).css("background-color", "red");
+            }
+        });
+
+        _$total.val(FormatCurrency(sum.toString(), '.', ',', '.'));
+
+       // var totalAmount = addSeparatorsNF(sum.toFixed(0), '.', ',', '.');
+        //_$total.val(totalAmount);
+    }
 
 })();
 

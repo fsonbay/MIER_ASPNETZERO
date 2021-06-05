@@ -419,7 +419,7 @@
 
             //iterate through each textboxes and add the values
             $lineAmount.each(function () {
-
+              
                 var lineAmount = this.value.replace(/\./g, '');
 
                 //add only if the value is number and visible

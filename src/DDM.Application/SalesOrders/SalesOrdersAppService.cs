@@ -231,8 +231,8 @@ namespace DDM.SalesOrders
                         Name = line.Name,
                         Description = line.Description,
                         Quantity = line.Quantity,
-                        UnitPrice = line.Price,
-                        LineAmount = line.Amount
+                        Price = line.Price,
+                        Amount = line.Amount
                     };
 
                     salesOrderLineDtoList.Add(salesOrderLineDto);
@@ -248,8 +248,8 @@ namespace DDM.SalesOrders
                     Name = "",
                     Description = "",
                     Quantity = 0,
-                    UnitPrice = 0,
-                    LineAmount = 0
+                    Price = 0,
+                    Amount = 0
                 };
 
                 salesOrderLineDtoList.Add(salesOrderLineDto);

@@ -5,21 +5,24 @@
     @Html.HiddenFor(m => m.Id, new { @class = "payment-id" })
     @Html.HiddenFor(m => m.MarkForDelete, new { @class = "mark-for-delete" })
 
-    <div class="col-3">
+    <div class="col-4">
         <div class="form-group">
             <label for="m.Date">@L("Date")</label>
             @Html.TextBoxFor(m => m.Date, new { @class = "form-control m-input date-picker" })
-            <span class="form-text text-muted">Nama barang</span>
+           
         </div>
     </div>
-    <div class="col-3">
+    <div class="col-4">
         <div class="form-group">
-            <label for="m.Date">@L("Date")</label>
-            @Html.DropDownListFor(m => m.PaymentMethodId, (SelectList)ViewData["PaymentMethod"], "Please select...", new { @class = "form-control m-input selectpicker" })
-            <span class="form-text text-muted">Nama barang</span>
+            <label for="m.Amount">@L("Amount")</label>
+            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control m-input" })           
+     
         </div>
     </div>
-
-
-
+    <div class="col-4">
+        <div class="form-group">
+            <label for="m.Date">@L("PaymentMethod")</label>
+            @Html.DropDownListFor(m => m.PaymentMethodId, (SelectList)ViewData["PaymentMethod"], "Please select...", new { @class = "form-control m-input selectpicker" })
+        </div>
+    </div>
 </div>
